@@ -1,0 +1,125 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
+| Date         : Thu Nov 30 13:47:09 2023
+| Host         : beepboop running 64-bit Ubuntu 22.04.1 LTS
+| Command      : check_timing -file reports_cva6_fpga_impl/cva6_fpga.check_timing.rpt
+| Design       : cva6_zybo_z7_20
+| Device       : 7z020-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+--------------------------------------------------------------------------------------
+
+
+check_timing report
+
+Table of Contents
+-----------------
+1. checking no_clock (480)
+2. checking constant_clock (0)
+3. checking pulse_width_clock (0)
+4. checking unconstrained_internal_endpoints (32)
+5. checking no_input_delay (2)
+6. checking no_output_delay (1)
+7. checking multiple_clock (0)
+8. checking generated_clocks (0)
+9. checking loops (0)
+10. checking partial_input_delay (3)
+11. checking partial_output_delay (0)
+12. checking latch_loops (0)
+
+1. checking no_clock (480)
+--------------------------
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][0]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][1]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][2]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][3]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][4]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][5]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][6]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][0]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][1]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][2]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][3]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][4]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][5]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][6]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_wt_dcache/gen_rd_ports[1].i_wt_dcache_ctrl/id_q_reg[0]/Q (HIGH)
+
+
+2. checking constant_clock (0)
+------------------------------
+ There are 0 register/latch pins with constant_clock.
+
+
+3. checking pulse_width_clock (0)
+---------------------------------
+ There are 0 register/latch pins which need pulse_width check
+
+
+4. checking unconstrained_internal_endpoints (32)
+-------------------------------------------------
+ There are 32 pins that are not constrained for maximum delay. (HIGH)
+
+ There are 0 pins that are not constrained for maximum delay due to constant clock.
+
+
+5. checking no_input_delay (2)
+------------------------------
+ There are 2 input ports with no input delay specified. (HIGH)
+
+ There are 0 input ports with no input delay but user has a false path constraint.
+
+
+6. checking no_output_delay (1)
+-------------------------------
+ There is 1 port with no output delay specified. (HIGH)
+
+ There are 0 ports with no output delay but user has a false path constraint
+
+ There are 0 ports with no output delay but with a timing clock defined on it or propagating through it
+
+
+7. checking multiple_clock (0)
+------------------------------
+ There are 0 register/latch pins with multiple clocks.
+
+
+8. checking generated_clocks (0)
+--------------------------------
+ There are 0 generated clocks that are not connected to a clock source.
+
+
+9. checking loops (0)
+---------------------
+ There are 0 combinational loops in the design.
+
+
+10. checking partial_input_delay (3)
+------------------------------------
+ There are 3 input ports with partial input delay specified. (HIGH)
+
+
+11. checking partial_output_delay (0)
+-------------------------------------
+ There are 0 ports with partial output delay specified.
+
+
+12. checking latch_loops (0)
+----------------------------
+ There are 0 combinational latch loops in the design through latch input
+
+
