@@ -69,7 +69,7 @@ In our case, we use this cable to program software applications on the CV32A6 in
 $ make cva6_fpga
 ```
 
-3. When the bitstream is generated, switch on Zybo board and run:
+3. When the bitstream is generated, switch on Zybo board and run: (à refaire à chaque lancement du FPGA) 
 ```
 $ make program_cva6_fpga
 ```
