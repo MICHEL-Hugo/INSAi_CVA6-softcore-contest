@@ -7,6 +7,7 @@
 #include "Network.h"
 #include "util.h"
 
+
 void readStimulus(
                   UDATA_T* inputBuffer,
                   Target_T* expectedOutputBuffer)
@@ -74,9 +75,6 @@ int main(int argc, char* argv[]) {
     printf("credence: %d\n", output_value);
     printf("image %s: %d instructions\n", stringify(MNIST_INPUT_IMAGE), (int)(instret));
     printf("image %s: %d cycles\n", stringify(MNIST_INPUT_IMAGE), (int)(cycles));
-
-    //TEST
-    printf("size of weights : %d\n", sizeof(conv1_weights[0]));  
 
 #ifdef OUTPUTFILE
     FILE *f = fopen("success_rate.txt", "w");
