@@ -85,6 +85,7 @@ When the bitstream is loaded, the green LED `done` lights up.
    ```
    minicom -D /dev/ttyUSB0 115200-8-N-1
    ```
+   THis not necessary on USB0, most of the time it is USB0 or USB2, lsusb 
    This can be done after lanching docker and OpenOCD
    
 
@@ -262,6 +263,18 @@ image env0003: 2353693 cycles
 
 This result is obtained just after the FPGA bitstream loading.
 When MNIST is rerun system is not at initial state. For instance, cache is preloaded.
+
+## Sortir de docker et ou relancer
+To exit docker: ctrl P + ctrl Q
+To exit Minicom ctrl A +
+
+To restart, we must first kill the openocd process:
+```
+p.s.
+kill -9 <PID>
+
+```
+Then restart docker and so on.
 
 
 # Simulation get started
