@@ -58,13 +58,17 @@ The steps to run the RIPE application on CV32A6 FPGA platform are described belo
 The JTAG-HS2 programming cable is initially a cable that allows programming of Xilinx FPGAs (bitstream loading) from a host PC.
 
 In our case, we use this cable to program software applications on the CV32A6 instantiated in the FPGA through a PMOD connector.
-
+## Preparation
+Ajoute dans le .bashrc de la commande :
+```
+source /opt/Xilinx/Vivado/2020.1/settings64.sh
+```
 ## Get the Zybo ready
 
 1. First, make sure the Digilent **JTAG-HS2 debug adapter** is properly connected to the **PMOD JE** connector and that the USBAUART adapter is properly connected to the **PMOD JB** connector of the Zybo Z7-20 board.
 ![alt text](./docs/pictures/20201204_150708.jpg)
 
-2. Generate the bitstream of the FPGA platform:
+2. Generate the bitstream of the FPGA platform ( a refaire que si le bitstream a été supprimer):
 ```
 $ make cva6_fpga
 ```
@@ -77,12 +81,33 @@ When the bitstream is loaded, the green LED `done` lights up.
 ![alt text](./docs/pictures/20201204_160542.jpg)
 
 4. Get a hyperterminal configured on /dev/ttyUSB0 115200-8-N-1
+   Open a new terminal and cmd :
+   ```
+   minicom -D /dev/ttyUSB0 115200-8-N-1
+   ```
+   This can be done after lanching docker and OpenOCD
+   
 
 Now, the hardware is ready and the hyperterminal is connected to the UART output of the FPGA. We can now start the software.
 
 ## Get started with software environment
+### Summary
+```
+docker run -ti --privileged -v `realpath sw`:/workdir sw-docker:v1
+cd app
+make mnist
+openocd -f openocd_digilent_hs2.cfg &
+riscv-none-elf-gdb mnist.riscv
+target remote :3333
+load
+```
+Dans un nouveau terminal lancer L'Hyperterminal (  minicom -D /dev/ttyUSB0 115200-8-N-1 )
+```
+c
+```
 
-### Building the docker image
+
+### Building the docker image ( A faire la première fois seulement)
 
 Install Docker on the workstation.
 
@@ -126,9 +151,17 @@ user@[CONTAINER ID]:/workdir$ cd app
 user@[CONTAINER ID]:/workdir/app$ make mnist
 
 ```
+```
+cd app
+make mnist
+```
+
 At the end of the compilation the mnist.riscv executable file must be created.
 
 4. Then, in the Docker container, launch **OpenOCD** in background:
+```
+openocd -f openocd_digilent_hs2.cfg &
+```
 ```
 user@[CONTAINER ID]:/workdir/app$ openocd -f openocd_digilent_hs2.cfg &
 [1] 90
@@ -153,6 +186,9 @@ Info : Listening on port 4444 for telnet connections
 
 5. In the Docker container (same terminal), launch **gdb** as following:
 ```
+riscv-none-elf-gdb mnist.riscv
+```
+```
 user@[CONTAINER ID]:/workdir/app$ riscv-none-elf-gdb mnist.riscv
 GNU gdb (GDB) 14.0.50.20230114-git
 Copyright (C) 2022 Free Software Foundation, Inc.
@@ -175,6 +211,9 @@ Reading symbols from mnist.riscv...
 
 6. In **gdb**, you need to connect gdb to **openocd** as following:
 ```
+target remote :3333
+```
+```
 (gdb) target remote :3333
 Remote debugging using :3333
 Info : accepting 'gdb' connection on tcp/3333
@@ -184,6 +223,9 @@ Warn : Prefer GDB command "target extended-remote 3333" instead of "target remot
 ```
 
 7. In **gdb**, load **mnist.riscv** to CV32A6 FPGA platform by the load command:
+```
+load
+```
 ```
 (gdb) load
 Loading section .vectors, size 0x80 lma 0x80000000
@@ -199,6 +241,9 @@ Transfer rate: 57 KB/sec, 9579 bytes/write.
 ```
 
 8. At last, in gdb, you can run the **mnist** application by command **c**:
+```
+c
+```
 ```
 (gdb) c
 Continuing.
