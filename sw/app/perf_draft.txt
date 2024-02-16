@@ -1,0 +1,61 @@
+size_t i_cache_misses;
+size_t d_cache_misses;
+
+size_t i_cache_accesses;
+size_t d_cache_accesses;
+
+size_t branch_mispredicts;
+size_t pipeline_stall;
+
+ 
+/* EVENT SELECTOR */
+write_csr(mhpm_event_3, 0x01); // L1 I-Cache Misses
+write_csr(mhpm_event_4, 0x02); // L1 D-Cache Misses
+
+write_csr(mhpm_event_5, 0x20); // L1 I-Cache Accesses
+write_csr(mhpm_event_6, 0x21); // L1 D-Cache Accesses
+
+write_csr(mhpm_event_7, 0x0A); // Branch Mispredicts
+
+write_csr(mhpm_event_8, 0x26); // Pipeline Stall
+
+/* PERFOMANCE COUNTERS */
+
+i_cache_misses     = read_csr(mhpm_counter_3);
+d_cache_misses     = read_csr(mhpm_counter_4);
+
+i_cache_accesses   = read_csr(mhpm_counter_5); 
+d_cache_accesses   = read_csr(mhpm_counter_6); 
+
+branch_mispredicts = read_csr(mhpm_counter_7);
+pipeline_stall     = read_csr(mhpm_counter_8);
+
+
+
+/* 
+ *
+ *
+   Code Under Test 
+ *
+ *
+ */
+
+i_cache_misses     = read_csr(mhpm_counter_3);
+d_cache_misses     = read_csr(mhpm_counter_4);
+
+i_cache_accesses   = read_csr(mhpm_counter_5); 
+d_cache_accesses   = read_csr(mhpm_counter_6); 
+
+branch_mispredicts = read_csr(mhpm_counter_7);
+pipeline_stall     = read_csr(mhpm_counter_8);
+
+printf("L1 I - Cache misses = %d \n", (int)i_cache_misses);
+printf("L1 D - Cache misses = %d \n", (int)d_cache_misses);
+
+
+printf("L1 I - Cache accesses = %d \n", (int)i_cache_accesses);
+printf("L1 I - Cache accesses = %d \n", (int)i_cache_misses);
+printf("L1 I - Cache misses = %d \n", (int)i_cache_misses);
+printf("L1 I - Cache misses = %d \n", (int)i_cache_misses);
+printf("L1 I - Cache misses = %d \n", (int)i_cache_misses);
+
