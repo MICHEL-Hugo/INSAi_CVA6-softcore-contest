@@ -1,0 +1,13 @@
+function, d_cache_accesses, d_cache_misses, d_load, d_store, i_count, cycle_count
+processInput ,637259  ,9220, 520851  ,33492  ,1731593  ,2358461   
+propagate ,639521  ,9222, 520846  ,33489  ,1731569  ,2353740   
+processInputLoop ,8  ,1, 2  ,3  ,10  ,34    
+convcellPropagate1 ,305288  ,63, 110352  ,48527  ,245807  ,424087   
+convcellPropagate1(2ndCall), 316406  ,5322, 308436  ,875  ,1098807  ,1469408      
+fccellPropagateUDATA_T ,117621  ,3858, 115350  ,156  ,408312  ,560070   
+fccellPropagateDATA_T ,3167  ,110, 3010  ,15  ,10650  ,14739   
+maxPropagate1 ,12  ,1, 10  ,6  ,34  ,144      
+
+
+
+
