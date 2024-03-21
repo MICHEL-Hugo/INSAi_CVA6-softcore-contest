@@ -6,7 +6,7 @@
 // Create Date: 03/15/2024 05:23:32 PM
 // Design Name: 
 // Module Name: MAC_unit
-// Project Name: 
+// Project Name: cva6-softcore-contest
 // Target Devices: 
 // Tool Versions: 
 // Description: 
@@ -20,41 +20,19 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-//riscv::xlen_t declaration
-package riscv;
-
-    localparam XLEN = 32;
-    typedef logic [XLEN-1:0] xlen_t;
-    
-endpackage
-
-package ariane_pkg;
-
-    localparam TRANS_ID_BITS = 2;
-
-    typedef struct packed {
-        //fu_t                      fu;
-        //fu_op                     operation;
-        riscv::xlen_t             operand_a;
-        riscv::xlen_t             operand_b;
-        //riscv::xlen_t             imm;
-        //logic [TRANS_ID_BITS-1:0] trans_id;
-  } fu_data_t;
-  
-endpackage
-
 //Implemented MAC unit is for signed operand A and unsigned operand B
 localparam VALID = 1'b1;
 localparam READY = 1'b1;
 
 module MAC_unit(
-//    import ariane_pkg::*;
-//#(
-//    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty
-//) 
+    import ariane_pkg::*;
+#(
+    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty
+) 
     input   logic                       clk_i,
     input   logic                       rst_i,
     input   logic                       mac_valid_i,
+    input   logic                       flush_i,
     input   ariane_pkg::fu_data_t       fu_data_i,
     output  riscv::xlen_t               result_o,
     output  logic                       mac_valid_o,
@@ -81,7 +59,7 @@ module MAC_unit(
     assign mult_d_4 = $signed({fu_data_i.operand_a[4*riscv::XLEN/4-1] & 1'b1, fu_data_i.operand_a[4*riscv::XLEN/4-1:3*riscv::XLEN/4]}) 
                         * $signed({fu_data_i.operand_b[4*riscv::XLEN/4-1] & 1'b0, fu_data_i.operand_b[4*riscv::XLEN/4-1:3*riscv::XLEN/4]});
     
-    assign mac_valid_1_d = mac_valid_i;
+    assign mac_valid_1_d = mac_valid_i && ~flush_i; //result are valid if the unit has been choosen and if the pipeline is not flushed
     
     always_ff @(posedge clk_i or negedge rst_i) begin
     
@@ -95,7 +73,7 @@ module MAC_unit(
       end 
         
       else begin
-        if (mac_valid_1_d == VALID) begin
+        if (mac_valid_1_d == VALID && ~flush_i) begin
             mult_q_1 <= mult_d_1;
             mult_q_2 <= mult_d_2;
             mult_q_3 <= mult_d_3;
@@ -120,13 +98,13 @@ module MAC_unit(
     
     //addition stage 1
     logic [16:0] add_q_1, add_q_2; //intermediate registers
-    logic [16:0] add_d_1, add_d_2; //intermediate registers
+    logic [16:0] add_d_1, add_d_2; 
     logic mac_valid_2_q, mac_valid_2_d;
     
     assign add_d_1 = $signed({mult_q_1[15] & 1'b1, mult_q_1}) + $signed({mult_q_2[15] & 1'b1, mult_q_2});
     assign add_d_2 = $signed({mult_q_3[15] & 1'b1, mult_q_3}) + $signed({mult_q_4[15] & 1'b1, mult_q_4});
     
-    assign mac_valid_2_d = mac_valid_1_q;
+    assign mac_valid_2_d = mac_valid_1_q && ~flush_i;
     
     always_ff @(posedge clk_i or negedge rst_i) begin
     
@@ -139,7 +117,7 @@ module MAC_unit(
       
       else begin
       
-        if (mac_valid_2_d == VALID) begin
+        if (mac_valid_2_d == VALID && ~flush_i) begin
             add_q_1 <= add_d_1;
             add_q_2 <= add_d_2;
             
@@ -166,7 +144,7 @@ module MAC_unit(
     
     assign add_d_3 = $signed({add_q_1[16] & 1'b1, add_q_1}) + $signed({add_q_2[15] & 1'b1, add_q_2});
     
-    assign mac_valid_3_d = mac_valid_2_q;
+    assign mac_valid_3_d = mac_valid_2_q && ~flush_i;
     
     always_ff @(posedge clk_i or negedge rst_i) begin
     
@@ -177,7 +155,7 @@ module MAC_unit(
       end 
       
       else begin
-      if (mac_valid_3_d == VALID) begin
+      if (mac_valid_3_d == VALID && ~flush_i) begin
             add_q_3 <= add_d_3;
             
             mac_valid_3_q <= mac_valid_3_d;
