@@ -51,6 +51,15 @@ module ex_stage
     input logic csr_commit_i,
     // MULT
     input logic mult_valid_i,  // Output is valid
+
+    // Dummy_FU
+    input  logic                        dummy_FU_valid_i,
+    output logic                        dummy_FU_ready_o,
+    output logic                        dummy_FU_valid_o,
+    output riscv::xlen_t                dummy_FU_result_o,
+    output logic   [TRANS_ID_BITS-1:0]  dummy_FU_trans_id_o,
+    output exception_t                  dummy_FU_exception_o,
+
     // LSU
     output logic lsu_ready_o,  // FU is ready
     input logic lsu_valid_i,  // Input is valid
@@ -193,7 +202,7 @@ module ex_stage
       .pc_i,
       .is_compressed_instr_i,
       // any functional unit is valid, check that there is no accidental mis-predict
-      .fu_valid_i ( alu_valid_i || lsu_valid_i || csr_valid_i || mult_valid_i || fpu_valid_i || acc_valid_i ) ,
+      .fu_valid_i ( alu_valid_i || lsu_valid_i || csr_valid_i || mult_valid_i || fpu_valid_i || acc_valid_i || dummy_FU_valid_i) ,
       .branch_valid_i,
       .branch_comp_res_i(alu_branch_res),
       .branch_result_o(branch_result),
@@ -259,6 +268,29 @@ module ex_stage
       .mult_valid_o   (mult_valid),
       .mult_ready_o   (mult_ready),
       .mult_trans_id_o(mult_trans_id)
+  );
+
+  // --------------------------
+  //   Dummy_FU
+  // --------------------------
+  
+  fu_data_t dummy_FU_data;
+
+  assign dummy_FU_data = dummy_FU_valid_i ? fu_data_i : '0;
+
+  dummy_FU #(
+    .CVA6Cfg(CVA6Cfg)
+  ) i_dummy_FU (
+    .clk_i,
+    .rst_ni,
+    .flush_i,
+    .dummy_FU_valid_i,
+    .fu_data_i(dummy_FU_data),
+    .dummy_FU_result_o,
+    .dummy_FU_valid_o,
+    .dummy_FU_ready_o,
+    .dummy_FU_trans_id_o,
+    .dummy_FU_exception_o
   );
 
   // ----------------

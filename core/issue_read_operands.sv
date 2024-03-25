@@ -60,6 +60,9 @@ module issue_read_operands
     output logic lsu_valid_o,  // Output is valid
     // MULT
     output logic mult_valid_o,  // Output is valid
+    // Dummy_FU
+    input  dummy_FU_ready_i,
+    output dummy_FU_valid_o, 
     // FPU
     input logic fpu_ready_i,  // FU is ready
     output logic fpu_valid_o,  // Output is valid
@@ -92,6 +95,7 @@ module issue_read_operands
 
   logic        alu_valid_q;
   logic        mult_valid_q;
+  logic        dummy_FU_valid_q;
   logic        fpu_valid_q;
   logic [ 1:0] fpu_fmt_q;
   logic [ 2:0] fpu_rm_q;
@@ -128,6 +132,7 @@ module issue_read_operands
   assign lsu_valid_o         = lsu_valid_q;
   assign csr_valid_o         = csr_valid_q;
   assign mult_valid_o        = mult_valid_q;
+  assign dummy_FU_valid_o    = dummy_FU_valid_q;
   assign fpu_valid_o         = fpu_valid_q;
   assign fpu_fmt_o           = fpu_fmt_q;
   assign fpu_rm_o            = fpu_rm_q;
@@ -150,6 +155,7 @@ module issue_read_operands
       end else fu_busy = 1'b0;
       LOAD, STORE: fu_busy = ~lsu_ready_i;
       CVXIF: fu_busy = ~cvxif_ready_i;
+      Dummy_FU  : fu_busy = ~dummy_FU_ready_i;
       default: fu_busy = 1'b0;
     endcase
   end
@@ -286,7 +292,8 @@ module issue_read_operands
     if (!rst_ni) begin
       alu_valid_q    <= 1'b0;
       lsu_valid_q    <= 1'b0;
-      mult_valid_q   <= 1'b0;
+      mult_valid_q   <= 1'b0; 
+      dummy_FU_valid_q <= 1'b0;
       fpu_valid_q    <= 1'b0;
       fpu_fmt_q      <= 2'b0;
       fpu_rm_q       <= 3'b0;
@@ -296,6 +303,7 @@ module issue_read_operands
       alu_valid_q    <= 1'b0;
       lsu_valid_q    <= 1'b0;
       mult_valid_q   <= 1'b0;
+      dummy_FU_valid_q <= 1'b0;   
       fpu_valid_q    <= 1'b0;
       fpu_fmt_q      <= 2'b0;
       fpu_rm_q       <= 3'b0;
@@ -314,6 +322,9 @@ module issue_read_operands
           end
           MULT: begin
             mult_valid_q <= 1'b1;
+          end
+          Dummy_FU : begin
+            dummy_FU_valid_q <= 1'b1;
           end
           FPU: begin
             if (CVA6Cfg.FpPresent) begin
@@ -344,6 +355,7 @@ module issue_read_operands
         alu_valid_q    <= 1'b0;
         lsu_valid_q    <= 1'b0;
         mult_valid_q   <= 1'b0;
+        dummy_FU_valid_q <= 1'b0;
         fpu_valid_q    <= 1'b0;
         csr_valid_q    <= 1'b0;
         branch_valid_q <= 1'b0;

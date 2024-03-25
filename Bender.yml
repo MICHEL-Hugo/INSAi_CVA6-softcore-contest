@@ -148,6 +148,7 @@ sources:
       - core/load_store_unit.sv
       - core/lsu_bypass.sv
       - core/mult.sv
+      - core/dummy_FU,
       - core/multiplier.sv
       - core/serdiv.sv
       - core/perf_counters.sv

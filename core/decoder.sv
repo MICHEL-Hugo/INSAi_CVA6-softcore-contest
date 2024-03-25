@@ -265,6 +265,31 @@ module decoder
           endcase
         end
 
+        // insAI Extension : Dummy_FU
+        // Mac8 
+        // Choose instructions format for MAC8
+        // should we use Accelerator ?? 
+
+        riscv::OpcodeCustom0: begin
+          // select the functionnal unit
+          instruction_o.fu = Dummy_FU;
+
+          //instructions operands
+          instruction_o.rs1[4:0] = instr.rtype.rs1;
+          instruction_o.rs2[4:0] = instr.rtype.rs2;
+          instruction_o.rd[4:0]  = instr.rtype.rd;
+          /*
+          unique case ({
+              instr.rtype.funct7, instr.rtype.funct3
+            })
+              {7'b000_0001, 3'b000} : instruction_o.op = ariane_pkg::DUMMY_OP;  // PlaceHolder
+              default: begin
+                illegal_instr = 1'b1;
+              end
+          endcase
+          */
+        end
+
         // --------------------------
         // Reg-Reg Operations
         // --------------------------
