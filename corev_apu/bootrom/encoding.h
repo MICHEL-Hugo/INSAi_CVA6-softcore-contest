@@ -749,8 +749,6 @@
 #define MATCH_CUSTOM3_RD_RS1_RS2 0x707b
 #define MASK_CUSTOM3_RD_RS1_RS2  0x707f
 
-#define MASK_MAC8 0x200000b
-#define MATCH_MAC8 0xfe00707f //custom MAC
 
 #define CSR_FFLAGS 0x1
 #define CSR_FRM 0x2
