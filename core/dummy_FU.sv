@@ -1,4 +1,3 @@
-`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -19,55 +18,33 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
-//riscv::xlen_t declaration
-package riscv;
-
-    localparam XLEN = 32;
-    typedef logic [XLEN-1:0] xlen_t;
-    
-endpackage
-
-package ariane_pkg;
-
-    localparam TRANS_ID_BITS = 2;
-
-    typedef struct packed {
-        //fu_t                      fu;
-        //fu_op                     operation;
-        riscv::xlen_t             operand_a;
-        riscv::xlen_t             operand_b;
-        riscv::xlen_t             imm;
-        logic [TRANS_ID_BITS-1:0] trans_id;
-  } fu_data_t;
-  
-endpackage
-
 localparam TRANS_ID_BITS = 4;
 
 //Implemented MAC unit is for signed operand A and unsigned operand B
 localparam VALID = 1'b1;
 localparam READY = 1'b1;
 
-module MAC_unit(
-//    import ariane_pkg::*;
-//#(
-//    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty
-//) 
+module dummy_FU(
+    import ariane_pkg::*;
+#(
+    parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty
+) 
     input   logic                       clk_i,
     input   logic                       rst_i,
-    input   logic                       mac_valid_i,
+    input   logic                       dummy_FU_valid_i,
     input   logic                       flush_i,
     input   ariane_pkg::fu_data_t       fu_data_i,
-    output  riscv::xlen_t               result_o,
-    output  logic                       mac_valid_o,
-    output  logic                       mac_ready_o,
-    output  logic   [TRANS_ID_BITS-1:0] trans_id_o
+    output  riscv::xlen_t               dummy_FU_result_o,
+    output  logic                       dummy_FU_valid_o,
+    output  logic                       dummy_FU_ready_o,
+    output  logic   [TRANS_ID_BITS-1:0] dummy_FU_trans_id_o,
+    output  exception_t                 dummy_FU_exception_o
     );
     
     //control signals
-    assign mac_ready_o = READY; //always ready because it is the same than a unit with a unit execution cycle
-    
+    assign dummy_FU_ready_o = READY; //always ready because it is the same than a unit with a unit execution cycle
+    assign dummy_FU_exception_o = '0;
+
     //mulplication
     logic [15:0] mult_d_1, mult_d_2, mult_d_3, mult_d_4; //intermediate registers
     logic [15:0] mult_q_1, mult_q_2, mult_q_3, mult_q_4;
@@ -87,7 +64,7 @@ module MAC_unit(
     assign mult_d_4 = $signed({fu_data_i.operand_a[4*riscv::XLEN/4-1] & 1'b1, fu_data_i.operand_a[4*riscv::XLEN/4-1:3*riscv::XLEN/4]}) 
                         * $signed({fu_data_i.operand_b[4*riscv::XLEN/4-1] & 1'b0, fu_data_i.operand_b[4*riscv::XLEN/4-1:3*riscv::XLEN/4]});
     
-    assign mac_valid_1_d = mac_valid_i && ~flush_i; //result are valid if the unit has been choosen and if the pipeline is not flushed
+    assign mac_valid_1_d = dummy_FU_valid_i && ~flush_i; //result are valid if the unit has been choosen and if the pipeline is not flushed
     
     always_ff @(posedge clk_i or negedge rst_i) begin
     
@@ -210,9 +187,9 @@ module MAC_unit(
       end
     end
     
-    assign result_o = 32'(signed'(add_q_3));
-    assign mac_valid_o = mac_valid_3_q;
-    assign trans_id_o = trans_id_3_q;
+    assign dummy_FU_result_o = 32'(signed'(add_q_3));
+    assign dummy_FU_valid_o = mac_valid_3_q;
+    assign dummy_FU_trans_id_o = trans_id_3_q;
     
     
     
