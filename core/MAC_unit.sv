@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -18,6 +19,32 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+
+//riscv::xlen_t declaration
+package riscv;
+
+    localparam XLEN = 32;
+    typedef logic [XLEN-1:0] xlen_t;
+    
+endpackage
+
+package ariane_pkg;
+
+    localparam TRANS_ID_BITS = 2;
+
+    typedef struct packed {
+        //fu_t                      fu;
+        //fu_op                     operation;
+        riscv::xlen_t             operand_a;
+        riscv::xlen_t             operand_b;
+        riscv::xlen_t             imm;
+        logic [TRANS_ID_BITS-1:0] trans_id;
+  } fu_data_t;
+  
+endpackage
+
+localparam TRANS_ID_BITS = 4;
+
 //Implemented MAC unit is for signed operand A and unsigned operand B
 localparam VALID = 1'b1;
 localparam READY = 1'b1;
@@ -31,7 +58,6 @@ module MAC_unit(
     input   logic                       rst_i,
     input   logic                       mac_valid_i,
     input   logic                       flush_i,
-    input   logic   [TRANS_ID_BITS-1:0] trans_id_i,
     input   ariane_pkg::fu_data_t       fu_data_i,
     output  riscv::xlen_t               result_o,
     output  logic                       mac_valid_o,
@@ -83,7 +109,7 @@ module MAC_unit(
             mult_q_4 <= mult_d_4;
             
             mac_valid_1_q <= mac_valid_1_d;
-            trans_id_1_q <= trans_id_i;
+            trans_id_1_q <= fu_data_i.trans_id;
         end 
         
         else begin
