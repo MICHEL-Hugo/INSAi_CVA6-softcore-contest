@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h> //ajoute int8_t et uint8_t
-#include <decode.h>
+#include <encoding.h>
 
 #define NB_LOOP 4
 
@@ -31,17 +31,17 @@ int32_t * Kernel_Val_Ptr;
 int8_t Kernel_Val = {23, 56, 29, 35, -34, 45, -34, 56, 0, 3, 4, 67, -3, -127, -34, 12};
 uint8_t Image_Val = {34, 255, 76, 23, 23, 0, 0, 0, 56, 22, 35, 44, 43, 78, 123, 145};
 
-int32_t * Kernel_Val_Ptr = &Kernel_Val;
+uint32_t * Kernel_Val_Ptr = &Kernel_Val;
 uint32_t * Image_Val_Ptr = &Image_Val;
 
 
 
 
 //---------------------------Fonction MAC utilisant la nouvelle instruction-----------------------------
-int32_t Multiple_Accumulate_Test_Instr( uint32_t * ImagePtr, int32_t * KernelPtr){
+int32_t Multiple_Accumulate_Test_Instr( uint32_t * ImagePtr, uint32_t * KernelPtr){
     int result;
     asm volatile(
-        "/*instruction here */": "=r" (result) :  [a5] "r"(*ImagePtr), [a3] "r"(*KernelPtr) :
+        "mac8 %[z], %[x], %[y]\n\t" : [z] "=r" (result) :  [x] "r"(*ImagePtr), [y] "r"(*KernelPtr)
     );
     return result;
 }
@@ -65,8 +65,8 @@ int main(void)
 {
     for (i=0; i++; i<(NB_LOOP-1))
     {
-        printf("Theorical result = %d \n",  Multiple_Accumucate_OG( Kernel_Val_Ptr + 32*i, Image_Val_Ptr + 32*i))
-        printf("Practical result = %d \n", Multiple_Accumulate_Test_Instr( Kernel_Val_Ptr + 32*i, Image_Val_Ptr + 32*i))
+        printf("Theorical result = %d \n",  Multiple_Accumucate_OG( Kernel_Val_Ptr + 32*i, Image_Val_Ptr + 32*i));
+        printf("Practical result = %d \n", Multiple_Accumulate_Test_Instr( Kernel_Val_Ptr + 32*i, Image_Val_Ptr + 32*i));
     }
     
     return(0);
