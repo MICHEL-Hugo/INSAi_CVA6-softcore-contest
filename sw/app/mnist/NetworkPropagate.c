@@ -9,6 +9,7 @@
 #include "fc1.h"
 #include "fc2.h"
 
+#include <string.h>
 
 static DATA_T mem[MEMORY_SIZE];
 
@@ -28,14 +29,61 @@ static int clamp(int v, int lo, int hi) {
     }
 }
 
+/*
 static void macsOnRange(const UDATA_T* __restrict inputs,
                         const WDATA_T* __restrict weights,
                         SUM_T* __restrict weightedSum,
                         int nb_iterations)
 {
     for (int iter = 0; iter < nb_iterations; ++iter) {
+    	*weightedSum += inputs[iter] * weights[iter];
+    }
+}
+*/
+
+
+static inline  void macsOnRange(const UDATA_T* __restrict inputs,
+                        const WDATA_T* __restrict weights,
+                        SUM_T* __restrict weightedSum,
+                        int nb_iterations)
+{
+#if 0
+    for (int iter = 0; iter < nb_iterations; ++iter) {
         *weightedSum += inputs[iter] * weights[iter];
     }
+#else 
+    int32_t accumulator = 0;   //flush the accumulator
+    
+    uint32_t  ptr1 = 0U;
+    uint32_t  ptr2 = 0U;
+    
+    int rem = nb_iterations % 4 ; // nb_iterations & 0b11
+    
+    if (rem != 0) {    
+    	memcpy(&ptr1,  inputs, rem * sizeof(*inputs));
+    	memcpy(&ptr2, weights, rem * sizeof(*weights));
+    	asm volatile (
+    		"mac8 %[z], %[x], %[y]\n\t"
+    		: [z] "=r"(accumulator)
+    		: [x] "r"(ptr2), [y] "r"(ptr1) 
+    	);
+    	inputs  += rem;
+    	weights += rem;
+    }
+    
+    for (int iter = 0, tmp = 0; iter < nb_iterations; iter += 4, inputs += 4, weights += 4) {
+    	memcpy(&ptr1,  inputs, 4 * sizeof(*inputs));
+    	memcpy(&ptr2, weights, 4 * sizeof(*weights));
+    	asm volatile (
+    		"mac8 %[z], %[x], %[y]\n\t"
+    		: [z] "=r"(tmp)
+    		: [x] "r"(ptr2), [y] "r"(ptr1) 
+    	);
+	accumulator += tmp;
+    }
+    
+    *weightedSum += accumulator; // Add the accumulator value to *weightedSum
+ #endif
 }
 
 static UDATA_T saturate(SUM_T value, uint32_t sat) {
