@@ -71,6 +71,7 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
     	weights += rem;
     }
     
+    nb_iterations -= rem;
     for (int iter = 0, tmp = 0; iter < nb_iterations; iter += 4, inputs += 4, weights += 4) {
     	memcpy(&ptr1,  inputs, 4 * sizeof(*inputs));
     	memcpy(&ptr2, weights, 4 * sizeof(*weights));
