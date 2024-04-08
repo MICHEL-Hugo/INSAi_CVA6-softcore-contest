@@ -9,7 +9,6 @@
 #include "fc1.h"
 #include "fc2.h"
 
-#include <string.h>
 
 static DATA_T mem[MEMORY_SIZE];
 
@@ -29,18 +28,24 @@ static int clamp(int v, int lo, int hi) {
     }
 }
 
-/*
-static void macsOnRange(const UDATA_T* __restrict inputs,
-                        const WDATA_T* __restrict weights,
-                        SUM_T* __restrict weightedSum,
-                        int nb_iterations)
+static inline uint32_t mac_pack32(void* __restrict src, size_t bytes_count)
 {
-    for (int iter = 0; iter < nb_iterations; ++iter) {
-    	*weightedSum += inputs[iter] * weights[iter];
-    }
+    const union {uint32_t  w;
+	         uint16_t hw;
+		 uint8_t   b; } __attribute__((packed)) *ptr = (typeof(ptr))(src);
+    switch(bytes_count) {
+    	case 4 : 
+		return (ptr->w);
+	case 3 :
+		return ((ptr->hw) | (*((char*)src + 2) << (8 * 2))); //little endianness assumed
+	case 2 : 
+		return (ptr->hw);
+	case 1 : 
+		return (ptr->b);
+	default:
+		return 0;
+    }	
 }
-*/
-
 
 static inline  void macsOnRange(const UDATA_T* __restrict inputs,
                         const WDATA_T* __restrict weights,
@@ -59,9 +64,9 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
     
     int rem = nb_iterations % 4 ; // nb_iterations & 0b11
     
-    if (rem != 0) {    
-    	memcpy(&ptr1,  inputs, rem * sizeof(*inputs));
-    	memcpy(&ptr2, weights, rem * sizeof(*weights));
+    if (rem != 0) {  
+    	ptr1 = mac_pack32 (inputs, rem);
+    	ptr2 = mac_pack32(weights, rem);
     	asm volatile (
     		"mac8 %[z], %[x], %[y]\n\t"
     		: [z] "=r"(accumulator)
@@ -73,8 +78,8 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
     
     nb_iterations -= rem;
     for (int iter = 0, tmp = 0; iter < nb_iterations; iter += 4, inputs += 4, weights += 4) {
-    	memcpy(&ptr1,  inputs, 4 * sizeof(*inputs));
-    	memcpy(&ptr2, weights, 4 * sizeof(*weights));
+    	ptr1 = mac_pack32( inputs, 4);
+    	ptr2 = mac_pack32(weights, 4);
     	asm volatile (
     		"mac8 %[z], %[x], %[y]\n\t"
     		: [z] "=r"(tmp)
