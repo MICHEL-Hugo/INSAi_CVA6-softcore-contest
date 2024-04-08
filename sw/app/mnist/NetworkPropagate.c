@@ -52,11 +52,7 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
                         SUM_T* __restrict weightedSum,
                         int nb_iterations)
 {
-#if 0
-    for (int iter = 0; iter < nb_iterations; ++iter) {
-        *weightedSum += inputs[iter] * weights[iter];
-    }
-#else 
+#if HOST_HAS_MAC8_UNIT
     int32_t accumulator = 0;   //flush the accumulator
     
     uint32_t  ptr1 = 0U;
@@ -89,7 +85,12 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
     }
     
     *weightedSum += accumulator; // Add the accumulator value to *weightedSum
- #endif
+#else 
+    //Default implementation 
+    for (int iter = 0; iter < nb_iterations; ++iter) {
+        *weightedSum += inputs[iter] * weights[iter];
+    }
+#endif
 }
 
 static UDATA_T saturate(SUM_T value, uint32_t sat) {

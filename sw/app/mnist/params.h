@@ -6,5 +6,6 @@
 
 #define NB_BITS 8
 #define UNSIGNED_DATA 1
+#define HOST_HAS_MAC8_UNIT 1
 
 #endif // N2D2_EXPORTC_PARAMS_H
