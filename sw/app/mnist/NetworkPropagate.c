@@ -53,25 +53,65 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
                         int nb_iterations)
 {
 #if HOST_HAS_MAC8_UNIT
+#define MAC8(a, b, c) \
+	do { \
+    	asm volatile ( \
+    		"mac8 %[z], %[x], %[y]\n\t" \
+    		: [z] "=r"(a) \
+    		: [x] "r"(c), [y] "r"(b)  \
+    	); \
+	} while (0)
+
+
     int32_t accumulator = 0;   //flush the accumulator
     
     uint32_t  operand_1 = 0U;
     uint32_t  operand_2 = 0U;
+    uint32_t  operand_3 = 0U;
+    uint32_t  operand_4 = 0U;
+    uint32_t  operand_5 = 0U;
+    uint32_t  operand_6 = 0U;
+    uint32_t  operand_7 = 0U;
+    uint32_t  operand_8 = 0U;
     
-    int rem = nb_iterations % 4 ; // nb_iterations & 0b11
-    
-    if (rem != 0) {  
-    	operand_1 = mac_pack32 ((void*)inputs, rem);
-    	operand_2 = mac_pack32((void*)weights, rem);
-    	asm volatile (
-    		"mac8 %[z], %[x], %[y]\n\t"
-    		: [z] "=r"(accumulator)
-    		: [x] "r"(operand_2), [y] "r"(operand_1) 
-    	);
-    	inputs  += rem;
-    	weights += rem;
+
+
+
+    int rem16 = nb_iterations % 16 ;
+    int nb_iterations16 = nb_iterations - rem16;
+    for (int iter = 0; iter < nb_iterations16; iter += 16, inputs += 16, weights += 16) {
+        int tmp1;
+        int tmp2;
+        int tmp3;
+        int tmp4;
+
+    	operand_1 = mac_pack32 ((void*)inputs, 4);
+    	operand_2 = mac_pack32((void*)weights, 4);
+
+    	operand_3 = mac_pack32 ((void*)inputs + 4, 4);
+    	operand_4 = mac_pack32((void*)weights + 4, 4);
+
+    	operand_5 = mac_pack32 ((void*)inputs + 8, 4);
+    	operand_6 = mac_pack32((void*)weights + 8, 4);
+
+    	operand_7 = mac_pack32 ((void*)inputs + 12, 4);
+    	operand_8 = mac_pack32((void*)weights + 12, 4);
+
+	MAC8(tmp1, operand_1, operand_2);
+	MAC8(tmp2, operand_3, operand_4);
+	MAC8(tmp3, operand_5, operand_6);
+	MAC8(tmp4, operand_7, operand_8);
+
+	accumulator += tmp1 + tmp2 + tmp3 + tmp4;
     }
     
+
+    nb_iterations = rem16;
+
+
+
+    
+    int rem = nb_iterations % 4 ; // nb_iterations & 0b11
     nb_iterations -= rem;
     for (int iter = 0, tmp = 0; iter < nb_iterations; iter += 4, inputs += 4, weights += 4) {
     	operand_1 = mac_pack32 ((void*)inputs, 4);
@@ -84,6 +124,20 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
 	accumulator += tmp;
     }
     
+    if (rem != 0) {
+    	operand_1 = mac_pack32 ((void*)inputs, rem);
+    	operand_2 = mac_pack32((void*)weights, rem);
+	int tmp = 0;
+    	asm volatile (
+    		"mac8 %[z], %[x], %[y]\n\t"
+    		: [z] "=r"(tmp)
+    		: [x] "r"(operand_2), [y] "r"(operand_1) 
+    	);
+    	inputs  += rem;
+    	weights += rem;
+	accumulator += tmp;
+    }
+
     *weightedSum += accumulator; // Add the accumulator value to *weightedSum
 #else 
     //Default implementation 
