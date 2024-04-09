@@ -28,7 +28,7 @@ static int clamp(int v, int lo, int hi) {
     }
 }
 
-static inline uint32_t mac_pack32(void*  src, size_t bytes_count)
+__attribute__((noinline)) static uint32_t mac_pack32(void*  src, size_t bytes_count)
 {
     const union {uint32_t  w;
 	         uint16_t hw;
@@ -65,25 +65,34 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
 
     int32_t accumulator = 0;   //flush the accumulator
     
-    uint32_t  operand_1 = 0U;
-    uint32_t  operand_2 = 0U;
-    uint32_t  operand_3 = 0U;
-    uint32_t  operand_4 = 0U;
-    uint32_t  operand_5 = 0U;
-    uint32_t  operand_6 = 0U;
-    uint32_t  operand_7 = 0U;
-    uint32_t  operand_8 = 0U;
-    
+    register uint32_t  operand_1 = 0U;
+    register uint32_t  operand_2 = 0U;
+    register uint32_t  operand_3 = 0U;
+    register uint32_t  operand_4 = 0U;
+    register uint32_t  operand_5 = 0U;
+    register uint32_t  operand_6 = 0U;
+    register uint32_t  operand_7 = 0U;
+    register uint32_t  operand_8 = 0U;
+    register uint32_t  operand_9 = 0U;
+    register uint32_t  operand_10 = 0U;
+    register uint32_t  operand_11 = 0U;
+    register uint32_t  operand_12 = 0U;
+    register uint32_t  operand_13 = 0U;
+    register uint32_t  operand_14 = 0U;
+    register uint32_t  operand_15 = 0U;
+    register uint32_t  operand_16 = 0U;
 
-
-
-    int rem16 = nb_iterations % 16 ;
+    int rem16 = nb_iterations % 32 ;
     int nb_iterations16 = nb_iterations - rem16;
-    for (int iter = 0; iter < nb_iterations16; iter += 16, inputs += 16, weights += 16) {
-        int tmp1;
-        int tmp2;
-        int tmp3;
-        int tmp4;
+    for (int iter = 0; iter < nb_iterations16; iter += 32, inputs += 32, weights += 32) {
+        register int tmp1;
+        register int tmp2;
+        register int tmp3;
+        register int tmp4;
+        register int tmp5;
+        register int tmp6;
+        register int tmp7;
+        register int tmp8;
 
     	operand_1 = mac_pack32 ((void*)inputs, 4);
     	operand_2 = mac_pack32((void*)weights, 4);
@@ -97,12 +106,28 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
     	operand_7 = mac_pack32 ((void*)inputs + 12, 4);
     	operand_8 = mac_pack32((void*)weights + 12, 4);
 
+    	operand_9 = mac_pack32 ((void*)inputs + 16, 4);
+    	operand_10 = mac_pack32((void*)weights + 16, 4);
+
+    	operand_11 = mac_pack32 ((void*)inputs + 20, 4);
+    	operand_12 = mac_pack32((void*)weights + 20, 4);
+
+    	operand_13 = mac_pack32 ((void*)inputs + 24, 4);
+    	operand_14 = mac_pack32((void*)weights + 24, 4);
+
+    	operand_15 = mac_pack32 ((void*)inputs + 28, 4);
+    	operand_16 = mac_pack32((void*)weights + 28, 4);
+
 	MAC8(tmp1, operand_1, operand_2);
 	MAC8(tmp2, operand_3, operand_4);
 	MAC8(tmp3, operand_5, operand_6);
 	MAC8(tmp4, operand_7, operand_8);
+	MAC8(tmp5, operand_9, operand_10);
+	MAC8(tmp6, operand_11, operand_12);
+	MAC8(tmp7, operand_13, operand_14);
+	MAC8(tmp8, operand_15, operand_16);
 
-	accumulator += tmp1 + tmp2 + tmp3 + tmp4;
+	accumulator += tmp1 + tmp2 + tmp3 + tmp4 + tmp5 + tmp6 + tmp7 + tmp8;
     }
     
 
