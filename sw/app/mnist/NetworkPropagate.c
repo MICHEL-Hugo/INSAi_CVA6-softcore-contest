@@ -28,11 +28,11 @@ static int clamp(int v, int lo, int hi) {
     }
 }
 
-static inline uint32_t mac_pack32(void* __restrict src, size_t bytes_count)
+static inline uint32_t mac_pack32(void*  src, size_t bytes_count)
 {
     const union {uint32_t  w;
 	         uint16_t hw;
-		 uint8_t   b; } __attribute__((packed)) *ptr = (typeof(ptr))(src);
+		 uint8_t   b; } __attribute__((packed)) *ptr = src;
     switch(bytes_count) {
     	case 4 : 
 		return (ptr->w);
