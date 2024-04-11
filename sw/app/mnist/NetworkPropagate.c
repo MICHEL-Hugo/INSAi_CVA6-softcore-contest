@@ -28,7 +28,7 @@ static int clamp(int v, int lo, int hi) {
     }
 }
 
-static inline uint32_t mac_pack32(void*  src, size_t bytes_count)
+ static inline uint32_t mac_pack32(void*  src, size_t bytes_count)
 {
     const union {uint32_t  w;
 	         uint16_t hw;
@@ -53,6 +53,7 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
                         int nb_iterations)
 {
 #if HOST_HAS_MAC8_UNIT
+#define MAC16 1
 #define MAC8(a, b, c) \
 	do { \
     	asm volatile ( \
@@ -73,120 +74,89 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
 
 
     int32_t accumulator = 0;   //flush the accumulator
-   
+    
+     uint32_t  operand_1  = 0U;
+     uint32_t  operand_2  = 0U;
+     uint32_t  operand_3  = 0U;
+     uint32_t  operand_4  = 0U;
+     uint32_t  operand_5  = 0U;
+     uint32_t  operand_6  = 0U;
+     uint32_t  operand_7  = 0U;
+     uint32_t  operand_8  = 0U;
 
-    uint32_t operands1[8] __attribute__((aligned(4)));
-    uint32_t operands2[8] __attribute__((aligned(4)));
-
-    register uint32_t  operand_1 = 0U;
-    register uint32_t  operand_2 = 0U;
-    /*register uint32_t  operand_1 = 0U;
-    register uint32_t  operand_2 = 0U;
-    register uint32_t  operand_3 = 0U;
-    register uint32_t  operand_4 = 0U;
-    register uint32_t  operand_5 = 0U;
-    register uint32_t  operand_6 = 0U;
-    register uint32_t  operand_7 = 0U;
-    register uint32_t  operand_8 = 0U;
-    register uint32_t  operand_9 = 0U;
-    register uint32_t  operand_10 = 0U;
-    register uint32_t  operand_11 = 0U;
-    register uint32_t  operand_12 = 0U;
-    register uint32_t  operand_13 = 0U;
-    register uint32_t  operand_14 = 0U;
-    register uint32_t  operand_15 = 0U;
-    register uint32_t  operand_16 = 0U;*/
-
-    int rem16 = nb_iterations % 32 ;
+    /* BLOCK_SIZE : 16 BYTES */
+    int rem16 = nb_iterations % 16 ;
     int nb_iterations16 = nb_iterations - rem16;
-    for (int iter = 0; iter < nb_iterations16; iter += 32, inputs += 32, weights += 32) {
-        register int tmp1;
-        register int tmp2;
-        register int tmp3;
-        register int tmp4;
-        register int tmp5;
-        register int tmp6;
-        register int tmp7;
-        register int tmp8;
+    for (int iter = 0; iter < nb_iterations16;   iter += 16, 
+		                               inputs += 16, 
+					      weights += 16) {
+        int tmp1;
+        int tmp2;
+        int tmp3;
+        int tmp4;
 
-	memcpy(operands1, inputs, 4 * 8);
-	memcpy(operands2, weights, 4 * 8);
+    	operand_1 = mac_pack32 ((void*)(inputs + 0), 4);
+    	operand_2 = mac_pack32((void*)(weights + 0), 4);
 
-    	/*operand_1 = mac_pack32 ((void*)inputs, 4);
-    	operand_2 = mac_pack32((void*)weights, 4);
+    	operand_3 = mac_pack32 ((void*)(inputs + 4), 4);
+    	operand_4 = mac_pack32((void*)(weights + 4), 4);
 
-    	operand_3 = mac_pack32 ((void*)inputs + 4, 4);
-    	operand_4 = mac_pack32((void*)weights + 4, 4);
+    	operand_5 = mac_pack32 ((void*)(inputs + 8), 4);
+    	operand_6 = mac_pack32((void*)(weights + 8), 4);
 
-    	operand_5 = mac_pack32 ((void*)inputs + 8, 4);
-    	operand_6 = mac_pack32((void*)weights + 8, 4);
-
-    	operand_7 = mac_pack32 ((void*)inputs + 12, 4);
-    	operand_8 = mac_pack32((void*)weights + 12, 4);
-
-    	operand_9 = mac_pack32 ((void*)inputs + 16, 4);
-    	operand_10 = mac_pack32((void*)weights + 16, 4);
-
-    	operand_11 = mac_pack32 ((void*)inputs + 20, 4);
-    	operand_12 = mac_pack32((void*)weights + 20, 4);
-
-    	operand_13 = mac_pack32 ((void*)inputs + 24, 4);
-    	operand_14 = mac_pack32((void*)weights + 24, 4);
-
-    	operand_15 = mac_pack32 ((void*)inputs + 28, 4);
-    	operand_16 = mac_pack32((void*)weights + 28, 4);*/
-
-	/*MAC8(tmp1, operand_1, operand_2);
+    	operand_7 = mac_pack32 ((void*)(inputs + 12), 4);
+    	operand_8 = mac_pack32((void*)(weights + 12), 4);
+#if MAC16
+	asm volatile (
+	  "mac8 %[z1], %[x1], %[y1]\n\t " \
+	  "mac8 %[z2], %[x2], %[y2]\n\t " \
+	  "mac8 %[z3], %[x3], %[y3]\n\t " \
+	  "mac8 %[z4], %[x4], %[y4]\n\t " \
+	 :  [z1] "=&r"(tmp1) ,  \
+	    [z2] "=&r"(tmp2) ,  \
+	    [z3] "=&r"(tmp3) ,  \
+	    [z4] "=&r"(tmp4)   \
+	 :  [x1] "r"(operand_2), [y1] "r"(operand_1) ,  \
+	    [x2] "r"(operand_4), [y2] "r"(operand_3) ,  \
+	    [x3] "r"(operand_6), [y3] "r"(operand_5) ,  \
+	    [x4] "r"(operand_8), [y4] "r"(operand_7)   \
+	);
+#else
+	MAC8(tmp1, operand_1, operand_2);
 	MAC8(tmp2, operand_3, operand_4);
 	MAC8(tmp3, operand_5, operand_6);
 	MAC8(tmp4, operand_7, operand_8);
-	MAC8(tmp5, operand_9, operand_10);
-	MAC8(tmp6, operand_11, operand_12);
-	MAC8(tmp7, operand_13, operand_14);
-	MAC8(tmp8, operand_15, operand_16);*/
-	MAC8(tmp1, operands1[0], operands2[0]);
-	MAC8(tmp2, operands1[1], operands2[1]);
-	MAC8(tmp3, operands1[2], operands2[2]);
-	MAC8(tmp4, operands1[3], operands2[3]);
-	MAC8(tmp5, operands1[4], operands2[4]);
-	MAC8(tmp6, operands1[5], operands2[5]);
-	MAC8(tmp7, operands1[6], operands2[6]);
-	MAC8(tmp8, operands1[7], operands2[7]);
-
-	accumulator += tmp1 + tmp2 + tmp3 + tmp4 + tmp5 + tmp6 + tmp7 + tmp8;
+#endif
+	accumulator += tmp1 + tmp2 + tmp3 + tmp4;
     }
-    
-
     nb_iterations = rem16;
 
+    /* BLOCK_SIZE : 4 BYTES */
+    int rem4 = nb_iterations % 4 ; 
+    int nb_iterations4 = nb_iterations - rem4;
+    for (int iter = 0; iter < nb_iterations4;   iter += 4, 
+		    			      inputs += 4,
+					     weights += 4) {
+    	int tmp1;
 
+	operand_1 = mac_pack32 ((void*)(inputs + 0), 4);
+    	operand_2 = mac_pack32((void*)(weights + 0), 4);
+	
+	MAC8(tmp1, operand_1, operand_2);
 
-    
-    int rem = nb_iterations % 4 ; // nb_iterations & 0b11
-    nb_iterations -= rem;
-    for (int iter = 0, tmp = 0; iter < nb_iterations; iter += 4, inputs += 4, weights += 4) {
-    	operand_1 = mac_pack32 ((void*)inputs, 4);
-    	operand_2 = mac_pack32((void*)weights, 4);
-    	asm volatile (
-    		"mac8 %[z], %[x], %[y]\n\t"
-    		: [z] "=r"(tmp)
-    		: [x] "r"(operand_2), [y] "r"(operand_1) 
-    	);
-	accumulator += tmp;
+	accumulator += tmp1;
     }
-    
-    if (rem != 0) {
-    	operand_1 = mac_pack32 ((void*)inputs, rem);
-    	operand_2 = mac_pack32((void*)weights, rem);
-	int tmp = 0;
-    	asm volatile (
-    		"mac8 %[z], %[x], %[y]\n\t"
-    		: [z] "=r"(tmp)
-    		: [x] "r"(operand_2), [y] "r"(operand_1) 
-    	);
-    	inputs  += rem;
-    	weights += rem;
-	accumulator += tmp;
+    nb_iterations = rem4;
+
+    /* REMAINING : 3, 2, 1 */
+    if (rem4 != 0) {
+	int tmp1;
+    	operand_1 = mac_pack32 ((void*)inputs, rem4);
+    	operand_2 = mac_pack32((void*)weights, rem4);
+	
+	MAC8(tmp1, operand_1, operand_2);
+
+	accumulator += tmp1;
     }
 
     *weightedSum += accumulator; // Add the accumulator value to *weightedSum
@@ -730,5 +700,3 @@ float Network::backpropagate(const DATA_T* input, const std::int32_t* labels){
 int Network::gradientCheck(){
    return(0);
 }*/
-
-
