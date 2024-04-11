@@ -112,6 +112,7 @@ RUN export RISCV=riscv_toolchain && \
     cd gcc-toolchain-builder && \
     ls -al && \
     bash ./get-toolchain.sh && \
+    bash ./add-custom-instructions-support.sh && \
     bash ./build-toolchain.sh $RISCV
 
 
