@@ -37,7 +37,7 @@ ariane:
     src/mmu_sv39/mmu.sv,
     src/mmu_sv32/cva6_mmu_sv32.sv,
     src/mult.sv,
-    src/dummy_FU,
+    src/dummy_FU/dummy_FU.sv,
     src/nbdcache.sv,
     src/vdregs.sv,
     src/std_cache_subsystem.sv,

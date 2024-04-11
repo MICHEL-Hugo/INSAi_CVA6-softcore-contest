@@ -36,7 +36,7 @@ filesets:
       - src/mmu_sv39/mmu.sv
       - src/mmu_sv32/cva6_mmu_sv32.sv
       - src/mult.sv
-      - src/dummy_FU.sv
+      - src/dummy_FU/src/dummy_FU.sv
       - src/nbdcache.sv
       - src/pcgen_stage.sv
       - src/perf_counters.sv
