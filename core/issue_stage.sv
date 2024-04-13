@@ -56,10 +56,11 @@ module issue_stage
     output logic       fpu_valid_o,
     output logic [1:0] fpu_fmt_o,    // FP fmt field from instr.
     output logic [2:0] fpu_rm_o,     // FP rm field from instr.
-    
+      `ifdef ENABLE_insAI_EXTENSION
     // Dummy_FU (Fix lantency unit, maybe i need a ready signal)
     input  logic       dummy_FU_ready_i,
     output logic       dummy_FU_valid_o, 
+    `endif // ENABLE_insAI_EXTENSION
     
     output logic csr_valid_o,
 

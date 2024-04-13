@@ -15,3 +15,4 @@
 
 // to use BRAM in FPGA fabric  
 `define BRAM
+`define ENABLE_insAI_EXTENSION

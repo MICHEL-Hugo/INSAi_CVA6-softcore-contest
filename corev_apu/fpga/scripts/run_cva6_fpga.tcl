@@ -85,9 +85,17 @@ add_files -fileset constrs_1 -norecurse constraints/$project.xdc
 
 # synth_design -verilog_define PS7_DDR=$::env(PS7_DDR) -verilog_define BRAM=$::env(BRAM) -rtl -name rtl_1
 if { $::env(PS7_DDR) == 1 } {
-   synth_design -verilog_define PS7_DDR=PS7_DDR -rtl -name rtl_1
+   if {$::env(ENABLE_insAI_EXTENSION) == 1} {
+   	synth_design -verilog_define PS7_DDR=PS7_DDR -verilog_define ENABLE_insAI_EXTENSION=ENABLE_insAI_EXTENSION -rtl -name rtl_1
+   } else {
+	synth_design -verilog_define PS7_DDR=PS7_DDR -rtl -name rtl_1
+   }
 } elseif {$::env(BRAM) == 1} {
-   synth_design -verilog_define BRAM=BRAM -rtl -name rtl_1
+   if { $::env(ENABLE_insAI_EXTENSION) == 1} { 
+   	synth_design -verilog_define BRAM=BRAM -verilog_define ENABLE_insAI_EXTENSION=ENABLE_insAI_EXTENSION -rtl -name rtl_1
+   } else { 
+	synth_design -verilog_define BRAM=BRAM -rtl -name rtl_1
+   }
 } else {
    puts "None of the values is matching"
 }

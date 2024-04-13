@@ -159,7 +159,12 @@ module cva6
   localparam bit XF8Vec     = CVA6Cfg.XF8     & CVA6Cfg.XFVec & FLen>8;  // FP8 vectors available if vectors and larger fmt enabled
 
   localparam bit EnableAccelerator = CVA6Cfg.RVV;  // Currently only used by V extension (Ara)
-  localparam int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? (5+1) : (4+1);
+  
+  `ifdef ENABLE_insAI_EXTENSION
+    localparam int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? (6) : (5); //dummy_FU
+  `else 
+    localparam int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? (5) : (4); //dummy_FU
+  `endif // ENABLE_insAI_EXTENSION
 
   localparam NrRgprPorts = 2;
 
@@ -287,6 +292,8 @@ module cva6
   exception_t store_exception_ex_id;
   // MULT
   logic mult_valid_id_ex;
+
+`ifdef ENABLE_insAI_EXTENSION
   //Dummy_FU
   logic dummy_FU_ready_ex_id;
   logic dummy_FU_valid_id_ex;
@@ -294,6 +301,7 @@ module cva6
   riscv::xlen_t dummy_FU_result_ex_id;
   logic dummy_FU_valid_ex_id;
   exception_t dummy_FU_exception_ex_id;
+`endif // ENABLE_insAI_EXTENSION
 
   // FPU
   logic fpu_ready_ex_id;
@@ -523,22 +531,32 @@ module cva6
       flu_trans_id_ex_id,
       load_trans_id_ex_id,
       store_trans_id_ex_id,
-      fpu_trans_id_ex_id,
-      dummy_FU_trans_id_ex_id
+      fpu_trans_id_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        ,dummy_FU_trans_id_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
     assign wbdata_ex_id = {
-      x_result_ex_id, flu_result_ex_id, load_result_ex_id, store_result_ex_id, fpu_result_ex_id, dummy_FU_result_ex_id
+      x_result_ex_id, flu_result_ex_id, load_result_ex_id, store_result_ex_id, fpu_result_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        , dummy_FU_result_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
     assign ex_ex_ex_id = {
       x_exception_ex_id,
       flu_exception_ex_id,
       load_exception_ex_id,
       store_exception_ex_id,
-      fpu_exception_ex_id,
-      dummy_FU_exception_ex_id
+      fpu_exception_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        ,dummy_FU_exception_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
     assign wt_valid_ex_id = {
-      x_valid_ex_id, flu_valid_ex_id, load_valid_ex_id, store_valid_ex_id, fpu_valid_ex_id, dummy_FU_valid_ex_id
+      x_valid_ex_id, flu_valid_ex_id, load_valid_ex_id, store_valid_ex_id, fpu_valid_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        , dummy_FU_valid_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
   end else if (CVA6ExtendCfg.EnableAccelerator) begin
     assign trans_id_ex_id = {
@@ -546,34 +564,57 @@ module cva6
       load_trans_id_ex_id,
       store_trans_id_ex_id,
       fpu_trans_id_ex_id,
-      acc_trans_id_ex_id,
-      dummy_FU_trans_id_ex_id
+      acc_trans_id_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        ,dummy_FU_trans_id_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
     assign wbdata_ex_id = {
-      flu_result_ex_id, load_result_ex_id, store_result_ex_id, fpu_result_ex_id, acc_result_ex_id, dummy_FU_result_ex_id
+      flu_result_ex_id, load_result_ex_id, store_result_ex_id, fpu_result_ex_id, acc_result_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        , dummy_FU_result_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
     assign ex_ex_ex_id = {
       flu_exception_ex_id,
       load_exception_ex_id,
       store_exception_ex_id,
       fpu_exception_ex_id,
-      acc_exception_ex_id,
-      dummy_FU_exception_ex_id
+      acc_exception_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        ,dummy_FU_exception_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
     assign wt_valid_ex_id = {
-      flu_valid_ex_id, load_valid_ex_id, store_valid_ex_id, fpu_valid_ex_id, acc_valid_ex_id, dummy_FU_valid_ex_id
+      flu_valid_ex_id, load_valid_ex_id, store_valid_ex_id, fpu_valid_ex_id, acc_valid_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        , dummy_FU_valid_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
   end else begin
     assign trans_id_ex_id = {
-      flu_trans_id_ex_id, load_trans_id_ex_id, store_trans_id_ex_id, fpu_trans_id_ex_id, dummy_FU_trans_id_ex_id
+      flu_trans_id_ex_id, load_trans_id_ex_id, store_trans_id_ex_id, fpu_trans_id_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        , dummy_FU_trans_id_ex_id
+      `endif //ENABLE_insAI_EXTENSION
     };
     assign wbdata_ex_id = {
-      flu_result_ex_id, load_result_ex_id, store_result_ex_id, fpu_result_ex_id, dummy_FU_result_ex_id
+      flu_result_ex_id, load_result_ex_id, store_result_ex_id, fpu_result_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+        , dummy_FU_result_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
     assign ex_ex_ex_id = {
-      flu_exception_ex_id, load_exception_ex_id, store_exception_ex_id, fpu_exception_ex_id, dummy_FU_exception_ex_id
+      flu_exception_ex_id, load_exception_ex_id, store_exception_ex_id, fpu_exception_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+      , dummy_FU_exception_ex_id
+      `endif // ENABLE_insAI_EXTENSION
     };
-    assign wt_valid_ex_id = {flu_valid_ex_id, load_valid_ex_id, store_valid_ex_id, fpu_valid_ex_id, dummy_FU_valid_ex_id};
+    assign wt_valid_ex_id = {flu_valid_ex_id, load_valid_ex_id, store_valid_ex_id, fpu_valid_ex_id
+      `ifdef ENABLE_insAI_EXTENSION
+      , dummy_FU_valid_ex_id
+      `endif // ENABLE_insAI_EXTENSION
+    };
   end
 
   if (CVA6ExtendCfg.CvxifEn && CVA6ExtendCfg.EnableAccelerator) begin : gen_err_xif_and_acc
@@ -623,9 +664,11 @@ module cva6
       .fpu_valid_o           (fpu_valid_id_ex),
       .fpu_fmt_o             (fpu_fmt_id_ex),
       .fpu_rm_o              (fpu_rm_id_ex),
+      `ifdef ENABLE_insAI_EXTENSION
       // Dummy_FU
       .dummy_FU_ready_i     (dummy_FU_ready_ex_id),
       .dummy_FU_valid_o     (dummy_FU_valid_id_ex),
+      `endif// ENABLE_insAI_EXTENSION
       // CSR
       .csr_valid_o           (csr_valid_id_ex),
       // CVXIF
@@ -713,6 +756,7 @@ module cva6
       .commit_tran_id_i       (lsu_commit_trans_id),           // from commit
       .stall_st_pending_i     (stall_st_pending_ex),
       .no_st_pending_o        (no_st_pending_ex),
+      `ifdef ENABLE_insAI_EXTENSION
       // Dummy_FU
       .dummy_FU_ready_o       (dummy_FU_ready_ex_id),
       .dummy_FU_valid_i       (dummy_FU_valid_id_ex),
@@ -720,6 +764,7 @@ module cva6
       .dummy_FU_result_o      (dummy_FU_result_ex_id),
       .dummy_FU_trans_id_o    (dummy_FU_trans_id_ex_id),
       .dummy_FU_exception_o   (dummy_FU_exception_ex_id),
+      `endif // ENABLE_insAI_EXTENSION
       // FPU
       .fpu_ready_o            (fpu_ready_ex_id),
       .fpu_valid_i            (fpu_valid_id_ex),

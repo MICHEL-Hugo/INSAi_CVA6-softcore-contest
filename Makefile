@@ -663,13 +663,17 @@ cva6_ooc: $(ariane_pkg) $(util) $(src) $(fpga_src) $(src_flist) corev_apu/fpga/s
 .PHONY:  cva6_ooc cva6_fpga program_cva6_fpga
 
 
+cva6_fpga_insAI: $(ariane_pkg) $(util) $(src) $(fpga_src) $(uart_src) $(src_flist) corev_apu/fpga/scripts/add_sources.tcl
+
+	cd corev_apu/fpga && make cva6_fpga BRAM=1 PS7_DDR=0 ENABLE_insAI_EXTENSION=1 XILINX_PART=$(XILINX_PART) XILINX_BOARD=$(XILINX_BOARD) CLK_PERIOD_NS=$(CLK_PERIOD_NS) BATCH_MODE=$(BATCH_MODE) FPGA=1
+
 cva6_fpga: $(ariane_pkg) $(util) $(src) $(fpga_src) $(uart_src) $(src_flist) corev_apu/fpga/scripts/add_sources.tcl
 
-	cd corev_apu/fpga && make cva6_fpga BRAM=1 PS7_DDR=0 XILINX_PART=$(XILINX_PART) XILINX_BOARD=$(XILINX_BOARD) CLK_PERIOD_NS=$(CLK_PERIOD_NS) BATCH_MODE=$(BATCH_MODE) FPGA=1
+	cd corev_apu/fpga && make cva6_fpga BRAM=1 PS7_DDR=0 ENABLE_insAI_EXTENSION=0 XILINX_PART=$(XILINX_PART) XILINX_BOARD=$(XILINX_BOARD) CLK_PERIOD_NS=$(CLK_PERIOD_NS) BATCH_MODE=$(BATCH_MODE) FPGA=1
 
 cva6_fpga_ddr: $(ariane_pkg) $(util) $(src) $(fpga_src) $(uart_src) $(src_flist) corev_apu/fpga/scripts/add_sources.tcl
 
-	cd corev_apu/fpga && make cva6_fpga PS7_DDR=1 BRAM=0 XILINX_PART=$(XILINX_PART) XILINX_BOARD=$(XILINX_BOARD) CLK_PERIOD_NS=$(CLK_PERIOD_NS) BATCH_MODE=$(BATCH_MODE) FPGA=1
+	cd corev_apu/fpga && make cva6_fpga PS7_DDR=1 BRAM=0 ENABLE_insAI_EXTENSION=0 XILINX_PART=$(XILINX_PART) XILINX_BOARD=$(XILINX_BOARD) CLK_PERIOD_NS=$(CLK_PERIOD_NS) BATCH_MODE=$(BATCH_MODE) FPGA=1
 
 
 program_cva6_fpga: 

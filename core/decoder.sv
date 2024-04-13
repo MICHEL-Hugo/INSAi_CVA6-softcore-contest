@@ -265,11 +265,11 @@ module decoder
           endcase
         end
 
+        `ifdef ENABLE_insAI_EXTENSION
         // insAI Extension : Dummy_FU
         // Mac8 
         // Choose instructions format for MAC8
-        // should we use Accelerator ?? 
-
+        // should we use Accelerator ??
         riscv::OpcodeCustom0: begin
           // select the functionnal unit
           instruction_o.fu = Dummy_FU;
@@ -289,7 +289,7 @@ module decoder
           endcase
           */
         end
-
+        `endif // ENABLE_insAI_EXTENSION
         // --------------------------
         // Reg-Reg Operations
         // --------------------------

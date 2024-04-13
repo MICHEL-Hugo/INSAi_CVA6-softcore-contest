@@ -52,6 +52,7 @@ module ex_stage
     // MULT
     input logic mult_valid_i,  // Output is valid
 
+`ifdef ENABLE_insAI_EXTENSION
     // Dummy_FU
     input  logic                        dummy_FU_valid_i,
     output logic                        dummy_FU_ready_o,
@@ -59,6 +60,7 @@ module ex_stage
     output riscv::xlen_t                dummy_FU_result_o,
     output logic   [TRANS_ID_BITS-1:0]  dummy_FU_trans_id_o,
     output exception_t                  dummy_FU_exception_o,
+`endif //ENABLE_insAI_EXTENSION
 
     // LSU
     output logic lsu_ready_o,  // FU is ready
@@ -202,7 +204,12 @@ module ex_stage
       .pc_i,
       .is_compressed_instr_i,
       // any functional unit is valid, check that there is no accidental mis-predict
-      .fu_valid_i ( alu_valid_i || lsu_valid_i || csr_valid_i || mult_valid_i || fpu_valid_i || acc_valid_i || dummy_FU_valid_i) ,
+      .fu_valid_i ( alu_valid_i || lsu_valid_i || csr_valid_i || mult_valid_i || fpu_valid_i || acc_valid_i 
+      `ifdef ENABLE_insAI_EXTENSION
+        || dummy_FU_valid_i) ,
+      `else 
+        ),
+      `endif // ENABLE_insAI_EXTENSION
       .branch_valid_i,
       .branch_comp_res_i(alu_branch_res),
       .branch_result_o(branch_result),
@@ -270,6 +277,7 @@ module ex_stage
       .mult_trans_id_o(mult_trans_id)
   );
 
+`ifdef ENABLE_insAI_EXTENSION
   // --------------------------
   //   Dummy_FU
   // --------------------------
@@ -292,7 +300,7 @@ module ex_stage
     .dummy_FU_trans_id_o,
     .dummy_FU_exception_o
   );
-
+`endif // ENABLE_insAI_EXTENSION
   // ----------------
   // FPU
   // ----------------
