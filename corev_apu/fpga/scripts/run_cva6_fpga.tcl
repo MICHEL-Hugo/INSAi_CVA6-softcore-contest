@@ -84,21 +84,20 @@ update_compile_order -fileset sources_1
 add_files -fileset constrs_1 -norecurse constraints/$project.xdc
 
 # synth_design -verilog_define PS7_DDR=$::env(PS7_DDR) -verilog_define BRAM=$::env(BRAM) -rtl -name rtl_1
+set synth_args ""
 if { $::env(PS7_DDR) == 1 } {
-   if {$::env(ENABLE_insAI_EXTENSION) == 1} {
-   	synth_design -verilog_define PS7_DDR=PS7_DDR -verilog_define ENABLE_insAI_EXTENSION=ENABLE_insAI_EXTENSION -rtl -name rtl_1
-   } else {
-	synth_design -verilog_define PS7_DDR=PS7_DDR -rtl -name rtl_1
-   }
+	append synth_args "-verilog_define PS7_DDR=PS7_DDR -rtl -name rtl_1"
 } elseif {$::env(BRAM) == 1} {
-   if { $::env(ENABLE_insAI_EXTENSION) == 1} { 
-   	synth_design -verilog_define BRAM=BRAM -verilog_define ENABLE_insAI_EXTENSION=ENABLE_insAI_EXTENSION -rtl -name rtl_1
-   } else { 
-	synth_design -verilog_define BRAM=BRAM -rtl -name rtl_1
-   }
+	append synth_args "-verilog_define BRAM=BRAM -rtl -name rtl_1"
 } else {
    puts "None of the values is matching"
 }
+
+if {$::env(ENABLE_insAI_EXTENSION) == 1} {
+	append synth_args "-verilog ENABLE_insAI_EXTENSION=ENABLE_insAI_EXTENSION"
+}
+
+eval synth_design $synth_args
 
 set_property STEPS.SYNTH_DESIGN.ARGS.RETIMING true [get_runs synth_1]
 
