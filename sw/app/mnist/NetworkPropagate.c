@@ -58,7 +58,7 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
 	do { \
     	asm volatile ( \
     		"mac8 %[z], %[x], %[y]\n\t" \
-    		: [z] "=r"(a) \
+    		: [z] "=&r"(a) \
     		: [x] "r"(c), [y] "r"(b)  \
     	); \
 	} while (0)
