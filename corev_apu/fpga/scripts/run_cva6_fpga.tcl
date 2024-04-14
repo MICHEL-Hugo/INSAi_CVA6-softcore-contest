@@ -64,7 +64,7 @@ source scripts/add_sources.tcl
 
 set_property top cva6_zybo_z7_20 [current_fileset]
 
-read_verilog -sv {src/zybo-z7-20.svh src/zybo-z7-20-ddr.svh ../../vendor/pulp-platform/common_cells/include/common_cells/registers.svh}
+read_verilog -sv {src/zybo-z7-20.svh src/zybo-z7-20-ddr.svh src/zybo-z7-20-insAI.svh ../../vendor/pulp-platform/common_cells/include/common_cells/registers.svh}
 #set file "src/zybo-z7-20.svh"
 if { $::env(PS7_DDR) == 1 } {
    set file "src/zybo-z7-20-ddr.svh"
@@ -76,7 +76,12 @@ if { $::env(PS7_DDR) == 1 } {
 
 set registers "../../vendor/pulp-platform/common_cells/include/common_cells/registers.svh"
 
-set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file" "$registers"]]
+if {$::env(ENABLE_insAI_EXTENSION) == 1} {
+	set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file" "$registers" "src/zybo-z7-20-insAI.svh"]]
+} else {
+	set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file" "$registers"]]
+}
+
 set_property -dict { file_type {Verilog Header} is_global_include 1} -objects $file_obj
 
 update_compile_order -fileset sources_1
@@ -86,16 +91,18 @@ add_files -fileset constrs_1 -norecurse constraints/$project.xdc
 # synth_design -verilog_define PS7_DDR=$::env(PS7_DDR) -verilog_define BRAM=$::env(BRAM) -rtl -name rtl_1
 set synth_args ""
 if { $::env(PS7_DDR) == 1 } {
-	append synth_args "-verilog_define PS7_DDR=PS7_DDR -rtl -name rtl_1"
+	append synth_args " -verilog_define PS7_DDR=PS7_DDR"
 } elseif {$::env(BRAM) == 1} {
-	append synth_args "-verilog_define BRAM=BRAM -rtl -name rtl_1"
+	append synth_args " -verilog_define BRAM=BRAM"
 } else {
    puts "None of the values is matching"
 }
 
 if {$::env(ENABLE_insAI_EXTENSION) == 1} {
-	append synth_args "-verilog ENABLE_insAI_EXTENSION=ENABLE_insAI_EXTENSION"
+	append synth_args " -verilog_define ENABLE_insAI_EXTENSION=ENABLE_insAI_EXTENSION"
 }
+
+append synth_args " -rtl -name rtl_1" 
 
 eval synth_design $synth_args
 
