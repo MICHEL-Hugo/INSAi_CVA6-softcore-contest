@@ -77,7 +77,7 @@ if { $::env(PS7_DDR) == 1 } {
 set registers "../../vendor/pulp-platform/common_cells/include/common_cells/registers.svh"
 
 if {$::env(ENABLE_insAI_EXTENSION) == 1} {
-	set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file" "$registers" "src/zybo-z7-20-insAI.svh"]]
+	set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file" "$registers" "*src/zybo-z7-20-insAI.svh"]]
 } else {
 	set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file" "$registers"]]
 }
