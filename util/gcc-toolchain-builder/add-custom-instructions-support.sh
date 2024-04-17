@@ -23,7 +23,7 @@ MAC8_OPCODE="{\"mac8\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MAC8, MASK
 
 echo "[insAI] adding mac8 instruction support...";
 
-grep  -i mac8  $riscv_opc_h 1>/dev/null 2>&1;
+grep  -w mac8  $riscv_opc_h 1>/dev/null 2>&1;
 if [ $? -eq 1 ]; then
 	sed -i '/#define RISCV_ENCODING_H/,/#endif \/\* RISCV_ENCODING_H/  s/^\/\* Instruction.*$/&\n\n'"$HEADER\n$MATCH_MAC8\n$MASK_MAC8\n"'\n/i' $riscv_opc_h 
 	sed -i '/#ifdef DECLARE_INSN/, /#endif \/\* DECLARE_INSN \*\// s/#endif \/\* DECLARE_INSN \*\//'"$HEADER\n$DECLARE_INSN\n\n"'&/i' $riscv_opc_h 
