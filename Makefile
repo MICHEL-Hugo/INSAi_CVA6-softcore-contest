@@ -660,7 +660,7 @@ fpga: $(ariane_pkg) $(src) $(fpga_src) $(uart_src) $(src_flist)
 cva6_ooc: $(ariane_pkg) $(util) $(src) $(fpga_src) $(src_flist) corev_apu/fpga/scripts/add_sources.tcl
 	cd corev_apu/fpga && make cva6_ooc BOARD=$(BOARD) XILINX_PART=$(XILINX_PART) XILINX_BOARD=$(XILINX_BOARD) CLK_PERIOD_NS=$(CLK_PERIOD_NS) BATCH_MODE=$(BATCH_MODE)
 
-.PHONY:  cva6_ooc cva6_fpga program_cva6_fpga
+.PHONY:  cva6_ooc cva6_fpga cva6_fpga_insAI program_cva6_fpga
 
 
 cva6_fpga_insAI: $(ariane_pkg) $(util) $(src) $(fpga_src) $(uart_src) $(src_flist) corev_apu/fpga/scripts/add_sources.tcl
