@@ -266,30 +266,29 @@ module decoder
         end
 
         `ifdef ENABLE_insAI_EXTENSION
-        // insAI Extension : Dummy_FU
-        // Mac8 
-        // Choose instructions format for MAC8
-        // should we use Accelerator ??
+		// -------------------------- 
+        // MAC8_FU 
+		// --------------------------
         riscv::OpcodeCustom0: begin
           // select the functionnal unit
-          instruction_o.fu = Dummy_FU;
+          instruction_o.fu = MAC8_FU;
 
           //instructions operands
           instruction_o.rs1[4:0] = instr.rtype.rs1;
           instruction_o.rs2[4:0] = instr.rtype.rs2;
           instruction_o.rd[4:0]  = instr.rtype.rd;
-          /*
-          unique case ({
+          // only one operation is supported 
+		  unique case ({
               instr.rtype.funct7, instr.rtype.funct3
             })
-              {7'b000_0001, 3'b000} : instruction_o.op = ariane_pkg::DUMMY_OP;  // PlaceHolder
+              {7'b000_0001, 3'b000} : instruction_o.op = ariane_pkg::MAC8SU;  
               default: begin
                 illegal_instr = 1'b1;
               end
           endcase
-          */
         end
         `endif // ENABLE_insAI_EXTENSION
+
         // --------------------------
         // Reg-Reg Operations
         // --------------------------
