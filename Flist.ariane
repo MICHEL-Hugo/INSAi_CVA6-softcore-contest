@@ -86,7 +86,7 @@ core/mmu_sv39/mmu.sv
 core/mult.sv
 core/multiplier.sv
 core/serdiv.sv
-core/dummy_FU/src/dummy_FU.sv
+core/mac8_FU/src/mac8_FU.sv
 core/perf_counters.sv
 core/mmu_sv39/ptw.sv
 core/ariane_regfile_ff.sv

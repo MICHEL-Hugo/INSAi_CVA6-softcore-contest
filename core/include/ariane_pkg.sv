@@ -261,7 +261,7 @@ package ariane_pkg;
     FPU_VEC,    // 8
     CVXIF,      // 9
     ACCEL,      // 10
-    Dummy_FU    // 11
+    MAC8_FU     // 11
   } fu_t;
 
   localparam EXC_OFF_RST = 8'h80;
@@ -564,9 +564,11 @@ package ariane_pkg;
     ACCEL_OP_STORE,
     // Zicond instruction
     CZERO_EQZ,
-    CZERO_NEZ,
+    CZERO_NEZ
+`ifdef ENABLE_insAI_EXTENSION
     // insAI extension
-    DUMMY_OP  //PlaceHolder
+    , MAC8SU  
+`endif // ENABLE_insAI_EXTENSION
   } fu_op;
 
   typedef struct packed {

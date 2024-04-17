@@ -1,3 +1,4 @@
+
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -23,26 +24,26 @@
 localparam VALID = 1'b1;
 localparam READY = 1'b1;
 
-module dummy_FU
+module mac8_FU
     import ariane_pkg::*;
 #(
     parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty
 ) (
     input   logic                       clk_i,
     input   logic                       rst_ni,
-    input   logic                       dummy_FU_valid_i,
+    input   logic                      mac8_FU_valid_i,
     input   logic                       flush_i,
     input   ariane_pkg::fu_data_t       fu_data_i,
-    output  riscv::xlen_t               dummy_FU_result_o,
-    output  logic                       dummy_FU_valid_o,
-    output  logic                       dummy_FU_ready_o,
-    output  logic   [TRANS_ID_BITS-1:0] dummy_FU_trans_id_o,
-    output  exception_t                 dummy_FU_exception_o
+    output  riscv::xlen_t              mac8_FU_result_o,
+    output  logic                      mac8_FU_valid_o,
+    output  logic                      mac8_FU_ready_o,
+    output  logic   [TRANS_ID_BITS-1:0] mac8_FU_trans_id_o,
+    output  exception_t                mac8_FU_exception_o
     );
     
     //control signals
-    assign dummy_FU_ready_o = READY; //always ready because it is the same than a unit with a unit execution cycle
-    assign dummy_FU_exception_o = '0;
+    assign mac8_FU_ready_o = READY; //always ready because it is the same than a unit with a unit execution cycle
+    assign mac8_FU_exception_o = '0;
 
     //mulplication
     logic [15:0] mult_d_1, mult_d_2, mult_d_3, mult_d_4; //intermediate registers
@@ -63,7 +64,7 @@ module dummy_FU
     assign mult_d_4 = $signed({fu_data_i.operand_a[4*riscv::XLEN/4-1], fu_data_i.operand_a[4*riscv::XLEN/4-1:3*riscv::XLEN/4]}) 
                         * $signed({1'b0, fu_data_i.operand_b[4*riscv::XLEN/4-1:3*riscv::XLEN/4]});
     
-    assign mac_valid_1_d = ~flush_i & dummy_FU_valid_i; //result are valid if the unit has been choosen and if the pipeline is not flushed
+    assign mac_valid_1_d = ~flush_i & mac8_FU_valid_i; //result are valid if the unit has been choosen and if the pipeline is not flushed
     
 
     
@@ -78,8 +79,8 @@ module dummy_FU
     logic   [TRANS_ID_BITS-1:0] trans_id_2_q, trans_id_2_d;
     
     
-    assign add_d_1 = $signed({mult_q_1[15], mult_q_1}) + $signed({mult_q_2[15], mult_q_2});
-    assign add_d_2 = $signed({mult_q_3[15], mult_q_3}) + $signed({mult_q_4[15], mult_q_4});
+    assign add_d_1 = $signed({mult_q_1}) + $signed({mult_q_2});
+    assign add_d_2 = $signed({mult_q_3}) + $signed({mult_q_4});
     
     assign mac_valid_2_d = ~flush_i & mac_valid_1_q;
     
@@ -93,7 +94,7 @@ module dummy_FU
     logic   [TRANS_ID_BITS-1:0] trans_id_3_q, trans_id_3_d;
 
     
-    assign add_d_3 = $signed({add_q_1[16], add_q_1}) + $signed({add_q_2[16], add_q_2});
+    assign add_d_3 = $signed({add_q_1}) + $signed({add_q_2});
     
     assign mac_valid_3_d = ~flush_i & mac_valid_2_q;
     
@@ -102,9 +103,9 @@ module dummy_FU
     assign trans_id_2_d        = trans_id_1_q;
     assign trans_id_1_d        = fu_data_i.trans_id;
       
-    assign dummy_FU_result_o   = 32'(signed'(add_q_3));
-    assign dummy_FU_valid_o    = mac_valid_3_q;
-    assign dummy_FU_trans_id_o = trans_id_3_q;
+    assign mac8_FU_result_o   = 32'(signed'(add_q_3));
+    assign mac8_FU_valid_o    = mac_valid_3_q;
+    assign mac8_FU_trans_id_o = trans_id_3_q;
     
     always_ff @(posedge clk_i or negedge rst_ni) begin
       if (~rst_ni) begin

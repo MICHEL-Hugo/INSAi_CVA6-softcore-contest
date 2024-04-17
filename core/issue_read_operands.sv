@@ -61,9 +61,9 @@ module issue_read_operands
     // MULT
     output logic mult_valid_o,  // Output is valid
     `ifdef ENABLE_insAI_EXTENSION
-    // Dummy_FU
-    input  dummy_FU_ready_i,
-    output dummy_FU_valid_o, 
+    // MAC8_FU
+    input  mac8_FU_ready_i,
+    output mac8_FU_valid_o, 
     `endif // ENABLE_insAI_EXTENSION
     // FPU
     input logic fpu_ready_i,  // FU is ready
@@ -98,7 +98,7 @@ module issue_read_operands
   logic        alu_valid_q;
   logic        mult_valid_q;
   `ifdef ENABLE_insAI_EXTENSION
-  logic        dummy_FU_valid_q;
+  logic        mac8_FU_valid_q;
   `endif // ENABLE_insAI_EXTENSION
   logic        fpu_valid_q;
   logic [ 1:0] fpu_fmt_q;
@@ -137,7 +137,7 @@ module issue_read_operands
   assign csr_valid_o         = csr_valid_q;
   assign mult_valid_o        = mult_valid_q;
     `ifdef ENABLE_insAI_EXTENSION
-  assign dummy_FU_valid_o    = dummy_FU_valid_q;
+  assign mac8_FU_valid_o    = mac8_FU_valid_q;
     `endif // ENABLE_insAI_EXTENSION
   assign fpu_valid_o         = fpu_valid_q;
   assign fpu_fmt_o           = fpu_fmt_q;
@@ -162,7 +162,7 @@ module issue_read_operands
       LOAD, STORE: fu_busy = ~lsu_ready_i;
       CVXIF: fu_busy = ~cvxif_ready_i;
         `ifdef ENABLE_insAI_EXTENSION
-      Dummy_FU  : fu_busy = ~dummy_FU_ready_i;
+      MAC8_FU  : fu_busy = ~mac8_FU_ready_i;
         `endif // ENABLE_insAI_EXTENSION
       default: fu_busy = 1'b0;
     endcase
@@ -302,7 +302,7 @@ module issue_read_operands
       lsu_valid_q    <= 1'b0;
       mult_valid_q   <= 1'b0; 
         `ifdef ENABLE_insAI_EXTENSION
-      dummy_FU_valid_q <= 1'b0;
+      mac8_FU_valid_q <= 1'b0;
         `endif // ENABLE_insAI_EXTENSION
       fpu_valid_q    <= 1'b0;
       fpu_fmt_q      <= 2'b0;
@@ -314,7 +314,7 @@ module issue_read_operands
       lsu_valid_q    <= 1'b0;
       mult_valid_q   <= 1'b0;
         `ifdef ENABLE_insAI_EXTENSION
-      dummy_FU_valid_q <= 1'b0;  
+      mac8_FU_valid_q <= 1'b0;  
         `endif // ENABLE_insAI_EXTENSION 
       fpu_valid_q    <= 1'b0;
       fpu_fmt_q      <= 2'b0;
@@ -336,8 +336,8 @@ module issue_read_operands
             mult_valid_q <= 1'b1;
           end
             `ifdef ENABLE_insAI_EXTENSION
-          Dummy_FU : begin
-            dummy_FU_valid_q <= 1'b1;
+          MAC8_FU : begin
+            mac8_FU_valid_q <= 1'b1;
           end
             `endif // ENABLE_insAI_EXTENSION
           FPU: begin
@@ -370,7 +370,7 @@ module issue_read_operands
         lsu_valid_q    <= 1'b0;
         mult_valid_q   <= 1'b0;
           `ifdef ENABLE_insAI_EXTENSION
-        dummy_FU_valid_q <= 1'b0;
+        mac8_FU_valid_q <= 1'b0;
           `endif // ENABLE_insAI_EXTENSION
         fpu_valid_q    <= 1'b0;
         csr_valid_q    <= 1'b0;

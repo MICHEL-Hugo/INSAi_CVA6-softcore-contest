@@ -53,13 +53,13 @@ module ex_stage
     input logic mult_valid_i,  // Output is valid
 
 `ifdef ENABLE_insAI_EXTENSION
-    // Dummy_FU
-    input  logic                        dummy_FU_valid_i,
-    output logic                        dummy_FU_ready_o,
-    output logic                        dummy_FU_valid_o,
-    output riscv::xlen_t                dummy_FU_result_o,
-    output logic   [TRANS_ID_BITS-1:0]  dummy_FU_trans_id_o,
-    output exception_t                  dummy_FU_exception_o,
+    // MAC8_FU
+    input  logic                        mac8_FU_valid_i,
+    output logic                        mac8_FU_ready_o,
+    output logic                        mac8_FU_valid_o,
+    output riscv::xlen_t                mac8_FU_result_o,
+    output logic   [TRANS_ID_BITS-1:0]  mac8_FU_trans_id_o,
+    output exception_t                  mac8_FU_exception_o,
 `endif //ENABLE_insAI_EXTENSION
 
     // LSU
@@ -206,7 +206,7 @@ module ex_stage
       // any functional unit is valid, check that there is no accidental mis-predict
       .fu_valid_i ( alu_valid_i || lsu_valid_i || csr_valid_i || mult_valid_i || fpu_valid_i || acc_valid_i 
       `ifdef ENABLE_insAI_EXTENSION
-        || dummy_FU_valid_i) ,
+        || mac8_FU_valid_i) ,
       `else 
         ),
       `endif // ENABLE_insAI_EXTENSION
@@ -279,28 +279,29 @@ module ex_stage
 
 `ifdef ENABLE_insAI_EXTENSION
   // --------------------------
-  //   Dummy_FU
+  // MAC8_FU
   // --------------------------
   
-  fu_data_t dummy_FU_data;
+  fu_data_t mac8_FU_data;
 
-  assign dummy_FU_data = dummy_FU_valid_i ? fu_data_i : '0;
+  assign mac8_FU_data = mac8_FU_valid_i ? fu_data_i : '0;
 
-  dummy_FU #(
+  mac8_FU #(
     .CVA6Cfg(CVA6Cfg)
-  ) i_dummy_FU (
+  ) i_mac8_FU (
     .clk_i,
     .rst_ni,
     .flush_i,
-    .dummy_FU_valid_i,
-    .fu_data_i(dummy_FU_data),
-    .dummy_FU_result_o,
-    .dummy_FU_valid_o,
-    .dummy_FU_ready_o,
-    .dummy_FU_trans_id_o,
-    .dummy_FU_exception_o
+    .mac8_FU_valid_i,
+    .fu_data_i(mac8_FU_data),
+    .mac8_FU_result_o,
+    .mac8_FU_valid_o,
+    .mac8_FU_ready_o,
+    .mac8_FU_trans_id_o,
+    .mac8_FU_exception_o
   );
 `endif // ENABLE_insAI_EXTENSION
+
   // ----------------
   // FPU
   // ----------------
