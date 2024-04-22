@@ -28,22 +28,22 @@ static int clamp(int v, int lo, int hi) {
     }
 }
 
- static inline uint32_t mac_pack32(void*  src, size_t bytes_count)
+ static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_count)
 {
-    const union {uint32_t  w;
-	         uint16_t hw;
-		 uint8_t   b; } __attribute__((packed)) *ptr = src;
+    const unsigned char* array = (const unsigned char*)src;
+	
     switch(bytes_count) {
-    	case 4 : 
-		return (ptr->w);
-	case 3 :
-		return ((ptr->hw) | (*((char*)src + 2) << (8 * 2))); //little endianness assumed
-	case 2 : 
-		return (ptr->hw);
-	case 1 : 
-		return (ptr->b);
-	default:
-		return 0;
+		case 4 :
+			return (array[0] << (8 * 0)) | (array[1] << (8 * 1)) |    \  
+				   (array[2] << (8 * 2)) | (array[3] << (8 * 3)) ;  
+		case 2 : 
+			return (array[0] << (8 * 0)) | (array[1] << (8 * 1)); 
+		case 1 : 
+			return (array[0] << (8 * 0));
+		case 3 :
+			return (array[0] << (8 * 0)) | (array[1] << (8 * 1)) | (array[2] << (8 * 2)); 
+		default:
+			return 0;
     }	
 }
 
