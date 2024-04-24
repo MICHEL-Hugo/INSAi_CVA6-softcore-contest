@@ -31,19 +31,38 @@ static int clamp(int v, int lo, int hi) {
  static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_count)
 {
     const unsigned char* array = (const unsigned char*)src;
-	
+    
     switch(bytes_count) {
-		case 4 :
-			return (array[0] << (8 * 0)) | (array[1] << (8 * 1)) |    \  
-				   (array[2] << (8 * 2)) | (array[3] << (8 * 3)) ;  
+		case 4 : {
+			int count  = (int)((uintptr_t)src & 0x3); 
+
+			if (count == 0) {  /* The word is 4Bytes aligned */
+				return *(uint32_t*)src;
+			}
+
+			uintptr_t c_word_addr = (uintptr_t)src & ~0x3;
+			uintptr_t n_word_addr = c_word_addr +  4;
+			
+			uint32_t c_word = *((uint32_t*)c_word_addr);
+			uint32_t n_word = *((uint32_t*)n_word_addr);
+
+			count *= 8; //0, 8, 16, 24
+			
+			c_word >>= count; // logical right shift
+			n_word <<= count; // logical left  shift
+			
+			return (c_word | n_word);
+		}
 		case 2 : 
 			return (array[0] << (8 * 0)) | (array[1] << (8 * 1)); 
-		case 1 : 
-			return (array[0] << (8 * 0));
 		case 3 :
 			return (array[0] << (8 * 0)) | (array[1] << (8 * 1)) | (array[2] << (8 * 2)); 
+		
+		case 1 : {
+		   	__attribute__((fallthrough)); 
+		}
 		default:
-			return 0;
+			return (array[0] << (8 * 0));
     }	
 }
 
