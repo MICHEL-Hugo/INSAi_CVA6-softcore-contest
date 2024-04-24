@@ -28,41 +28,60 @@ static int clamp(int v, int lo, int hi) {
     }
 }
 
- static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_count)
+static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_count)
 {
-    const unsigned char* array = (const unsigned char*)src;
     
     switch(bytes_count) {
-		case 4 : {
+		case 4 : { 
 			int count  = (int)((uintptr_t)src & 0x3); 
 
 			if (count == 0) {  /* The word is 4Bytes aligned */
 				return *(uint32_t*)src;
 			}
-
+			/* Handle unaligned word */
 			uintptr_t c_word_addr = (uintptr_t)src & ~0x3;
 			uintptr_t n_word_addr = c_word_addr +  4;
 			
-			uint32_t c_word = *((uint32_t*)c_word_addr);
-			uint32_t n_word = *((uint32_t*)n_word_addr);
+			uint32_t c_word = *((uint32_t*)c_word_addr); //load current word
+			uint32_t n_word = *((uint32_t*)n_word_addr); //load next    word, BOF!!?
 
-			count *= 8; //0, 8, 16, 24
+			count *= 8; // part of word in the next word 
+						// [8, 16, 24] bits
 			
 			c_word >>= count; // logical right shift
 			n_word <<= count; // logical left  shift
 			
 			return (c_word | n_word);
 		}
-		case 2 : 
-			return (array[0] << (8 * 0)) | (array[1] << (8 * 1)); 
-		case 3 :
+		case 2 : {
+		   int count  = (int)((uintptr_t)src & 0x1); 
+
+		   if (count == 0) {  /* The half-word is 2Bytes aligned */
+				return *(uint16_t*)src;
+			}
+			/* Handle unaligned half-word */
+			uintptr_t c_half_word_addr = (uintptr_t)src & ~0x1;
+			uintptr_t n_half_word_addr = c_half_word_addr +  2;
+			
+			uint16_t c_half_word = *((uint16_t*)c_half_word_addr);
+			uint16_t n_half_word = *((uint16_t*)n_half_word_addr); // BOF !!?
+
+			// count *= 8; // 8 bits
+			
+			c_half_word >>= 8; // logical right shift
+			n_half_word <<= 8; // logical left  shift
+			
+			return (c_half_word | n_half_word);
+		}
+		case 3 : {
+    		const uint8_t* array = (const uint8_t*)src;
 			return (array[0] << (8 * 0)) | (array[1] << (8 * 1)) | (array[2] << (8 * 2)); 
-		
+		}
 		case 1 : {
 		   	__attribute__((fallthrough)); 
 		}
 		default:
-			return (array[0] << (8 * 0));
+			return *(uint8_t*)src;
     }	
 }
 
