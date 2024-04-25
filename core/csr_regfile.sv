@@ -87,6 +87,7 @@ module csr_regfile
     output logic dcache_en_o,  // L1 DCache Enable
     // Accelerator
     output logic acc_cons_en_o,  // Accelerator memory consistent mode
+    output logic pat_fecth_unit_en_o, //pattern feching unit enable
     // Performance Counter
     output logic [11:0] perf_addr_o,  // read/write address to performance counter module
     output logic [riscv::XLEN-1:0] perf_data_o,  // write data to performance counter module
@@ -498,6 +499,9 @@ module csr_regfile
           if (pmpcfg_q[index].addr_mode[1] == 1'b1) csr_rdata = pmpaddr_q[index][riscv::PLEN-3:0];
           else csr_rdata = {pmpaddr_q[index][riscv::PLEN-3:1], 1'b0};
         end
+
+        riscv::CSR_PAT_FETCH_UNIT : csr_rdata = 
+
         default: read_access_exception = 1'b1;
       endcase
     end

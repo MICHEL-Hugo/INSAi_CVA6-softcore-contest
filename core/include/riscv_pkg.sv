@@ -603,6 +603,7 @@ package riscv;
     CSR_HPM_COUNTER_29H  = 12'hC9D,  // reserved
     CSR_HPM_COUNTER_30H  = 12'hC9E,  // reserved
     CSR_HPM_COUNTER_31H  = 12'hC9F   // reserved
+    CSR_PAT_FETCH_UNIT = 12'h823     // custom CSR instruction for the partern fetching unit
   } csr_reg_t;
 
   localparam logic [63:0] SSTATUS_UIE = 'h00000001;

@@ -187,6 +187,8 @@ class instr_trace_item;
             riscv::CSR_TIME:       return "time";
             riscv::CSR_INSTRET:    return "instret";
 
+            riscv::CSR_PAT_FETCH_UNIT: return "enpatfecth";
+
             default:        return $sformatf("%0h", addr);
         endcase
     endfunction
