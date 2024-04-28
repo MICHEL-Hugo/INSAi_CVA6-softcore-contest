@@ -287,6 +287,28 @@ module decoder
               end
           endcase
         end
+
+    // mix_unit
+
+        riscv::OpcodeCustom0: begin
+          // select the functionnal unit
+          instruction_o.fu = MIX_UNIT;
+
+          //instructions operands
+          instruction_o.rs1[4:0] = instr.stype.rs1;
+          instruction_o.rs2[4:0] = instr.stype.rs2;
+          instruction_o.rd[4:0]  = instr.stype.rs1;
+          instruction_o.imm[1:0] = instr.stype.imm;
+          // only one operation is supported 
+		  unique case (
+              instr.stype.funct3
+            )
+              3'b001 : instruction_o.op = ariane_pkg::MIX;  
+              default: begin
+                illegal_instr = 1'b1;
+              end
+          endcase
+        end
         `endif // ENABLE_insAI_EXTENSION
 
         // --------------------------

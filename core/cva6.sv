@@ -301,6 +301,14 @@ module cva6
   riscv::xlen_t mac8_FU_result_ex_id;
   logic mac8_FU_valid_ex_id;
   exception_t mac8_FU_exception_ex_id;
+
+  //mix_unit
+  logic mix_unit_ready_ex_id;
+  logic mix_unit_valid_id_ex;
+  logic [TRANS_ID_BITS-1:0] mix_unit_trans_id_ex_id;
+  riscv::xlen_t mix_unit_result_ex_id;
+  logic mix_unit_valid_ex_id;
+  exception_t mix_unit_exception_ex_id;
 `endif // ENABLE_insAI_EXTENSION
 
   // FPU
@@ -668,6 +676,9 @@ module cva6
       // mac8_FU
       .mac8_FU_ready_i     (mac8_FU_ready_ex_id),
       .mac8_FU_valid_o     (mac8_FU_valid_id_ex),
+      // mix_unit
+       mix_unit_ready_i     (mix_unit_ready_ex_id),
+      .mix_unit_valid_o     (mix_unit_valid_id_ex),
       `endif// ENABLE_insAI_EXTENSION
       // CSR
       .csr_valid_o           (csr_valid_id_ex),
@@ -764,6 +775,14 @@ module cva6
       .mac8_FU_result_o      (mac8_FU_result_ex_id),
       .mac8_FU_trans_id_o    (mac8_FU_trans_id_ex_id),
       .mac8_FU_exception_o   (mac8_FU_exception_ex_id),
+
+      // mix_unit
+      .mix_unit_ready_o       (mix_unit_ready_ex_id),
+      .mix_unit_valid_i       (mix_unit_valid_id_ex),
+      .mix_unit_valid_o       (mix_unit_valid_ex_id),
+      .mix_unit_result_o      (mix_unit_result_ex_id),
+      .mix_unit_trans_id_o    (mix_unit_trans_id_ex_id),
+      .mix_unit_exception_o   (mix_unit_exception_ex_id),
       `endif // ENABLE_insAI_EXTENSION
       // FPU
       .fpu_ready_o            (fpu_ready_ex_id),

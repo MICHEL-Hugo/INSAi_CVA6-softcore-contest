@@ -411,7 +411,6 @@ module load_store_unit
           end
         end
         // word
-        //Modif_Here
         LW, LWU, SW, FLW, FSW,
                 AMO_LRW, AMO_SCW,
                 AMO_SWAPW, AMO_ADDW, AMO_ANDW, AMO_ORW,

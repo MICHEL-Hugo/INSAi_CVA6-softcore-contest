@@ -64,6 +64,10 @@ module issue_read_operands
     // MAC8_FU
     input  mac8_FU_ready_i,
     output mac8_FU_valid_o, 
+
+    // MIX_UNIT
+    input mix_unit_ready_i,
+    output mix_unit_valid_o,
     `endif // ENABLE_insAI_EXTENSION
     // FPU
     input logic fpu_ready_i,  // FU is ready
@@ -99,6 +103,7 @@ module issue_read_operands
   logic        mult_valid_q;
   `ifdef ENABLE_insAI_EXTENSION
   logic        mac8_FU_valid_q;
+  logic        mix_unit_valid_q;
   `endif // ENABLE_insAI_EXTENSION
   logic        fpu_valid_q;
   logic [ 1:0] fpu_fmt_q;
@@ -138,6 +143,7 @@ module issue_read_operands
   assign mult_valid_o        = mult_valid_q;
     `ifdef ENABLE_insAI_EXTENSION
   assign mac8_FU_valid_o    = mac8_FU_valid_q;
+  assign mix_unit_valid_o    = mix_unit_valid_q;
     `endif // ENABLE_insAI_EXTENSION
   assign fpu_valid_o         = fpu_valid_q;
   assign fpu_fmt_o           = fpu_fmt_q;
@@ -163,6 +169,7 @@ module issue_read_operands
       CVXIF: fu_busy = ~cvxif_ready_i;
         `ifdef ENABLE_insAI_EXTENSION
       MAC8_FU  : fu_busy = ~mac8_FU_ready_i;
+      MIX_UNIT  : fu_busy = ~mix_unit_ready_i;
         `endif // ENABLE_insAI_EXTENSION
       default: fu_busy = 1'b0;
     endcase
@@ -303,6 +310,7 @@ module issue_read_operands
       mult_valid_q   <= 1'b0; 
         `ifdef ENABLE_insAI_EXTENSION
       mac8_FU_valid_q <= 1'b0;
+      mix_unit_valid_q <= 1'b0;
         `endif // ENABLE_insAI_EXTENSION
       fpu_valid_q    <= 1'b0;
       fpu_fmt_q      <= 2'b0;
@@ -339,6 +347,9 @@ module issue_read_operands
           MAC8_FU : begin
             mac8_FU_valid_q <= 1'b1;
           end
+          MIX_UNIT : begin
+            mix_unit_valid_q <= 1'b1;
+          end
             `endif // ENABLE_insAI_EXTENSION
           FPU: begin
             if (CVA6Cfg.FpPresent) begin
@@ -371,6 +382,7 @@ module issue_read_operands
         mult_valid_q   <= 1'b0;
           `ifdef ENABLE_insAI_EXTENSION
         mac8_FU_valid_q <= 1'b0;
+        mix_unit_valid_q <= 1'b0;
           `endif // ENABLE_insAI_EXTENSION
         fpu_valid_q    <= 1'b0;
         csr_valid_q    <= 1'b0;

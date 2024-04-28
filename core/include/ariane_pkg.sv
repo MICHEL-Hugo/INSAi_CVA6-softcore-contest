@@ -262,6 +262,7 @@ package ariane_pkg;
     CVXIF,      // 9
     ACCEL,      // 10
     MAC8_FU     // 11
+    MIX_UNIT         // 12
   } fu_t;
 
   localparam EXC_OFF_RST = 8'h80;
@@ -408,6 +409,7 @@ package ariane_pkg;
     SD,
     LW,
     LWU,
+    LWAS, //Load Word Aligned then Shifted (selected bytes only)
     SW,
     LH,
     LHU,
@@ -564,10 +566,11 @@ package ariane_pkg;
     ACCEL_OP_STORE,
     // Zicond instruction
     CZERO_EQZ,
-    CZERO_NEZ
+    CZERO_NEZ,
 `ifdef ENABLE_insAI_EXTENSION
     // insAI extension
-    , MAC8SU  
+    MAC8SU,
+    MIX
 `endif // ENABLE_insAI_EXTENSION
   } fu_op;
 

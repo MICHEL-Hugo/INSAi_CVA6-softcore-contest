@@ -48,9 +48,12 @@ module mix_unit
     logic   [TRANS_ID_BITS-1:0] trans_id_q, trans_id_d;
 
     logic riscv::xlen_t  reg1, reg2;
+    logic [1:0] op_imm;
 
-    assign reg1 = fu_data_i.operand_a << (1'd8*fu_data_i.imm);
-    assign reg2 = fu_data_i.operand_a << (1'd8*(1'd4-fu_data_i.imm));
+    assign op_imm = fu_data_i.imm;
+
+    assign reg1 = fu_data_i.operand_a << (1'd8*op_imm);
+    assign reg2 = fu_data_i.operand_a << (1'd8*(1'd4-op_imm));
 
     assign mix_unit_result_o = 32'(reg1 | reg2);
 

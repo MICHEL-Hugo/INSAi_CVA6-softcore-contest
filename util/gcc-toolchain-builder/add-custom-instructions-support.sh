@@ -2,6 +2,7 @@
 
 # Objective: 
 # - add mac8 instruction to the toolchain
+# - add mix instruction to the toolchain as well
 
 # Prerequisites:
 # grep
@@ -18,8 +19,13 @@ MATCH_MAC8="#define MATCH_MAC8 0x200000b"
 MASK_MAC8="#define MASK_MAC8  0xfe00707f"
 DECLARE_INSN="DECLARE_INSN(mac8, MATCH_MAC8	, MASK_MAC8)"
 
+MATCH_MIX="#define MATCH_MIX 0x200000b"
+MASK_MIX="#define MASK_MIX  0xfe00707f"
+DECLARE_INSN="DECLARE_INSN(mix, MATCH_MIX	, MASK_MIX)"
+
 # riscv-opc.c
 MAC8_OPCODE="{\"mac8\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MAC8, MASK_MAC8,    match_opcode, 0 },"
+MAC8_OPCODE="{\"mix\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MAC8, MASK_MAC8,    match_opcode, 0 },"
 
 echo "[insAI] adding mac8 instruction support...";
 
