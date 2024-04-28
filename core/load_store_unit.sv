@@ -397,7 +397,7 @@ module load_store_unit
     misaligned_exception = {{riscv::XLEN{1'b0}}, {riscv::XLEN{1'b0}}, 1'b0};
 
     data_misaligned = 1'b0;
-
+  
     if (lsu_ctrl.valid) begin
       case (lsu_ctrl.operation)
         // double word
@@ -411,6 +411,7 @@ module load_store_unit
           end
         end
         // word
+        //Modif_Here
         LW, LWU, SW, FLW, FSW,
                 AMO_LRW, AMO_SCW,
                 AMO_SWAPW, AMO_ADDW, AMO_ANDW, AMO_ORW,
