@@ -541,13 +541,15 @@ module cva6
       store_trans_id_ex_id,
       fpu_trans_id_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-        , mac8_FU_trans_id_ex_id
+        , mac8_FU_trans_id_ex_id,
+        mix_unit_trans_id_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
     assign wbdata_ex_id = {
       x_result_ex_id, flu_result_ex_id, load_result_ex_id, store_result_ex_id, fpu_result_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-        , mac8_FU_result_ex_id
+        , mac8_FU_result_ex_id,
+        mix_unit_result_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
     assign ex_ex_ex_id = {
@@ -557,13 +559,15 @@ module cva6
       store_exception_ex_id,
       fpu_exception_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-        , mac8_FU_exception_ex_id
+        , mac8_FU_exception_ex_id,
+        mix_unit_exception_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
     assign wt_valid_ex_id = {
       x_valid_ex_id, flu_valid_ex_id, load_valid_ex_id, store_valid_ex_id, fpu_valid_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-        , mac8_FU_valid_ex_id
+        , mac8_FU_valid_ex_id,
+        mix_unit_valid_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
   end else if (CVA6ExtendCfg.EnableAccelerator) begin
@@ -574,13 +578,15 @@ module cva6
       fpu_trans_id_ex_id,
       acc_trans_id_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-        , mac8_FU_trans_id_ex_id
+        , mac8_FU_trans_id_ex_id,
+        mix_unit_trans_id_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
     assign wbdata_ex_id = {
       flu_result_ex_id, load_result_ex_id, store_result_ex_id, fpu_result_ex_id, acc_result_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-        , mac8_FU_result_ex_id
+        , mac8_FU_result_ex_id,
+        mix_unit_result_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
     assign ex_ex_ex_id = {
@@ -590,13 +596,15 @@ module cva6
       fpu_exception_ex_id,
       acc_exception_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-        , mac8_FU_exception_ex_id
+        , mac8_FU_exception_ex_id,
+        mix_unit_exception_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
     assign wt_valid_ex_id = {
       flu_valid_ex_id, load_valid_ex_id, store_valid_ex_id, fpu_valid_ex_id, acc_valid_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-        , mac8_FU_valid_ex_id
+        , mac8_FU_valid_ex_id,
+        mix_unit_valid_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
   end else begin
@@ -604,23 +612,27 @@ module cva6
       flu_trans_id_ex_id, load_trans_id_ex_id, store_trans_id_ex_id, fpu_trans_id_ex_id
       `ifdef ENABLE_insAI_EXTENSION
         , mac8_FU_trans_id_ex_id
+        , mix_unit_trans_id_ex_id
       `endif //ENABLE_insAI_EXTENSION
     };
     assign wbdata_ex_id = {
       flu_result_ex_id, load_result_ex_id, store_result_ex_id, fpu_result_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-        , mac8_FU_result_ex_id
+        , mac8_FU_result_ex_id,
+        mix_unit_result_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
     assign ex_ex_ex_id = {
       flu_exception_ex_id, load_exception_ex_id, store_exception_ex_id, fpu_exception_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-      , mac8_FU_exception_ex_id
+      , mac8_FU_exception_ex_id,
+      mix_unit_exception_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
     assign wt_valid_ex_id = {flu_valid_ex_id, load_valid_ex_id, store_valid_ex_id, fpu_valid_ex_id
       `ifdef ENABLE_insAI_EXTENSION
-      , mac8_FU_valid_ex_id
+      , mac8_FU_valid_ex_id,
+        mix_unit_valid_ex_id
       `endif // ENABLE_insAI_EXTENSION
     };
   end

@@ -298,7 +298,8 @@ module decoder
           instruction_o.rs1[4:0] = instr.stype.rs1;
           instruction_o.rs2[4:0] = instr.stype.rs2;
           instruction_o.rd[4:0]  = instr.stype.rs1;
-          instruction_o.imm[1:0] = instr.stype.imm;
+          instruction_o.result  = imm_s_type;
+          instruction_o.use_imm = 1'b1;
           // only one operation is supported 
 		  unique case (
               instr.stype.funct3
