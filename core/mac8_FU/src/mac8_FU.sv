@@ -24,7 +24,7 @@
 localparam VALID = 1'b1;
 localparam READY = 1'b1;
 
-module mac8_FU
+(* use_dsp = "simd" *)module mac8_FU
     import ariane_pkg::*;
 #(
     parameter config_pkg::cva6_cfg_t CVA6Cfg = config_pkg::cva6_cfg_empty
