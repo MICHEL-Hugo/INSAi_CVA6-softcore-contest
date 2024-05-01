@@ -83,8 +83,9 @@ VL_INC_DIR := $(VERILATOR_INSTALL_DIR)/share/verilator/include
 
 # board name for bitstream generation.BAS
 XILINX_BOARD   := digilentinc.com:zybo-z7-20:part0:1.2
+XILINX_PART := xc7z020clg400-1
 CLK_PERIOD_NS  := 25
-BATCH_MODE ?= 0
+BATCH_MODE ?= 1
 
 #Path to questasim binaries
 QUESTA_BIN := $(realpath $(dir $(shell which vsim)))

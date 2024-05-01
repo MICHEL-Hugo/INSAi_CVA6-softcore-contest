@@ -9,6 +9,7 @@
 #include "fc1.h"
 #include "fc2.h"
 
+#define __MIX_UNIT__ 
 
 static DATA_T mem[MEMORY_SIZE];
 
@@ -28,6 +29,16 @@ static int clamp(int v, int lo, int hi) {
     }
 }
 
+#define MIX(a, b, c) \
+	            do { \
+    	            asm volatile ( \
+    		        "mix %[z], %[x], %[y]\n\t" \
+    		        : [z] "=&r"(a) \
+    		        : [x] "r"(b), [y] "r"(c)  \
+    	            ); \
+	            } while (0)
+
+
 static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_count)
 {
     
@@ -45,13 +56,24 @@ static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_coun
 			uint32_t c_word = *((uint32_t*)c_word_addr); //load current word
 			uint32_t n_word = *((uint32_t*)n_word_addr); //load next    word, BOF!!?
 
-			count *= 8; // part of word in the next word 
-						// [8, 16, 24] bits
-			
-			c_word >>= count; // logical right shift
-			n_word <<= count; // logical left  shift
-			
-			return (c_word | n_word);
+
+            #ifdef __MIX_UNIT__
+
+                uint32_t result;
+
+                    MIX(result, c_word, n_word);
+
+                    //printf("c_word = %#x, n_word = %#x, result = %#x \n", c_word, n_word, result);
+                return result;
+            #else
+                count *= 8; // part of word in the next word 
+                            // [8, 16, 24] bits
+                
+                c_word >>= count; // logical right shift
+                n_word <<= count; // logical left  shift
+                
+                return (c_word | n_word);
+            #endif
 		}
 		case 2 : {
 		   int count  = (int)((uintptr_t)src & 0x1); 

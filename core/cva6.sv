@@ -161,7 +161,7 @@ module cva6
   localparam bit EnableAccelerator = CVA6Cfg.RVV;  // Currently only used by V extension (Ara)
   
   `ifdef ENABLE_insAI_EXTENSION
-    localparam int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? (5+1) : (4+1); //dummy_FU
+    localparam int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? (5+2) : (4+2); // += MAC8 + MIX
   `else 
     localparam int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? (5) : (4); 
   `endif // ENABLE_insAI_EXTENSION
@@ -689,7 +689,7 @@ module cva6
       .mac8_FU_ready_i     (mac8_FU_ready_ex_id),
       .mac8_FU_valid_o     (mac8_FU_valid_id_ex),
       // mix_unit
-       mix_unit_ready_i     (mix_unit_ready_ex_id),
+      .mix_unit_ready_i     (mix_unit_ready_ex_id),
       .mix_unit_valid_o     (mix_unit_valid_id_ex),
       `endif// ENABLE_insAI_EXTENSION
       // CSR

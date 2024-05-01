@@ -261,7 +261,7 @@ package ariane_pkg;
     FPU_VEC,    // 8
     CVXIF,      // 9
     ACCEL,      // 10
-    MAC8_FU     // 11
+    MAC8_FU ,    // 11
     MIX_UNIT         // 12
   } fu_t;
 
