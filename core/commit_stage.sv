@@ -231,7 +231,7 @@ module commit_stage
                                 && !instr_0_is_amo
                                 && !single_step_i) begin
         // only if the first instruction didn't throw an exception and this instruction won't throw an exception
-        // and the functional unit is of type ALU, LOAD, CTRL_FLOW, MULT, FPU or FPU_VEC
+        // and the functional unit is of type ALU, LOAD, CTRL_FLOW, MULT, FPU, FPU_VEC or MAC8_FU
         if (!exception_o.valid && !commit_instr_i[1].ex.valid
                                        && (commit_instr_i[1].fu inside {ALU, LOAD, CTRL_FLOW, MULT, FPU, FPU_VEC, MAC8_FU})) begin
 
