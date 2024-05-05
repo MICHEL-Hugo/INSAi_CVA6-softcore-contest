@@ -9,7 +9,12 @@
 #include "fc1.h"
 #include "fc2.h"
 
-
+#ifndef USE_MAC_PACK32
+	#include <string.h>       // Required for: memcpy -used in macsOnRange
+#else
+	#include "insAI_mac.h"    // Required for: MAC8, MAC8_16 -used in macsOnRange 
+#endif // USE_MAC_PACK32
+	   
 static DATA_T mem[MEMORY_SIZE];
 
 static int max(int lhs, int rhs) {
@@ -28,179 +33,85 @@ static int clamp(int v, int lo, int hi) {
     }
 }
 
-static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_count)
-{
-    
-    switch(bytes_count) {
-		case 4 : { 
-			int count  = (int)((uintptr_t)src & 0x3); 
-
-			if (count == 0) {  /* The word is 4Bytes aligned */
-				return *(uint32_t*)src;
-			}
-			/* Handle unaligned word */
-			uintptr_t c_word_addr = (uintptr_t)src & ~0x3;
-			uintptr_t n_word_addr = c_word_addr +  4;
-			
-			uint32_t c_word = *((uint32_t*)c_word_addr); //load current word
-			uint32_t n_word = *((uint32_t*)n_word_addr); //load next    word, BOF!!?
-
-			count *= 8; // part of word in the next word 
-						// [8, 16, 24] bits
-			
-			c_word >>= count; // logical right shift
-			n_word <<= count; // logical left  shift
-			
-			return (c_word | n_word);
-		}
-		case 2 : {
-		   int count  = (int)((uintptr_t)src & 0x1); 
-
-		   if (count == 0) {  /* The half-word is 2Bytes aligned */
-				return *(uint16_t*)src;
-			}
-			/* Handle unaligned half-word */
-			uintptr_t c_half_word_addr = (uintptr_t)src & ~0x1;
-			uintptr_t n_half_word_addr = c_half_word_addr +  2;
-			
-			uint16_t c_half_word = *((uint16_t*)c_half_word_addr);
-			uint16_t n_half_word = *((uint16_t*)n_half_word_addr); // BOF !!?
-
-			// count *= 8; // 8 bits
-			
-			c_half_word >>= 8; // logical right shift
-			n_half_word <<= 8; // logical left  shift
-			
-			return (c_half_word | n_half_word);
-		}
-		case 3 : {
-    		const uint8_t* array = (const uint8_t*)src;
-			return (array[0] << (8 * 0)) | (array[1] << (8 * 1)) | (array[2] << (8 * 2)); 
-		}
-		case 1 : {
-		   	__attribute__((fallthrough)); 
-		}
-		default:
-			return *(uint8_t*)src;
-    }	
-}
-
 static inline  void macsOnRange(const UDATA_T* __restrict inputs,
                         const WDATA_T* __restrict weights,
                         SUM_T* __restrict weightedSum,
                         int nb_iterations)
 {
 #if HOST_HAS_MAC8_UNIT
-#define MAC16 1
-#define MAC8(a, b, c) \
-	do { \
-    	asm volatile ( \
-    		"mac8 %[z], %[x], %[y]\n\t" \
-    		: [z] "=&r"(a) \
-    		: [x] "r"(c), [y] "r"(b)  \
-    	); \
-	} while (0)
 
-#define LW32(a, b) \
-	do { \
-    	asm volatile ( \
-    		"lw %[z], 0(%[y])\n\t" \
-    		: [z] "=r"(a) \
-    		: [y] "r"(b)  \
-    	); \
-	} while (0)
-
-
-    int32_t accumulator = 0;   //flush the accumulator
+     int32_t accumulator = 0;   //flush the accumulator
     
-     uint32_t  operand_1  = 0U;
-     uint32_t  operand_2  = 0U;
-     uint32_t  operand_3  = 0U;
-     uint32_t  operand_4  = 0U;
-     uint32_t  operand_5  = 0U;
-     uint32_t  operand_6  = 0U;
-     uint32_t  operand_7  = 0U;
-     uint32_t  operand_8  = 0U;
-
+	#if USE_BLOCK_SIZE_16
     /* BLOCK_SIZE : 16 BYTES */
     int rem16 = nb_iterations % 16 ;
     int nb_iterations16 = nb_iterations - rem16;
-    for (int iter = 0; iter < nb_iterations16;   iter += 16, 
-		                               inputs += 16, 
-					      weights += 16) {
-        int tmp1;
-        int tmp2;
-        int tmp3;
-        int tmp4;
+    for (int iter = 0; iter < nb_iterations16; iter += 16, inputs += 16, 
+					      				                  weights += 16) {
+        int tmp_array[4];
+		uint32_t  packed_inputs_array[4];
+		uint32_t packed_weights_array[4];
 
-    	operand_1 = mac_pack32 ((void*)(inputs + 0), 4);
-    	operand_2 = mac_pack32((void*)(weights + 0), 4);
-
-    	operand_3 = mac_pack32 ((void*)(inputs + 4), 4);
-    	operand_4 = mac_pack32((void*)(weights + 4), 4);
-
-    	operand_5 = mac_pack32 ((void*)(inputs + 8), 4);
-    	operand_6 = mac_pack32((void*)(weights + 8), 4);
-
-    	operand_7 = mac_pack32 ((void*)(inputs + 12), 4);
-    	operand_8 = mac_pack32((void*)(weights + 12), 4);
-#if MAC16
-	asm volatile (
-	  "mac8 %[z1], %[x1], %[y1]\n\t " \
-	  "mac8 %[z2], %[x2], %[y2]\n\t " \
-	  "mac8 %[z3], %[x3], %[y3]\n\t " \
-	  "mac8 %[z4], %[x4], %[y4]\n\t " \
-	 :  [z1] "=&r"(tmp1) ,  \
-	    [z2] "=&r"(tmp2) ,  \
-	    [z3] "=&r"(tmp3) ,  \
-	    [z4] "=&r"(tmp4)   \
-	 :  [x1] "r"(operand_2), [y1] "r"(operand_1) ,  \
-	    [x2] "r"(operand_4), [y2] "r"(operand_3) ,  \
-	    [x3] "r"(operand_6), [y3] "r"(operand_5) ,  \
-	    [x4] "r"(operand_8), [y4] "r"(operand_7)   \
-	);
-#else
-	MAC8(tmp1, operand_1, operand_2);
-	MAC8(tmp2, operand_3, operand_4);
-	MAC8(tmp3, operand_5, operand_6);
-	MAC8(tmp4, operand_7, operand_8);
-#endif
-	accumulator += tmp1 + tmp2 + tmp3 + tmp4;
+		/* Get mac8' operands */
+		for (int i = 0; i < 4; ++i) {
+			packed_inputs_array[i]  = mac_pack32 ((void*)(inputs + 4*i), 4);
+			packed_weights_array[i] = mac_pack32((void*)(weights + 4*i), 4);
+		}
+		/* Calculate */
+		MAC8_16(tmp_array, packed_inputs_array, packed_weights_array);
+		/* Accumulate */
+		for (int i = 0; i < 4; ++i) 
+			accumulator += tmp_array[i];
     }
     nb_iterations = rem16;
+	#endif // BLOCK_SIZE_16
 
     /* BLOCK_SIZE : 4 BYTES */
     int rem4 = nb_iterations % 4 ; 
     int nb_iterations4 = nb_iterations - rem4;
-    for (int iter = 0; iter < nb_iterations4;   iter += 4, 
-		    			      inputs += 4,
-					     weights += 4) {
+    for (int iter = 0; iter < nb_iterations4; iter += 4, inputs += 4,
+	       			     						        weights += 4) {
     	int tmp1;
-
-	operand_1 = mac_pack32 ((void*)(inputs + 0), 4);
-    	operand_2 = mac_pack32((void*)(weights + 0), 4);
-	
-	MAC8(tmp1, operand_1, operand_2);
-
-	accumulator += tmp1;
+		uint32_t  packed_inputs;
+		uint32_t packed_weights;
+		/* Get mac8' operands */
+		#if USE_MAC_PACK32
+			packed_inputs  = mac_pack32 ((void*)(inputs + 0), 4);
+    		packed_weights = mac_pack32((void*)(weights + 0), 4);
+		#else // USE memcpy
+    		memcpy((void*)&packed_inputs, (void*)inputs,  4);
+			memcpy((void*)&packed_weights, (void*)weights, 4);
+		#endif // USE_MAC_PACK32
+		/* Calculate */
+		MAC8(tmp1, packed_inputs, packed_weights);
+		/* Accumulate */
+		accumulator += tmp1;
     }
     nb_iterations = rem4;
 
     /* REMAINING : 3, 2, 1 */
     if (rem4 != 0) {
-	int tmp1;
-    	operand_1 = mac_pack32 ((void*)inputs, rem4);
-    	operand_2 = mac_pack32((void*)weights, rem4);
-	
-	MAC8(tmp1, operand_1, operand_2);
-
-	accumulator += tmp1;
+		int tmp1;
+		uint32_t  packed_inputs;
+		uint32_t packed_weights;
+		/* Get mac8' operands */
+		#if USE_MAC_PACK32
+    		packed_inputs  = mac_pack32 ((void*)inputs, rem4);
+    		packed_weights = mac_pack32((void*)weights, rem4);
+		#else  // USE memcpy
+    		memcpy((void*)&packed_inputs, (void*)inputs,  rem4);
+			memcpy((void*)&packed_weights, (void*)weights, rem4);
+		#endif // USE_MAC_PACK32	
+		/* Calculate */
+		MAC8(tmp1, packed_inputs, packed_weights);
+		/* Accumulate */
+		accumulator += tmp1;
     }
 
     *weightedSum += accumulator; // Add the accumulator value to *weightedSum
 
 #else 
-    //Default implementation 
+    // Default implementation 
     for (int iter = 0; iter < nb_iterations; ++iter) {
         *weightedSum += inputs[iter] * weights[iter];
     }
