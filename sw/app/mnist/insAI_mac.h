@@ -4,22 +4,32 @@
 #include <stddef.h>   // Required for : size_t
 #include <stdint.h>   // Required for : uint32_t
 	
-#define MAC8(res, in, wgt)                                                     \
+//res = result, in = input_matrix and wgt = weight
+#define MAC8_ACC(res, in, wgt)                                                 \
 		do {                                                                   \
 			asm volatile (                                                     \
-				"mac8 %[z], %[x], %[y]\n\t"                                    \
+				"mac8.acc %[z], %[x], %[y]\n\t"                                    \
 				: [z] "=&r"((res))                                             \
 				: [x] "r"((wgt)), [y] "r"((in))                                \
 			);                                                                 \
 		} while (0)
 
-#define MAC8_16(res_array, in_array, wgt_array)                                \
+#define MAC8_INIT(res, in, wgt)                                                     \
+		do {                                                                   \
+			asm volatile (                                                     \
+				"mac8.init %[z], %[x], %[y]\n\t"                                    \
+				: [z] "=&r"((res))                                             \
+				: [x] "r"((wgt)), [y] "r"((in))                                \
+			);                                                                 \
+		} while (0)
+
+#define MAC8_16(res, in_array, wgt_array)                                \
 		do {                                                                   \
 			asm volatile (                                                     \
 			  "mac8 %[z1], %[x1], %[y1]\n\t " "mac8 %[z2], %[x2], %[y2]\n\t "  \
 			  "mac8 %[z3], %[x3], %[y3]\n\t " "mac8 %[z4], %[x4], %[y4]\n\t "  \
-			 :  [z1] "=&r"((res_array)[0]), [z2] "=&r"((res_array)[1]),        \
-				[z3] "=&r"((res_array)[2]), [z4] "=&r"((res_array)[3])         \
+			 :  [z1] "=&r"((res)), [z2] "=&r"((res)),        \
+				[z3] "=&r"((res)), [z4] "=&r"((res))         \
 			 :  [x1] "r"((wgt_array)[0]), [y1] "r"((in_array)[0]),             \
 				[x2] "r"((wgt_array)[1]), [y2] "r"((in_array)[1]),             \
 				[x3] "r"((wgt_array)[2]), [y3] "r"((in_array)[2]),             \
