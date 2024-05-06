@@ -567,8 +567,8 @@ package ariane_pkg;
     CZERO_NEZ
 `ifdef ENABLE_insAI_EXTENSION
     // insAI extension
-    , MAC8.INIT
-    , MAC8.ACC	
+    , MAC8_INIT
+    , MAC8_ACC	
 `endif // ENABLE_insAI_EXTENSION
   } fu_op;
 
