@@ -27,7 +27,7 @@
 /// *Note*: There are some parameters here as well which will eventually be
 /// moved out to favour a fully parameterizable core.
 package ariane_pkg;
-
+  localparam ENABLE_RENAME = 1'b1;
   // TODO: Slowly move those parameters to the new system.
   localparam NR_SB_ENTRIES = cva6_config_pkg::CVA6ConfigNrScoreboardEntries; // number of scoreboard entries
   localparam TRANS_ID_BITS = $clog2(
@@ -567,7 +567,8 @@ package ariane_pkg;
     CZERO_NEZ
 `ifdef ENABLE_insAI_EXTENSION
     // insAI extension
-    , MAC8SU  
+    , MAC8SU.INIT
+    , MAC8SU.ACC	
 `endif // ENABLE_insAI_EXTENSION
   } fu_op;
 
