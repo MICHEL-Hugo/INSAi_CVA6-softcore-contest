@@ -3,7 +3,6 @@
 # Objective: 
 # - add mac8 instruction to the toolchain
 # - add mix instruction to the toolchain as well
-file:///home/beepboop/riscv_2023/cva6_study/sw/app/mnist/NetworkPropagate.c
 
 # Prerequisites:
 # grep
@@ -13,7 +12,7 @@ HEADER="\/* Custom : insAI*\/"
 
 # To be Modified files : 
 riscv_opc_c="./src/binutils-gdb/opcodes/riscv-opc.c"
-riscv_opc_h="./src/binutils-gdb/include/opcode/riscv-opc.h"file:///home/beepboop/riscv_2023/cva6_study/sw/app/mnist/NetworkPropagate.c
+riscv_opc_h="./src/binutils-gdb/include/opcode/riscv-opc.h"
 
 
 # riscv-opc.h
