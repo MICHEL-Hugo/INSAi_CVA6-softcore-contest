@@ -40,15 +40,17 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
 {
 #if HOST_HAS_MAC8_UNIT
 
-     int32_t accumulator = 0;   //flush the accumulator
-    
+    int32_t accumulator = 0;   
+
+    MAC8_INIT(accumulator, 0, 0); //flush the accumulator
+
 	#if USE_BLOCK_SIZE_16
     /* BLOCK_SIZE : 16 BYTES */
     int rem16 = nb_iterations % 16 ;
     int nb_iterations16 = nb_iterations - rem16;
     for (int iter = 0; iter < nb_iterations16; iter += 16, inputs += 16, 
 					      				                  weights += 16) {
-        int tmp_array[4];
+        
 		uint32_t  packed_inputs_array[4];
 		uint32_t packed_weights_array[4];
 
@@ -58,10 +60,8 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
 			packed_weights_array[i] = mac_pack32((void*)(weights + 4*i), 4);
 		}
 		/* Calculate */
-		MAC8_16(tmp_array, packed_inputs_array, packed_weights_array);
+		MAC8_16(accumulator, packed_inputs_array, packed_weights_array);
 		/* Accumulate */
-		for (int i = 0; i < 4; ++i) 
-			accumulator += tmp_array[i];
     }
     nb_iterations = rem16;
 	#endif // BLOCK_SIZE_16
@@ -71,7 +71,6 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
     int nb_iterations4 = nb_iterations - rem4;
     for (int iter = 0; iter < nb_iterations4; iter += 4, inputs += 4,
 	       			     						        weights += 4) {
-    	int tmp1;
 		uint32_t  packed_inputs;
 		uint32_t packed_weights;
 		/* Get mac8' operands */
@@ -83,15 +82,12 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
 			memcpy((void*)&packed_weights, (void*)weights, 4);
 		#endif // USE_MAC_PACK32
 		/* Calculate */
-		MAC8(tmp1, packed_inputs, packed_weights);
-		/* Accumulate */
-		accumulator += tmp1;
+		MAC8_ACC(accumulator, packed_inputs, packed_weights);
     }
     nb_iterations = rem4;
 
     /* REMAINING : 3, 2, 1 */
     if (rem4 != 0) {
-		int tmp1;
 		uint32_t  packed_inputs;
 		uint32_t packed_weights;
 		/* Get mac8' operands */
@@ -103,9 +99,7 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
 			memcpy((void*)&packed_weights, (void*)weights, rem4);
 		#endif // USE_MAC_PACK32	
 		/* Calculate */
-		MAC8(tmp1, packed_inputs, packed_weights);
-		/* Accumulate */
-		accumulator += tmp1;
+		MAC8_ACC(accumulator, packed_inputs, packed_weights);
     }
 
     *weightedSum += accumulator; // Add the accumulator value to *weightedSum
