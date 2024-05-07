@@ -278,32 +278,10 @@ module decoder
           instruction_o.rs2[4:0] = instr.rtype.rs2;
           instruction_o.rd[4:0]  = instr.rtype.rd;
           // only one operation is supported 
-		  unique case ({
-              instr.rtype.funct7, instr.rtype.funct3
-            })
-              {7'b000_0001, 3'b000} : instruction_o.op = ariane_pkg::MAC8SU;  
-              default: begin
-                illegal_instr = 1'b1;
-              end
-          endcase
-        end
-
-    // mix_unit
-
-        riscv::OpcodeCustom0: begin
-          // select the functionnal unit
-          instruction_o.fu = MIX_UNIT;
-
-          //instructions operands
-          instruction_o.rs1[4:0] = instr.stype.rs1;
-          instruction_o.rs2[4:0] = instr.stype.rs2;
-          instruction_o.rd[4:0]  = instr.stype.rs1;
-          instruction_o.imm[1:0] = instr.stype.imm;
-          // only one operation is supported 
-		  unique case (
-              instr.stype.funct3
-            )
-              3'b001 : instruction_o.op = ariane_pkg::MIX;  
+		  unique case ({instr.rtype.funct3})
+              3'b000 : instruction_o.op = ariane_pkg::MAC8_ACC;
+			        3'b010 : instruction_o.op = ariane_pkg::MAC8_INIT; 
+              3'b001 : instruction_o.op = ariane_pkg::MIX;
               default: begin
                 illegal_instr = 1'b1;
               end
