@@ -23,15 +23,15 @@ MATCH_MAC8_INIT="#define MATCH_MAC8_INIT 0x200b"
 MASK_MAC8_INIT="#define MASK_MAC8_INIT 0xfe00707f"
 
 
-DECLARE_INSN_MAC8_ACC="DECLARE_INSN(mac8.acc, MATCH_MAC8_ACC	, MASK_MAC8_ACC)"
-DECLARE_INSN_MAC8_INIT="DECLARE_INSN(mac8.init, MATCH_MAC8_INIT	, MASK_MAC8_INIT)"
+DECLARE_INSN_MAC8_ACC="DECLARE_INSN(mac8_acc, MATCH_MAC8_ACC	, MASK_MAC8_ACC)"
+DECLARE_INSN_MAC8_INIT="DECLARE_INSN(mac8_init, MATCH_MAC8_INIT	, MASK_MAC8_INIT)"
 
 # riscv-opc.c
 
-MAC8_ACC_OPCODE="{\"mac8.acc\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MAC8_ACC, MASK_MAC8_ACC,    match_opcode, 0 },"
-MAC8_INIT_OPCODE="{\"mac8.init\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MAC8_INIT, MASK_MAC8_INIT,    match_opcode, 0 },"
+MAC8_ACC_OPCODE="{\"mac8_acc\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MAC8_ACC, MASK_MAC8_ACC,    match_opcode, 0 },"
+MAC8_INIT_OPCODE="{\"mac8_init\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MAC8_INIT, MASK_MAC8_INIT,    match_opcode, 0 },"
 
-echo "[insAI] adding mac8.acc and mac8.init instruction support...";
+echo "[insAI] adding mac8_acc and mac8_init instruction support...";
 
 grep  -w "MASK_MAC8_ACC\|MASK_MAC8_INIT"  $riscv_opc_h 1>/dev/null 2>&1;
 if [ $? -eq 1 ]; then
