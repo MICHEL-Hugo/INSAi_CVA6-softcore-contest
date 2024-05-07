@@ -1,3 +1,7 @@
+// TODO : handle overflow 
+//   simple solution : raise exception when an overflow occurs
+//   increase accumulator size ?
+
 //Implemented MAC unit is for signed operand A and unsigned operand B
 localparam VALID = 1'b1;
 localparam READY = 1'b1;
@@ -85,5 +89,5 @@ module mac8_FU
 			//mac8_FU_trans_id_q <= mac8_FU_trans_id_d;
 		end
 	end
-
+   	
 endmodule
