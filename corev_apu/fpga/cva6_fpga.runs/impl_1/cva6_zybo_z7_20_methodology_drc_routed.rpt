@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-| Date         : Thu Nov 30 13:45:12 2023
+| Date         : Wed May  1 18:04:15 2024
 | Host         : beepboop running 64-bit Ubuntu 22.04.1 LTS
 | Command      : report_methodology -file cva6_zybo_z7_20_methodology_drc_routed.rpt -pb cva6_zybo_z7_20_methodology_drc_routed.pb -rpx cva6_zybo_z7_20_methodology_drc_routed.rpx
 | Design       : cva6_zybo_z7_20
@@ -23,14 +23,14 @@ Table of Contents
           Floorplan: checkpoint_cva6_zybo_z7_20
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 59
+             Violations found: 55
 +-----------+------------------+------------------------------------------------+------------+
 | Rule      | Severity         | Description                                    | Violations |
 +-----------+------------------+------------------------------------------------+------------+
 | TIMING-6  | Critical Warning | No common primary clock between related clocks | 1          |
 | TIMING-7  | Critical Warning | No common node between related clocks          | 1          |
 | LUTAR-1   | Warning          | LUT drives async reset alert                   | 4          |
-| SYNTH-6   | Warning          | Timing of a RAM block might be sub-optimal     | 10         |
+| SYNTH-6   | Warning          | Timing of a RAM block might be sub-optimal     | 6          |
 | SYNTH-10  | Warning          | Wide multiplier                                | 4          |
 | TIMING-10 | Warning          | Missing property on synchronizer               | 1          |
 | TIMING-18 | Warning          | Missing input or output delay                  | 3          |
@@ -117,50 +117,30 @@ Related violations: <none>
 
 SYNTH-6#1 Warning
 Timing of a RAM block might be sub-optimal  
-The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_cva6_icache/gen_sram[0].data_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
+The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_cva6_icache/gen_sram[0].tag_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
 Related violations: <none>
 
 SYNTH-6#2 Warning
 Timing of a RAM block might be sub-optimal  
-The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_cva6_icache/gen_sram[0].data_sram/gen_cut[1].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
+The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_cva6_icache/gen_sram[1].tag_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
 Related violations: <none>
 
 SYNTH-6#3 Warning
 Timing of a RAM block might be sub-optimal  
-The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_cva6_icache/gen_sram[0].tag_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
+The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_wt_dcache/i_wt_dcache_mem/gen_data_banks[0].i_data_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
 Related violations: <none>
 
 SYNTH-6#4 Warning
 Timing of a RAM block might be sub-optimal  
-The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_cva6_icache/gen_sram[1].data_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
+The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_wt_dcache/i_wt_dcache_mem/gen_data_banks[1].i_data_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
 Related violations: <none>
 
 SYNTH-6#5 Warning
 Timing of a RAM block might be sub-optimal  
-The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_cva6_icache/gen_sram[1].data_sram/gen_cut[1].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
-Related violations: <none>
-
-SYNTH-6#6 Warning
-Timing of a RAM block might be sub-optimal  
-The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_cva6_icache/gen_sram[1].tag_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
-Related violations: <none>
-
-SYNTH-6#7 Warning
-Timing of a RAM block might be sub-optimal  
-The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_wt_dcache/i_wt_dcache_mem/gen_data_banks[0].i_data_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
-Related violations: <none>
-
-SYNTH-6#8 Warning
-Timing of a RAM block might be sub-optimal  
-The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_wt_dcache/i_wt_dcache_mem/gen_data_banks[1].i_data_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
-Related violations: <none>
-
-SYNTH-6#9 Warning
-Timing of a RAM block might be sub-optimal  
 The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_wt_dcache/i_wt_dcache_mem/gen_data_banks[2].i_data_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
 Related violations: <none>
 
-SYNTH-6#10 Warning
+SYNTH-6#6 Warning
 Timing of a RAM block might be sub-optimal  
 The timing for the instance i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_wt_dcache/i_wt_dcache_mem/gen_data_banks[3].i_data_sram/gen_cut[0].i_tc_sram_wrapper/i_ram/Mem_DP_reg, implemented as a RAM block, might be sub-optimal as no output register was merged into the block.
 Related violations: <none>
@@ -369,21 +349,21 @@ XDCH-2#1 Warning
 Same min and max delay values on IO port  
 The same input delay of 5.000 ns has been defined on port 'tdi' relative to clock tck for both max and min. Make sure this reflects the design intent.
 set_input_delay -clock tck -clock_fall 5.000 [get_ports tdi]
-/home/beepboop/riscv_2023/cva6-softcore-contest/corev_apu/fpga/constraints/cva6_fpga.xdc (Line: 8)
+/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/constraints/cva6_fpga.xdc (Line: 8)
 Related violations: <none>
 
 XDCH-2#2 Warning
 Same min and max delay values on IO port  
 The same input delay of 5.000 ns has been defined on port 'tms' relative to clock tck for both max and min. Make sure this reflects the design intent.
 set_input_delay -clock tck -clock_fall 5.000 [get_ports tms]
-/home/beepboop/riscv_2023/cva6-softcore-contest/corev_apu/fpga/constraints/cva6_fpga.xdc (Line: 9)
+/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/constraints/cva6_fpga.xdc (Line: 9)
 Related violations: <none>
 
 XDCH-2#3 Warning
 Same min and max delay values on IO port  
 The same output delay of 5.000 ns has been defined on port 'tdo' relative to clock tck for both max and min. Make sure this reflects the design intent.
 set_output_delay -clock tck 5.000 [get_ports tdo]
-/home/beepboop/riscv_2023/cva6-softcore-contest/corev_apu/fpga/constraints/cva6_fpga.xdc (Line: 10)
+/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/constraints/cva6_fpga.xdc (Line: 10)
 Related violations: <none>
 
 

@@ -14,7 +14,8 @@ HEADER="\/* Custom : insAI*\/"
 riscv_opc_c="./src/binutils-gdb/opcodes/riscv-opc.c"
 riscv_opc_h="./src/binutils-gdb/include/opcode/riscv-opc.h"
 
-# riscv-opc.h
+
+ riscv-opc.h
 # MATCH_MAC8="#define MATCH_MAC8 0x200000b"
 # MASK_MAC8="#define MASK_MAC8  0xfe00707f"
 
@@ -33,10 +34,10 @@ DECLARE_INSN="DECLARE_INS(mix, MATCH_MIX	, MASK_MIX)"
 
 # riscv-opc.c
 
-MAC8_OPCODE="{\"mix\",         0, INSN_CLASS_S, \"d,s,t\",     MATCH_MIX, MASK_MIX,    match_opcode, 0 },"
 
 MAC8_ACC_OPCODE="{\"mac8_acc\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MAC8_ACC, MASK_MAC8_ACC,    match_opcode, 0 },"
 MAC8_INIT_OPCODE="{\"mac8_init\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MAC8_INIT, MASK_MAC8_INIT,    match_opcode, 0 },"
+MIX_OPCODE="{\"mix\",         0, INSN_CLASS_I, \"d,s,t\",     MATCH_MIX, MASK_MIX,    match_opcode, 0 },"
 
 echo "[insAI] adding mac8_acc and mac8_init instruction support...";
 
@@ -60,15 +61,15 @@ fi
 
 grep  -w mix  $riscv_opc_h 1>/dev/null 2>&1;
 if [ $? -eq 1 ]; then
-	sed -i '/#define RISCV_ENCODING_H/,/#endif \/\* RISCV_ENCODING_H/  s/^\/\* Instruction.*$/&\n\n'"$HEADER\n$MATCH_mix\n$MASK_mix\n"'\n/i' $riscv_opc_h 
-	sed -i '/#ifdef DECLARE_INSN/, /#endif \/\* DECLARE_INSN \*\// s/#endif \/\* DECLARE_INSN \*\//'"$HEADER\n$DECLARE_INSN\n\n"'&/i' $riscv_opc_h 
+	sed -i '/#define RISCV_ENCODING_H/,/#endif \/\* RISCV_ENCODING_H/  s/^\/\* Instruction.*$/&\n\n'"$HEADER\n$MATCH_MIX\n$MASK_MIX\n"'\n/i' $riscv_opc_h 
+	sed -i '/#ifdef DECLARE_INSN/, /#endif \/\* DECLARE_INSN \*\// s/#endif \/\* DECLARE_INSN \*\//'"$HEADER\n$DECLARE_INSN_MIX\n\n"'&/i' $riscv_opc_h 
 else
 	echo "[insAI] mix instruction is already present in $riscv_opc_h"
 fi	
 
 grep  -w mix $riscv_opc_c 1>/dev/null 2>&1
 if [ $? -eq 1 ]; then
-	sed -i '/riscv_opcodes/,/^};/ s/^\/\* Terminate/'"$HEADER\n$mix_OPCODE\n"'\n&/i' $riscv_opc_c  
+	sed -i '/riscv_opcodes/,/^};/ s/^\/\* Terminate/'"$HEADER\n$MIX_OPCODE\n"'\n&/i' $riscv_opc_c  
 else
 	echo "[insAI] mix instruction is already present in $riscv_opc_c"
 fi

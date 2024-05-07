@@ -270,8 +270,7 @@ module decoder
         // MAC8_FU 
 		// --------------------------
         riscv::OpcodeCustom0: begin
-          // select the functionnal unit
-          instruction_o.fu = MAC8_FU;
+
 
           //instructions operands
           instruction_o.rs1[4:0] = instr.rtype.rs1;
@@ -287,7 +286,7 @@ module decoder
               end
           endcase
         end
-        `endif // ENABLE_insAI_EXTENSION
+      `endif // ENABLE_insAI_EXTENSION
 
         // --------------------------
         // Reg-Reg Operations

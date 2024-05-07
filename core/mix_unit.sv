@@ -20,8 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-localparam VALID = 1'b1;
-localparam READY = 1'b1;
+//localparam VALID = 1'b1;
+//localparam READY = 1'b1;
 
 module mix_unit
     import ariane_pkg::*;
@@ -44,34 +44,33 @@ module mix_unit
     assign mix_unit_ready_o = READY; //always ready
     assign mix_unit_exception_o = '0;
 
-    logic   mix_unit_valid;
+    logic   mix_unit_valid_d, mix_unit_valid_q;
     logic   [TRANS_ID_BITS-1:0] trans_id_q, trans_id_d;
 
-    logic riscv::xlen_t  reg1, reg2;
-    logic [1:0] op_imm;
+    riscv::xlen_t result_d, result_q;
 
-    assign op_imm = fu_data_i.imm;
-
-    assign reg1 = fu_data_i.operand_a << (1'd8*op_imm);
-    assign reg2 = fu_data_i.operand_a << (1'd8*(1'd4-op_imm));
-
-    assign mix_unit_result_o = 32'(reg1 | reg2);
-
-    assign mix_unit_valid_o = ~flush_i & mix_unit_valid;
-
-    assign mix_unit_trans_id_o = fu_data_i.trans_id;
+    assign mix_unit_valid_d = mix_unit_valid_i;
+    assign trans_id_d = fu_data_i.trans_id;
+    assign mix_unit_valid_o = ~flush_i & mix_unit_valid_q;
+    assign mix_unit_trans_id_o = trans_id_q;
 
 
+
+    assign result_d = 32'((fu_data_i.operand_a >> 16) | (fu_data_i.operand_b << 16));
 
     always_ff @(posedge clk_i or negedge rst_ni) begin
         if (~rst_ni) begin
-        reg1 <= '0;
-        reg2 <= '0;
-        mix_unit_valid <= ~VALID;
+        result_q <= '0;
+        trans_id_q <= '0;
+        mix_unit_valid_q <= ~VALID;
         end else begin
-            mix_unit_valid <= VALID;
+            mix_unit_valid_q <= mix_unit_valid_d;
+            result_q <= result_d;
+            trans_id_q <= trans_id_d;
         end
     end
+
+    assign mix_unit_result_o = result_q;
 
 
 

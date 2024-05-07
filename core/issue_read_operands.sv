@@ -322,7 +322,8 @@ module issue_read_operands
       lsu_valid_q    <= 1'b0;
       mult_valid_q   <= 1'b0;
         `ifdef ENABLE_insAI_EXTENSION
-      mac8_FU_valid_q <= 1'b0;  
+      mac8_FU_valid_q <= 1'b0; 
+      mix_unit_valid_q <= 1'b0; 
         `endif // ENABLE_insAI_EXTENSION 
       fpu_valid_q    <= 1'b0;
       fpu_fmt_q      <= 2'b0;
