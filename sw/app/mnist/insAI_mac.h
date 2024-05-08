@@ -23,6 +23,15 @@
 			);                                                                 \
 		} while (0)
 
+#define MIX(res, oph, opl)                                                     \//res for result, oph for most significant bytes, opl, idem respectfully for least significant bytes
+		do {                                                                   \
+			asm volatile (                                                     \
+				"mix %[z], %[x], %[y]\n\t"                                    \
+				: [z] "=&r"((res))                                             \
+				: [x] "r"((wgt)), [y] "r"((in))                                \
+			);                                                                 \
+		} while (0)
+
 #define MAC8_16(res, in_array, wgt_array)                                \
 		do {                                                                   \
 			asm volatile (                                                     \
