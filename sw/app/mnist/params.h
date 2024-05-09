@@ -6,7 +6,9 @@
 
 #define NB_BITS 8
 #define UNSIGNED_DATA 1
-#define HOST_HAS_MAC8_UNIT 1 
+
+// insAI configuration
+#define ENABLE_insAI_EXTENSION 1 
 #define HOST_IS_FPGA 1 
 
 #define USE_MAC_PACK32 1
