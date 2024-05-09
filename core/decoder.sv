@@ -270,17 +270,18 @@ module decoder
         // MAC8_FU 
 		// --------------------------
         riscv::OpcodeCustom0: begin
-
-
+          instruction_o.fu  = MAC8_FU;
           //instructions operands
           instruction_o.rs1[4:0] = instr.rtype.rs1;
           instruction_o.rs2[4:0] = instr.rtype.rs2;
           instruction_o.rd[4:0]  = instr.rtype.rd;
-          // only one operation is supported 
 		  unique case ({instr.rtype.funct3})
               3'b000 : instruction_o.op = ariane_pkg::MAC8_ACC;
-			        3'b010 : instruction_o.op = ariane_pkg::MAC8_INIT; 
-              3'b001 : instruction_o.op = ariane_pkg::MIX;
+			  3'b010 : instruction_o.op = ariane_pkg::MAC8_INIT; 
+              3'b001 : begin 
+                instruction_o.fu  = MIX_UNIT;
+                instruction_o.op  = ariane_pkg::MIX;
+              end
               default: begin
                 illegal_instr = 1'b1;
               end
