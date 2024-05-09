@@ -56,7 +56,7 @@ module mac8_FU
         accumulator_d = accumulator_q;
         unique case (fu_data_i.operation)
             MAC8_INIT : 
-                accumulator_d = cur_res;
+                accumulator_d = $signed(fu_data_i.operand_a);
             MAC8_ACC  :
                 accumulator_d = $signed(cur_res) + $signed(accumulator_q);
             default: 
@@ -67,9 +67,6 @@ module mac8_FU
         end
 	end
 	
-     //assign mac8_FU_valid_d = mac8_FU_valid_i;
-     //assign mac8_FU_trans_id_d = fu_data_i.trans_id;
-	
 	// Outputs
     assign mac8_FU_result_o    = accumulator_d; 
     assign mac8_FU_valid_o     = mac8_FU_valid_i;
@@ -78,15 +75,12 @@ module mac8_FU
     assign mac8_FU_exception_o = '0;
 	
 	// Accumulator register
+	// TODO : speculative execution !!! move register writing to commit stage
 	always_ff @(posedge clk_i or negedge rst_ni) begin
 		if (~rst_ni) begin 
 			accumulator_q <= '0;
-			//mac8_FU_valid_q <= '0;
-			//mac8_FU_trans_id_q <= '0;
 		end else begin 
 			accumulator_q <= accumulator_d;
-			//mac8_FU_valid_q <= mac8_FU_valid_d;
-			//mac8_FU_trans_id_q <= mac8_FU_trans_id_d;
 		end
 	end
    	
