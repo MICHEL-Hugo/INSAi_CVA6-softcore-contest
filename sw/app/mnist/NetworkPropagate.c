@@ -9,10 +9,9 @@
 #include "fc1.h"
 #include "fc2.h"
 
-#ifndef USE_MAC_PACK32
-	#include <string.h>       // Required for: memcpy -used in macsOnRange
-#else
-	#include "insAI_mac.h"    // Required for: MAC8, MAC8_16 -used in macsOnRange 
+#if ENABLE_insAI_EXTENSION
+# include "insAI_mac.h"    // Required for: MAC8_INIT, MAC8_ACC, MAC8_16_ACC, mac_pack32 
+						   // Used in macsOnRange 
 #endif // USE_MAC_PACK32
 	   
 static DATA_T mem[MEMORY_SIZE];
@@ -38,78 +37,52 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
                         SUM_T* __restrict weightedSum,
                         int nb_iterations)
 {
-#if HOST_HAS_MAC8_UNIT
-
-    int32_t accumulator = 0;   
-
-    MAC8_INIT(accumulator, 0, 0); //flush the accumulator
-
-	#if USE_BLOCK_SIZE_16
+#if ENABLE_insAI_EXTENSION
+    MAC8_INIT(*weightedSum); // initialize the accumulator with (*weightedSum)    
+#   if USE_BLOCK_SIZE_16 
     /* BLOCK_SIZE : 16 BYTES */
     int rem16 = nb_iterations % 16 ;
     int nb_iterations16 = nb_iterations - rem16;
-    for (int iter = 0; iter < nb_iterations16; iter += 16, inputs += 16, 
-					      				                  weights += 16) {
-        
-		uint32_t  packed_inputs_array[4];
-		uint32_t packed_weights_array[4];
-
-		/* Get mac8' operands */
-		for (int i = 0; i < 4; ++i) {
-			packed_inputs_array[i]  = mac_pack32 ((void*)(inputs + 4*i), 4);
-			packed_weights_array[i] = mac_pack32((void*)(weights + 4*i), 4);
-		}
-		/* Calculate */
-		MAC8_16(accumulator, packed_inputs_array, packed_weights_array);
-		/* Accumulate */
+    for (int iter = 0; iter < nb_iterations16; iter += 16, inputs += 16, weights += 16) {
+        uint32_t  packed_inputs_array[4], packed_weights_array[4];
+        /* Get mac8' operands */
+        for (int i = 0; i < 4; ++i) {
+            packed_inputs_array[i]  = mac_pack32 ((void*)(inputs + 4*i), 4);
+            packed_weights_array[i] = mac_pack32((void*)(weights + 4*i), 4);
+        }
+        /* Calculate and Accumulate */
+        MAC8_16_ACC(*weightedSum, packed_inputs_array, packed_weights_array);
     }
     nb_iterations = rem16;
-	#endif // BLOCK_SIZE_16
+#   endif // BLOCK_SIZE_16
 
     /* BLOCK_SIZE : 4 BYTES */
     int rem4 = nb_iterations % 4 ; 
     int nb_iterations4 = nb_iterations - rem4;
-    for (int iter = 0; iter < nb_iterations4; iter += 4, inputs += 4,
-	       			     						        weights += 4) {
-		uint32_t  packed_inputs;
-		uint32_t packed_weights;
-		/* Get mac8' operands */
-		#if USE_MAC_PACK32
-			packed_inputs  = mac_pack32 ((void*)(inputs + 0), 4);
-    		packed_weights = mac_pack32((void*)(weights + 0), 4);
-		#else // USE memcpy
-    		memcpy((void*)&packed_inputs, (void*)inputs,  4);
-			memcpy((void*)&packed_weights, (void*)weights, 4);
-		#endif // USE_MAC_PACK32
-		/* Calculate */
-		MAC8_ACC(accumulator, packed_inputs, packed_weights);
+    for (int iter = 0; iter < nb_iterations4; iter += 4, inputs += 4, weights += 4) {
+        uint32_t  packed_inputs, packed_weights;
+        /* Get mac8' operands */
+        packed_inputs  = mac_pack32 ((void*)(inputs + 0), 4);
+        packed_weights = mac_pack32((void*)(weights + 0), 4);
+        /* Calculate and Accumulate */
+        MAC8_ACC(*weightedSum, packed_inputs, packed_weights);
     }
     nb_iterations = rem4;
 
     /* REMAINING : 3, 2, 1 */
     if (rem4 != 0) {
-		uint32_t  packed_inputs;
-		uint32_t packed_weights;
-		/* Get mac8' operands */
-		#if USE_MAC_PACK32
-    		packed_inputs  = mac_pack32 ((void*)inputs, rem4);
-    		packed_weights = mac_pack32((void*)weights, rem4);
-		#else  // USE memcpy
-    		memcpy((void*)&packed_inputs, (void*)inputs,  rem4);
-			memcpy((void*)&packed_weights, (void*)weights, rem4);
-		#endif // USE_MAC_PACK32	
-		/* Calculate */
-		MAC8_ACC(accumulator, packed_inputs, packed_weights);
+        uint32_t  packed_inputs, packed_weights;
+        /* Get mac8' operands */
+        packed_inputs  = mac_pack32 ((void*)inputs, rem4);
+        packed_weights = mac_pack32((void*)weights, rem4);  
+        /* Calculate and Accumulate */
+        MAC8_ACC(*weightedSum, packed_inputs, packed_weights);
     }
-
-    *weightedSum += accumulator; // Add the accumulator value to *weightedSum
-
-#else 
-    // Default implementation 
+#else  // Default implementation 
     for (int iter = 0; iter < nb_iterations; ++iter) {
         *weightedSum += inputs[iter] * weights[iter];
     }
-#endif
+#endif // ENABLE_insAI_EXTENSION
 }
 
 static UDATA_T saturate(SUM_T value, uint32_t sat) {
