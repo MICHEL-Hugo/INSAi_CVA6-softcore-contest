@@ -37,6 +37,15 @@
       );                                                                   \
     } while (0)
 
+#define MIX(unaligned_word, current_word, next_word)                       \
+    do {                                                                   \
+      asm volatile (                                                       \
+        "mix %[z], %[x], %[y]\n\t"                                         \
+        : [z] "=&r"((unaligned_word))                                      \
+        : [x] "r"((current_word)), [y] "r"((next_word))                    \
+      );                                                                   \
+    } while (0)                                               
+
 /* 
  * packs up to 4 bytes from src address into 32 bits word 
  */
@@ -55,14 +64,9 @@ static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_coun
       
       uint32_t c_word = *((uint32_t*)c_word_addr); //load current word
       uint32_t n_word = *((uint32_t*)n_word_addr); //load next    word, BOF!!?
-
-      count *= 8; // part of word in the next word 
-                  // [8, 16, 24] bits
-      
-      c_word >>= count; // logical right shift
-      n_word <<= count; // logical left  shift
-      
-      return (c_word | n_word);
+      uint32_t unaligned_word;
+      MIX(unaligned_word, c_word, n_word);
+      return unaligned_word;
     }
     case 2 : {
       int count  = (int)((uintptr_t)src & 0x1); 
@@ -76,8 +80,6 @@ static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_coun
       
       uint16_t c_half_word = *((uint16_t*)c_half_word_addr);
       uint16_t n_half_word = *((uint16_t*)n_half_word_addr); // BOF !!?
-
-      // count *= 8; // 8 bits
       
       c_half_word >>= 8; // logical right shift
       n_half_word <<= 8; // logical left  shift
@@ -93,7 +95,6 @@ static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_coun
     }
     default:
       return *(uint8_t*)src;
-    }  
+    }
 }
-
 #endif // __INSAI_MAC__
