@@ -566,10 +566,10 @@ package ariane_pkg;
     ACCEL_OP_STORE,
     // Zicond instruction
     CZERO_EQZ,
-    CZERO_NEZ,
+    CZERO_NEZ
 `ifdef ENABLE_insAI_EXTENSION
     // insAI extension
-        , MAC8_INIT
+    , MAC8_INIT
     , MAC8_ACC	
     , MIX
 `endif // ENABLE_insAI_EXTENSION
