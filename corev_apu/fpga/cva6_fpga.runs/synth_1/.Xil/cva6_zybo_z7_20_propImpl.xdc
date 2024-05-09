@@ -1,6 +1,6 @@
-set_property SRC_FILE_INFO {cfile:/home/beepboop/riscv_2023/cva6-softcore-contest/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen/xlnx_clk_gen_in_context.xdc rfile:../../../xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen/xlnx_clk_gen_in_context.xdc id:1 order:EARLY scoped_inst:i_xlnx_clk_gen} [current_design]
-set_property SRC_FILE_INFO {cfile:/home/beepboop/riscv_2023/cva6-softcore-contest/corev_apu/fpga/constraints/zybo_z7_20.xdc rfile:../../../constraints/zybo_z7_20.xdc id:2} [current_design]
-set_property SRC_FILE_INFO {cfile:/home/beepboop/riscv_2023/cva6-softcore-contest/corev_apu/fpga/constraints/cva6_fpga.xdc rfile:../../../constraints/cva6_fpga.xdc id:3} [current_design]
+set_property SRC_FILE_INFO {cfile:/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen/xlnx_clk_gen_in_context.xdc rfile:../../../xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen/xlnx_clk_gen_in_context.xdc id:1 order:EARLY scoped_inst:i_xlnx_clk_gen} [current_design]
+set_property SRC_FILE_INFO {cfile:/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/constraints/zybo_z7_20.xdc rfile:../../../constraints/zybo_z7_20.xdc id:2} [current_design]
+set_property SRC_FILE_INFO {cfile:/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/constraints/cva6_fpga.xdc rfile:../../../constraints/cva6_fpga.xdc id:3} [current_design]
 current_instance i_xlnx_clk_gen
 set_property src_info {type:SCOPED_XDC file:1 line:1 export:INPUT save:INPUT read:READ} [current_design]
 create_clock -period 8.000 [get_ports -no_traverse {}]

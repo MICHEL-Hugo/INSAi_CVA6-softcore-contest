@@ -75,7 +75,6 @@ int main(int argc, char* argv[]) {
     printf("credence: %d\n", output_value);
     printf("image %s: %d instructions\n", stringify(MNIST_INPUT_IMAGE), (int)(instret));
     printf("image %s: %d cycles\n", stringify(MNIST_INPUT_IMAGE), (int)(cycles));
-
 #ifdef OUTPUTFILE
     FILE *f = fopen("success_rate.txt", "w");
     if (f == NULL) {

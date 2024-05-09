@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-| Date         : Thu Nov 30 13:47:09 2023
+| Date         : Wed May  1 18:06:16 2024
 | Host         : beepboop running 64-bit Ubuntu 22.04.1 LTS
 | Command      : check_timing -file reports_cva6_fpga_impl/cva6_fpga.check_timing.rpt
 | Design       : cva6_zybo_z7_20
@@ -14,7 +14,7 @@ check_timing report
 
 Table of Contents
 -----------------
-1. checking no_clock (480)
+1. checking no_clock (544)
 2. checking constant_clock (0)
 3. checking pulse_width_clock (0)
 4. checking unconstrained_internal_endpoints (32)
@@ -27,7 +27,7 @@ Table of Contents
 11. checking partial_output_delay (0)
 12. checking latch_loops (0)
 
-1. checking no_clock (480)
+1. checking no_clock (544)
 --------------------------
  There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][0]/Q (HIGH)
 
@@ -43,6 +43,8 @@ Table of Contents
 
  There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][6]/Q (HIGH)
 
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[0][operation][7]/Q (HIGH)
+
  There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][0]/Q (HIGH)
 
  There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][1]/Q (HIGH)
@@ -56,6 +58,8 @@ Table of Contents
  There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][5]/Q (HIGH)
 
  There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][6]/Q (HIGH)
+
+ There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/ex_stage_i/lsu_i/i_load_unit/ldbuf_q_reg[1][operation][7]/Q (HIGH)
 
  There are 32 register/latch pins with no clock driven by root clock pin: i_ariane/i_cva6/gen_cache_wt.i_cache_subsystem/i_wt_dcache/gen_rd_ports[1].i_wt_dcache_ctrl/id_q_reg[0]/Q (HIGH)
 

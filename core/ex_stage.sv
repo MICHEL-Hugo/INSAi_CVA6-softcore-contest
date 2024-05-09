@@ -60,6 +60,15 @@ module ex_stage
     output riscv::xlen_t                mac8_FU_result_o,
     output logic   [TRANS_ID_BITS-1:0]  mac8_FU_trans_id_o,
     output exception_t                  mac8_FU_exception_o,
+
+    input  logic                        mix_unit_valid_i,
+    output logic                        mix_unit_ready_o,
+    output logic                        mix_unit_valid_o,
+    output riscv::xlen_t                mix_unit_result_o,
+    output logic   [TRANS_ID_BITS-1:0]  mix_unit_trans_id_o,
+    output exception_t                  mix_unit_exception_o,
+
+
 `endif //ENABLE_insAI_EXTENSION
 
     // LSU
@@ -206,7 +215,7 @@ module ex_stage
       // any functional unit is valid, check that there is no accidental mis-predict
       .fu_valid_i ( alu_valid_i || lsu_valid_i || csr_valid_i || mult_valid_i || fpu_valid_i || acc_valid_i 
       `ifdef ENABLE_insAI_EXTENSION
-        || mac8_FU_valid_i) ,
+        || mac8_FU_valid_i || mix_unit_valid_i) ,
       `else 
         ),
       `endif // ENABLE_insAI_EXTENSION
@@ -283,8 +292,10 @@ module ex_stage
   // --------------------------
   
   fu_data_t mac8_FU_data;
+  fu_data_t mix_unit_data;
 
   assign mac8_FU_data = mac8_FU_valid_i ? fu_data_i : '0;
+
 
   mac8_FU #(
     .CVA6Cfg(CVA6Cfg)
@@ -299,6 +310,27 @@ module ex_stage
     .mac8_FU_ready_o,
     .mac8_FU_trans_id_o,
     .mac8_FU_exception_o
+  );
+
+  // --------------------------
+  // MIX_UNIT
+  // --------------------------
+
+    assign mix_unit_data = mix_unit_valid_i ? fu_data_i : '0;
+
+  mix_unit #(
+    .CVA6Cfg(CVA6Cfg)
+  ) i_mix_unit (
+    .clk_i,
+    .rst_ni,
+    .flush_i,
+    .mix_unit_valid_i,
+    .fu_data_i(mix_unit_data),
+    .mix_unit_result_o,
+    .mix_unit_valid_o,
+    .mix_unit_ready_o,
+    .mix_unit_trans_id_o,
+    .mix_unit_exception_o
   );
 `endif // ENABLE_insAI_EXTENSION
 

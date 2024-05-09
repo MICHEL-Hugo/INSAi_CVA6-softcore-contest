@@ -20,7 +20,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/beepboop/riscv_2023/cva6-softcore-contest/corev_apu/fpga/cva6_fpga.runs/synth_1'
+HD_PWD='/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/cva6_fpga.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
