@@ -261,8 +261,8 @@ package ariane_pkg;
     FPU_VEC,    // 8
     CVXIF,      // 9
     ACCEL,      // 10
-    MAC8_FU ,    // 11
-    MIX_UNIT         // 12
+    MAC8_FU ,   // 11
+    MIX_UNIT    // 12
   } fu_t;
 
   localparam EXC_OFF_RST = 8'h80;
