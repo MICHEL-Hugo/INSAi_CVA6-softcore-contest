@@ -12,7 +12,7 @@
 #if ENABLE_insAI_EXTENSION
 # include "insAI_mac.h"    // Required for: MAC8_INIT, MAC8_ACC, MAC8_16_ACC, mac_pack32 
 						   // Used in macsOnRange 
-#endif // USE_MAC_PACK32
+#endif // ENABLE_insAI_EXTENSION
 	   
 static DATA_T mem[MEMORY_SIZE];
 
