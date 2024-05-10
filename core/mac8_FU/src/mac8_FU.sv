@@ -24,14 +24,11 @@ module mac8_FU
     output  logic   [TRANS_ID_BITS-1:0] mac8_FU_trans_id_o,
     output  exception_t                mac8_FU_exception_o
     );
-	
-	logic [31:0]     accumulator_q, accumulator_d;
 
-	logic [31:0]      cur_res;   
+    logic [31:0]     accumulator_q, accumulator_d;
+    logic [31:0]      cur_res; 
     logic [3:0][15:0] mult_res;
     logic [17:0]      add_res; 
-    logic mac8_FU_valid_d, mac8_FU_valid_q;
-    logic   [TRANS_ID_BITS-1:0] mac8_FU_trans_id_q, mac8_FU_trans_id_d;
     
 	// Multiplication stage
 	for (genvar i = 0; i < 4; ++i) begin

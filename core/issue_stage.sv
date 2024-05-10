@@ -59,7 +59,7 @@ module issue_stage
       `ifdef ENABLE_insAI_EXTENSION
     // MAC8_FU (Fix lantency unit, maybe i need a ready signal)
     input  logic       mac8_FU_ready_i,
-    output logic       mac8_FU_valid_o, 
+    output logic       mac8_FU_valid_o,
 
     input  logic       mix_unit_ready_i,
     output logic       mix_unit_valid_o,
