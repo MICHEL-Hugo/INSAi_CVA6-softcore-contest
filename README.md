@@ -68,9 +68,13 @@ source /opt/Xilinx/Vivado/2020.1/settings64.sh
 1. First, make sure the Digilent **JTAG-HS2 debug adapter** is properly connected to the **PMOD JE** connector and that the USBAUART adapter is properly connected to the **PMOD JB** connector of the Zybo Z7-20 board.
 ![alt text](./docs/pictures/20201204_150708.jpg)
 
-2. Generate the bitstream of the FPGA platform ( a refaire que si le bitstream a été supprimer):
+2. a Generate the bitstream of the FPGA platform ( a refaire que si le bitstream a été supprimer):
 ```
 $ make cva6_fpga
+```
+2. b Generate the bitstream of the FPGA platform with insAI extension :
+```
+$ make cva6_fpga_insAI
 ```
 
 3. When the bitstream is generated, switch on Zybo board and run: (à refaire à chaque lancement du FPGA) 
@@ -155,6 +159,17 @@ user@[CONTAINER ID]:/workdir/app$ make mnist
 ```
 cd app
 make mnist
+```
+  To enable Hardware acceleration, run 
+
+```
+user@[CONTAINER ID]:/workdir$ cd app
+user@[CONTAINER ID]:/workdir/app$ make mnist EN_HW_ACCEL=1
+
+```
+```
+cd app
+make mnist EN_HW_ACCEL=1
 ```
 
 At the end of the compilation the mnist.riscv executable file must be created.
