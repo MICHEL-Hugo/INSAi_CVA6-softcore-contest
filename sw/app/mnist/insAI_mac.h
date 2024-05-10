@@ -10,7 +10,7 @@
  * value0    : type : scalar (int32_t)
  *             width: 32 bits
  *             elmt : 32 bits signed value      
- * Note      : value0 may be a rvalue
+ * Note      : value0 may be an rvalue
  */
 #define MAC8_INIT(value0)                                                  \
     do {                                                                   \
@@ -122,14 +122,15 @@
  *              byte when bytes_count is 0 or greater than 4.
  *
  *              The same result can be achieved with memcpy. 
- *              memcpy uses 4 "lbu" to load contiguous memories --> not efficient
- *              we can leverage lw (load word, a word is 32 bits) to produce faster
- *              code.
- *              mac_pack32 uses 1 lw when the @src is 4 bytes aligned 
- *              and 2 "lw" + mix otherwise with little overhead (test + branch)
+ *              memcpy uses 4 "lbu" to load contiguous memories: not efficient
+ *              we can leverage lw (load word, a word is 32 bits) to produce 
+ *              faster code.
+ *              mac_pack32 uses 1 lw when the @src is 4 bytes aligned and 
+ *              2 "lw" + mix otherwise with little overhead (test + branch)
  *
- *              -> these overhead can result in a loop invariant code when use in 
- *              a loop with iteration step multiple of 4.That's our case (step = 16/4) 
+ *              -> these overhead can result in a loop invariant code when 
+ *              use in a loop with iteration step multiple of 4.That's our
+ *              case (step = 16/4) 
  *              -> @src is usually 4 bytes aligned.
  */
 static inline uint32_t 
@@ -147,7 +148,7 @@ mac_pack32(const void*  __restrict src, size_t bytes_count)
       uintptr_t n_word_addr = c_word_addr +  4;
       
       uint32_t c_word = *((uint32_t*)c_word_addr); //load current word
-      uint32_t n_word = *((uint32_t*)n_word_addr); //load next    word, BOF!!?
+      uint32_t n_word = *((uint32_t*)n_word_addr); //load next    word
       uint32_t unaligned_word;
       MIX(unaligned_word, c_word, n_word);
       return unaligned_word;
@@ -171,8 +172,8 @@ mac_pack32(const void*  __restrict src, size_t bytes_count)
       return (c_half_word | n_half_word);
     }
     case 3 : {
-        const uint8_t* array = (const uint8_t*)src;
-      return (array[0] << (8 * 0)) | (array[1] << (8 * 1)) | (array[2] << (8 * 2)); 
+      const uint8_t* array = (const uint8_t*)src;
+      return (array[0] << (8*0)) | (array[1] << (8*1)) | (array[2] << (8*2)); 
     }
     case 1 : {
          __attribute__((fallthrough)); 
