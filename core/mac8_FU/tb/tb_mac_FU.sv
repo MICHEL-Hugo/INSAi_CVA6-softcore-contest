@@ -1,9 +1,6 @@
 `define ENABLE_insAI_EXTENSION
 
-  
 `timescale 1ns / 1ps
-
-
 
 module tb_mac8_FU 
 import ariane_pkg::*;
@@ -50,12 +47,10 @@ import ariane_pkg::*;
     
     // Test stimulus
     initial begin
-        // Wait for reset to be deasserted
         @(posedge clk_i);
         
         // Apply test vectors
-        // Example: Set inputs and toggle valid signal
-        fu_data_i = '0; // Set input data here
+        fu_data_i = '0; 
         fu_data_i.operand_a = 'h55667788;
         fu_data_i.operand_b = 'h11223344;
         
@@ -74,7 +69,7 @@ import ariane_pkg::*;
         mac8_FU_valid_i = 1'b0;
         #(CLK_PERIOD);
         mac8_FU_valid_i = 1'b1;
-;
+
         #(4*CLK_PERIOD);
         mac8_FU_valid_i = 1'b0;
                 

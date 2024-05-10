@@ -27,7 +27,6 @@
 /// *Note*: There are some parameters here as well which will eventually be
 /// moved out to favour a fully parameterizable core.
 package ariane_pkg;
-  localparam ENABLE_RENAME = 1'b1;
   // TODO: Slowly move those parameters to the new system.
   localparam NR_SB_ENTRIES = cva6_config_pkg::CVA6ConfigNrScoreboardEntries; // number of scoreboard entries
   localparam TRANS_ID_BITS = $clog2(
@@ -566,13 +565,11 @@ package ariane_pkg;
     ACCEL_OP_STORE,
     // Zicond instruction
     CZERO_EQZ,
-    CZERO_NEZ
-`ifdef ENABLE_insAI_EXTENSION
+    CZERO_NEZ,
     // insAI extension
-    , MAC8_INIT
-    , MAC8_ACC	
-    , MIX
-`endif // ENABLE_insAI_EXTENSION
+    MAC8_INIT,
+    MAC8_ACC,	
+    MIX
   } fu_op;
 
   typedef struct packed {

@@ -9,10 +9,10 @@
 #include "fc1.h"
 #include "fc2.h"
 
-#if ENABLE_insAI_EXTENSION
+#if EN_HW_ACCEL
 # include "insAI_mac.h"    // Required for: MAC8_INIT, MAC8_ACC, MAC8_16_ACC, mac_pack32 
 						   // Used in macsOnRange 
-#endif // ENABLE_insAI_EXTENSION
+#endif // EN_HW_ACCEL
 	   
 static DATA_T mem[MEMORY_SIZE];
 
@@ -37,7 +37,7 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
                         SUM_T* __restrict weightedSum,
                         int nb_iterations)
 {
-#if ENABLE_insAI_EXTENSION
+#if EN_HW_ACCEL
     MAC8_INIT(*weightedSum); // initialize the accumulator with (*weightedSum)    
 
     /* BLOCK_SIZE : 16 BYTES */
@@ -81,7 +81,7 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
     for (int iter = 0; iter < nb_iterations; ++iter) {
         *weightedSum += inputs[iter] * weights[iter];
     }
-#endif // ENABLE_insAI_EXTENSION
+#endif // EN_HW_ACCEL
 }
 
 static UDATA_T saturate(SUM_T value, uint32_t sat) {
