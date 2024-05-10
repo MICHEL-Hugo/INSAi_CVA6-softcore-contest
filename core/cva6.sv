@@ -159,11 +159,11 @@ module cva6
   localparam bit XF8Vec     = CVA6Cfg.XF8     & CVA6Cfg.XFVec & FLen>8;  // FP8 vectors available if vectors and larger fmt enabled
 
   localparam bit EnableAccelerator = CVA6Cfg.RVV;  // Currently only used by V extension (Ara)
-  
+ 
   `ifdef ENABLE_insAI_EXTENSION
     localparam int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? (5+2) : (4+2); // += MAC8 + MIX
-  `else 
-    localparam int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? (5) : (4); 
+  `else
+    localparam int unsigned NrWbPorts = (CVA6Cfg.CvxifEn || EnableAccelerator) ? (5) : (4);
   `endif // ENABLE_insAI_EXTENSION
 
   localparam NrRgprPorts = 2;
@@ -891,7 +891,6 @@ module cva6
       .csr_rdata_i       (csr_rdata_csr_commit),
       .csr_write_fflags_o(csr_write_fflags_commit_cs),
       .csr_exception_i   (csr_exception_csr_commit),
-      
       .fence_i_o         (fence_i_commit_controller),
       .fence_o           (fence_commit_controller),
       .sfence_vma_o      (sfence_vma_commit_controller),

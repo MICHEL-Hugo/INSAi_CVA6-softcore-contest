@@ -266,9 +266,9 @@ module decoder
         end
 
         `ifdef ENABLE_insAI_EXTENSION
-		// -------------------------- 
-        // MAC8_FU 
-		// --------------------------
+         // --------------------------
+         // MAC8_FU  and MIX_UNIT
+		 // --------------------------
         riscv::OpcodeCustom0: begin
           instruction_o.fu  = MAC8_FU;
           //instructions operands
@@ -277,8 +277,8 @@ module decoder
           instruction_o.rd[4:0]  = instr.rtype.rd;
 		  unique case ({instr.rtype.funct3})
               3'b000 : instruction_o.op = ariane_pkg::MAC8_ACC;
-			  3'b010 : instruction_o.op = ariane_pkg::MAC8_INIT; 
-              3'b001 : begin 
+			  3'b010 : instruction_o.op = ariane_pkg::MAC8_INIT;
+              3'b001 : begin
                 instruction_o.fu  = MIX_UNIT;
                 instruction_o.op  = ariane_pkg::MIX;
               end
