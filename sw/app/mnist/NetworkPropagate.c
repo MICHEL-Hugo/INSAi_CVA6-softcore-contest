@@ -39,7 +39,7 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
 {
 #if ENABLE_insAI_EXTENSION
     MAC8_INIT(*weightedSum); // initialize the accumulator with (*weightedSum)    
-#   if USE_BLOCK_SIZE_16 
+
     /* BLOCK_SIZE : 16 BYTES */
     int rem16 = nb_iterations % 16 ;
     int nb_iterations16 = nb_iterations - rem16;
@@ -54,7 +54,6 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
         MAC8_16_ACC(*weightedSum, packed_inputs_array, packed_weights_array);
     }
     nb_iterations = rem16;
-#   endif // BLOCK_SIZE_16
 
     /* BLOCK_SIZE : 4 BYTES */
     int rem4 = nb_iterations % 4 ; 
@@ -69,7 +68,7 @@ static inline  void macsOnRange(const UDATA_T* __restrict inputs,
     }
     nb_iterations = rem4;
 
-    /* REMAINING : 3, 2, 1 */
+    /* REMAINING : 3, 2 or 1 Bytes */
     if (rem4 != 0) {
         uint32_t  packed_inputs, packed_weights;
         /* Get mac8' operands */
