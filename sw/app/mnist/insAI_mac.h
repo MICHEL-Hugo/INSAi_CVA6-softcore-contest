@@ -2,20 +2,19 @@
 #define __INSAI_MAC__
 
 #include <stddef.h>   // Required for : size_t
-#include <stdint.h>   // Required for : uint32_t
-#include <string.h>   // Required for : memcpy  
+#include <stdint.h>   // Required for : int32_t, uint32_t, uintptr_t
 
-#define MAC8_ACC(result, inputs, weights)                                  \
+/*
+ * MAC8_INIT : - initialize the accumulator register with value0
+ *
+ * value0    : type : scalar (int32_t)
+ *             width: 32 bits
+ *             elmt : 32 bits signed value      
+ * Note      : value0 may be a rvalue
+ */
+#define MAC8_INIT(value0)                                                  \
     do {                                                                   \
-      asm volatile (                                                       \
-        "mac8_acc %[z], %[x], %[y]\n\t"                                    \
-        : [z] "=&r"((result))                                              \
-        : [x] "r"((weights)), [y] "r"((inputs))                            \
-      );                                                                   \
-    } while (0)                                               
-
-#define MAC8_INIT(accumulator0)                                            \
-    do {                                                                   \
+      int32_t accumulator0 = value0;                                       \
       asm volatile (                                                       \
         "mac8_init %[z], %[x], x0\n\t"                                     \
         : [z] "=&r"((accumulator0))                                        \
@@ -23,6 +22,45 @@
       );                                                                   \
     } while (0)
 
+/*
+ * MAC8_ACC : - compute mac on inputs and weights
+ *            - add the result to the accumulator register
+ *            - "return" the sum in result
+ *
+ * inputs   : type : vector (uint32_t)
+ *            width: 4 * 8 = 32 bits
+ *            elmt : 8 bits unsigned value 
+ * weights  : type : vector (uint32_t)
+ *            width: 4 * 8 = 32 bits
+ *            elmt : 8 bits signed value
+ * result   : type : scalar (int32_t)
+ *            width: 32 bits
+ *            elmt : 32 bits signed value
+ */
+#define MAC8_ACC(result, inputs, weights)                                  \
+    do {                                                                   \
+      asm volatile (                                                       \
+        "mac8_acc %[z], %[x], %[y]\n\t"                                    \
+        : [z] "=&r"((result))                                              \
+        : [x] "r"((weights)), [y] "r"((inputs))                            \
+      );                                                                   \
+    } while (0)                               
+
+/*
+ * MAC8_16_ACC  : - compute mac on inputs_array and weights_array
+ *                - add the result to the accumulator register
+ *                - "return" the sum in result
+ *
+ * inputs_array : type : vector (uint32_t[4])
+ *                width: 16 * 8 = 128 bits
+ *                elmt : 8 bits unsigned value 
+ * weights_array: type : vector (uint32_t[4])
+ *                width: 16 * 8 = 128 bits
+ *                elmt : 8 bits signed value
+ * result       : type : scalar (int32_t)
+ *                width: 32 bits
+ *                elmt : 32 bits signed value
+ */
 #define MAC8_16_ACC(result, inputs_array, weights_array)                   \
     do {                                                                   \
       asm volatile (                                                       \
@@ -37,6 +75,30 @@
       );                                                                   \
     } while (0)
 
+/* MIX            : compress this snippet of code 
+ *                    {
+ *                      //count : 0, 1, 2 or 3
+ *                      current_word >>= 8 * count; // logical right shift
+ *                      next_word    <<= 8 * count; // logical left  shift
+ *                      unaligned_word = (current_word | next_word);
+ *                    } 
+ *                  into one instruction: 
+ *                     {
+ *                      MIX (unaligned_word, current_word, next_word)
+ *                     }
+ * current_word   : type : vector (uint32_t)
+ *                  width: 4 * 8 = 32 bits
+ *                  elmt : 8 bits signed (resp. unsigned) value
+ * next_word      : type : vector (uint32_t)
+ *                  width: 4 * 8 = 32 bits
+ *                  elmt : 8 bits signed (resp. unsigned) value
+ * unaligned_word : type : vector (uint32_t)
+ *                  width: 4 * 8 = 32 bits
+ *                  elmt : 8 bits signed (resp. unsigned) value
+ *
+ * Note : At this moment, only count = 2 is supported by the hardware
+ * TODO : create LOAD_UNALIGNED macro or rename MIX -> MIX_2
+ */
 #define MIX(unaligned_word, current_word, next_word)                       \
     do {                                                                   \
       asm volatile (                                                       \
@@ -46,10 +108,32 @@
       );                                                                   \
     } while (0)                                               
 
-/* 
- * packs up to 4 bytes from src address into 32 bits word 
+/*  
+ * mac_pack32 : - pack up to 4 bytes from src address into 32 bits word 
+ *              - return the new word
+ *
+ * src        : start address
+ * bytes_count: number of bytes to pack
+ * return     : type : vector (uint32_t)
+ *              width: 4 * 8 = 32 bits
+ *              elmt : 8 bits signed/unsigned
+ *
+ * Notes      : bytes_count should be less than 4. We only pack the first
+ *              byte when bytes_count is 0 or greater than 4.
+ *
+ *              The same result can be achieved with memcpy. 
+ *              memcpy uses 4 "lbu" to load contiguous memories --> not efficient
+ *              we can leverage lw (load word, a word is 32 bits) to produce faster
+ *              code.
+ *              mac_pack32 uses 1 lw when the @src is 4 bytes aligned 
+ *              and 2 "lw" + mix otherwise with little overhead (test + branch)
+ *
+ *              -> these overhead can result in a loop invariant code when use in 
+ *              a loop with iteration step multiple of 4.That's our case (step = 16/4) 
+ *              -> @src is usually 4 bytes aligned.
  */
-static inline uint32_t mac_pack32(const void*  __restrict src, size_t bytes_count)
+static inline uint32_t 
+mac_pack32(const void*  __restrict src, size_t bytes_count)
 {
     switch(bytes_count) {
     case 4 : { 
