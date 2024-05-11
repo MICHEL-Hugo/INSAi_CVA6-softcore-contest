@@ -1,3 +1,24 @@
+// Copyright 2023-2024 INSA Toulouse.
+// Copyright and related rights are licensed under the Solderpad Hardware
+// License, Version 0.51 (the "License"); you may not use this file except in
+// compliance with the License.  You may obtain a copy of the License at
+// http://solderpad.org/licenses/SHL-0.51. Unless required by applicable law
+// or agreed to in writing, software, hardware and materials distributed under
+// this License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+// CONDITIONS OF ANY KIND, either express or implied. See the License for the
+// specific language governing permissions and limitations under the License.
+//
+// Authors: Nell PARTY,              INSA Toulouse
+//          Hugo MICHEL,             INSA Toulouse
+//          Achille CAUTE,           INSA Toulouse 
+//          Diskouna J. GNANGUESSIM, INSA Toulouse
+/
+// Date   : 11.05.2024
+//
+// Description : mac8_FU testbench
+// NOTE : This testbench doesn't take into account 
+// input silencing. (mac8_FU_valid_i ^ fu_data_i)
+
 `define ENABLE_insAI_EXTENSION
 
 `timescale 1ns / 1ps
@@ -53,10 +74,8 @@ import ariane_pkg::*;
         fu_data_i = '0; 
         fu_data_i.operand_a = 'h55667788;
         fu_data_i.operand_b = 'h11223344;
-       /*
-        * NOTE : This testbench doesn't take into account 
-        * input silencing. (mac8_FU_valid_i ^ fu_data_i)
-        */
+       
+        
         #(CLK_PERIOD);
         fu_data_i.operation = MAC8_INIT;
         mac8_FU_valid_i = 1'b1;
@@ -81,11 +100,6 @@ import ariane_pkg::*;
         
         // End of simulation
         $finish;
-    end
-    
-    // Monitor outputs
-    always @(posedge clk_i) begin
-        $display("Result: %d, Valid: %b, Ready: %b", mac8_FU_result_o, mac8_FU_valid_o, mac8_FU_ready_o);
     end
 
 endmodule
