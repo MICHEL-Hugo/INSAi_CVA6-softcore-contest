@@ -53,7 +53,10 @@ import ariane_pkg::*;
         fu_data_i = '0; 
         fu_data_i.operand_a = 'h55667788;
         fu_data_i.operand_b = 'h11223344;
-        
+       /*
+        * NOTE : This testbench doesn't take into account 
+        * input silencing. (mac8_FU_valid_i ^ fu_data_i)
+        */
         #(CLK_PERIOD);
         fu_data_i.operation = MAC8_INIT;
         mac8_FU_valid_i = 1'b1;
