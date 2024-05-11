@@ -6,7 +6,7 @@
 localparam VALID = 1'b1;
 localparam READY = 1'b1;
 
-(* use_dsp = "simd" *)
+//(* use_dsp = "simd" *)
 module mac8_FU
     import ariane_pkg::*;
 	import riscv::XLEN;
@@ -50,19 +50,16 @@ module mac8_FU
 
 	// Calculate accumulator next value
     always_comb begin 
-        accumulator_d = accumulator_q;
         unique case (fu_data_i.operation)
             MAC8_INIT : 
                 accumulator_d = $signed(fu_data_i.operand_a);
-            MAC8_ACC  :
+            default: //MAC8_ACC falls in this case 
                 accumulator_d = $signed(cur_res) + $signed(accumulator_q);
-            default: 
-                ;
         endcase
         if (~mac8_FU_valid_i) begin
             accumulator_d = accumulator_q;
         end
-	end
+    end
 	
 	// Outputs
     assign mac8_FU_result_o    = accumulator_d; 
