@@ -1,12 +1,30 @@
-#!/bin/sh
-
-# Objective: 
-# - add mac8_init, mac8_acc instruction to the toolchain
-# - add mix instruction to the toolchain as well
-
+# Copyright 2023-2024 INSA Toulouse.
+# Copyright and related rights are licensed under the Solderpad Hardware
+# License, Version 0.51 (the "License"); you may not use this file except in
+# compliance with the License.  You may obtain a copy of the License at
+# http://solderpad.org/licenses/SHL-0.51. Unless required by applicable law
+# or agreed to in writing, software, hardware and materials distributed under
+# this License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+#
+# Authors: Nell PARTY,              INSA Toulouse
+#          Hugo MICHEL,             INSA Toulouse
+#          Achille CAUTE,           INSA Toulouse 
+#          Diskouna J. GNANGUESSIM, INSA Toulouse
+#
+# Date   : 11.05.2024
+#
+# Description : shell script that adds following instructions to GNU RISCV toolchain :
+#                - mac8_init, mac8_acc
+#                - mix.
+#               It uses a simple find/replace scheme .              
+#            
 # Prerequisites:
-# grep
-# sed
+#                - grep
+#                - sed
+
+#!/bin/sh
 
 HEADER="\/* Custom : insAI*\/"
 
