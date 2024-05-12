@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/cva6_fpga.runs/impl_1/cva6_zybo_z7_20.tcl"
+  variable script "/home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/cva6_fpga.runs/impl_1/cva6_zybo_z7_20.tcl"
   variable category "vivado_impl"
 }
 
@@ -127,9 +127,9 @@ set ACTIVE_STEP write_bitstream
 set rc [catch {
   create_msg_db write_bitstream.pb
   set_param chipscope.maxJobs 1
-  set_param synth.incrementalSynthesisCache ./.Xil/Vivado-36072-beepboop/incrSyn
+  set_param synth.incrementalSynthesisCache ./.Xil/Vivado-2960810-KaiirosChronos/incrSyn
   open_checkpoint cva6_zybo_z7_20_routed.dcp
-  set_property webtalk.parent_dir /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/cva6_fpga.cache/wt [current_project]
+  set_property webtalk.parent_dir /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/cva6_fpga.cache/wt [current_project]
 set_property TOP cva6_zybo_z7_20 [current_fileset]
 OPTRACE "read constraints: write_bitstream" START { }
 OPTRACE "read constraints: write_bitstream" END { }

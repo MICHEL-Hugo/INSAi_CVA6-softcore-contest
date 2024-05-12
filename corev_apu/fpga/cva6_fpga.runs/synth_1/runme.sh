@@ -7,9 +7,9 @@
 # 
 
 if [ -z "$PATH" ]; then
-  PATH=/opt/Xilinx/Vitis/2020.1/bin:/opt/Xilinx/Vivado/2020.1/ids_lite/ISE/bin/lin64:/opt/Xilinx/Vivado/2020.1/bin
+  PATH=/tools/Xilinx/Vivado/2020.1/ids_lite/ISE/bin/lin64:/tools/Xilinx/Vivado/2020.1/bin
 else
-  PATH=/opt/Xilinx/Vitis/2020.1/bin:/opt/Xilinx/Vivado/2020.1/ids_lite/ISE/bin/lin64:/opt/Xilinx/Vivado/2020.1/bin:$PATH
+  PATH=/tools/Xilinx/Vivado/2020.1/ids_lite/ISE/bin/lin64:/tools/Xilinx/Vivado/2020.1/bin:$PATH
 fi
 export PATH
 
@@ -20,7 +20,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/cva6_fpga.runs/synth_1'
+HD_PWD='/home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/cva6_fpga.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "/home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/cva6_fpga.runs/synth_1/cva6_zybo_z7_20.tcl"
+  variable script "/home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/cva6_fpga.runs/synth_1/cva6_zybo_z7_20.tcl"
   variable category "vivado_synth"
 }
 
@@ -70,7 +70,7 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param synth.incrementalSynthesisCache ./.Xil/Vivado-36072-beepboop/incrSyn
+set_param synth.incrementalSynthesisCache ./.Xil/Vivado-2960810-KaiirosChronos/incrSyn
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-4480} -limit 1000
 set_msg_config -id {Synth 8-638} -limit 10000
@@ -82,303 +82,303 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/cva6_fpga.cache/wt [current_project]
-set_property parent.project_path /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/cva6_fpga.xpr [current_project]
+set_property webtalk.parent_dir /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/cva6_fpga.cache/wt [current_project]
+set_property parent.project_path /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/cva6_fpga.xpr [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property board_part digilentinc.com:zybo-z7-20:part0:1.2 [current_project]
-set_property ip_output_repo /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/cva6_fpga.cache/ip [current_project]
+set_property ip_output_repo /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/cva6_fpga.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 set_property include_dirs {
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/axi_sd_bridge/include
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/include
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/axi/include
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/include
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/register_interface/include
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/axi_sd_bridge/include
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/include
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/axi/include
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/include
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/register_interface/include
 } [current_fileset]
 set_property verilog_define {BRAM=BRAM ENABLE_insAI_EXTENSION=ENABLE_insAI_EXTENSION} [current_fileset]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog {
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/zybo-z7-20.svh
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/zybo-z7-20-insAI.svh
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/include/common_cells/registers.svh
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/zybo-z7-20.svh
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/zybo-z7-20-insAI.svh
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/include/common_cells/registers.svh
 }
-set_property file_type "Verilog Header" [get_files /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/zybo-z7-20.svh]
-set_property is_global_include true [get_files /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/zybo-z7-20.svh]
-set_property file_type "Verilog Header" [get_files /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/zybo-z7-20-insAI.svh]
-set_property is_global_include true [get_files /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/zybo-z7-20-insAI.svh]
-set_property file_type "Verilog Header" [get_files /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/include/common_cells/registers.svh]
-set_property is_global_include true [get_files /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/include/common_cells/registers.svh]
+set_property file_type "Verilog Header" [get_files /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/zybo-z7-20.svh]
+set_property is_global_include true [get_files /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/zybo-z7-20.svh]
+set_property file_type "Verilog Header" [get_files /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/zybo-z7-20-insAI.svh]
+set_property is_global_include true [get_files /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/zybo-z7-20-insAI.svh]
+set_property file_type "Verilog Header" [get_files /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/include/common_cells/registers.svh]
+set_property is_global_include true [get_files /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/include/common_cells/registers.svh]
 read_verilog -library xil_defaultlib -sv {
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/fpga-support/rtl/AsyncDpRam.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/fpga-support/rtl/AsyncThreePortRam.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/fpga-support/rtl/SyncDpRam.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/fpga-support/rtl/SyncSpRamBeNx64.sv
-  /home/beepboop/riscv_2023/cva6_study/core/include/config_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/include/cv32a6_ima_sv32_fpga_config_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/include/riscv_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/include/ariane_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/include/acc_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/cf_math_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/acc_dispatcher.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/addr_decode.sv
-  /home/beepboop/riscv_2023/cva6_study/core/alu.sv
-  /home/beepboop/riscv_2023/cva6_study/core/amo_buffer.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_timer/apb_timer.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/register_interface/src/apb_to_reg.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/axi/src/axi_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/tb/ariane_axi_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/include/cvxif_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/src/ariane.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/tb/ariane_soc_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane_peripherals_xilinx.sv
-  /home/beepboop/riscv_2023/cva6_study/core/ariane_regfile_ff.sv
-  /home/beepboop/riscv_2023/cva6_study/core/ariane_regfile_fpga.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/riscv-dbg/src/dm_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/axi2apb/src/axi2apb_64_32.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/axi_mem_if/src/axi2mem.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/axi_adapter.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/axi_slice/src/axi_ar_buffer.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/axi/src/axi_atop_filter.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/axi_slice/src/axi_aw_buffer.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/axi_slice/src/axi_b_buffer.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/axi/src/axi_demux.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/axi/src/axi_err_slv.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/axi/src/axi_id_prepend.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/tb/axi_intf.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/clint/axi_lite_interface.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/axi/src/axi_mux.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/axi_slice/src/axi_r_buffer.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/src/axi_riscv_atomics/src/axi_res_tbl.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/src/axi_riscv_atomics/src/axi_riscv_amos.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/src/axi_riscv_atomics/src/axi_riscv_amos_alu.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/src/axi_riscv_atomics/src/axi_riscv_atomics.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/src/axi_riscv_atomics/src/axi_riscv_atomics_wrap.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/src/axi_riscv_atomics/src/axi_riscv_lrsc.sv
-  /home/beepboop/riscv_2023/cva6_study/core/axi_shim.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/axi_slice/src/axi_single_slice.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/axi_slice/src/axi_w_buffer.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/axi/src/axi_xbar.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/axis_async_fifo.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/axis_gmii_rx.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/axis_gmii_tx.sv
-  /home/beepboop/riscv_2023/cva6_study/core/frontend/bht.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/bootrom/bootrom_32.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/bootrom/bootrom_64.sv
-  /home/beepboop/riscv_2023/cva6_study/core/branch_unit.sv
-  /home/beepboop/riscv_2023/cva6_study/core/frontend/btb.sv
-  /home/beepboop/riscv_2023/cva6_study/core/include/std_cache_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/cache_ctrl.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/cdc_2phase.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/clint/clint.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/tech_cells_generic/src/deprecated/cluster_clk_cells.sv
-  /home/beepboop/riscv_2023/cva6_study/core/commit_stage.sv
-  /home/beepboop/riscv_2023/cva6_study/core/compressed_decoder.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/defs_div_sqrt_mvp.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/control_mvp.sv
-  /home/beepboop/riscv_2023/cva6_study/core/controller.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/counter.sv
-  /home/beepboop/riscv_2023/cva6_study/core/csr_buffer.sv
-  /home/beepboop/riscv_2023/cva6_study/core/csr_regfile.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cva6.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cva6_accel_first_pass_decoder_stub.sv
-  /home/beepboop/riscv_2023/cva6_study/core/include/cva6_hpdcache_default_config_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/cva6_hpdcache_if_adapter.sv
-  /home/beepboop/riscv_2023/cva6_study/core/include/wt_cache_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hwpf_stride/hwpf_stride_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/cva6_hpdcache_subsystem.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/cva6_icache.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/cva6_icache_axi_wrapper.sv
-  /home/beepboop/riscv_2023/cva6_study/core/mmu_sv32/cva6_mmu_sv32.sv
-  /home/beepboop/riscv_2023/cva6_study/core/mmu_sv32/cva6_ptw_sv32.sv
-  /home/beepboop/riscv_2023/cva6_study/core/mmu_sv32/cva6_shared_tlb_sv32.sv
-  /home/beepboop/riscv_2023/cva6_study/core/mmu_sv32/cva6_tlb_sv32.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cvxif_example/include/cvxif_instr_pkg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cvxif_example/cvxif_example_coprocessor.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cvxif_fu.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/riscv-dbg/debug_rom/debug_rom.sv
-  /home/beepboop/riscv_2023/cva6_study/core/decoder.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/delta_counter.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/div_sqrt_top_mvp.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/riscv-dbg/src/dm_csrs.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/riscv-dbg/src/dm_mem.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/riscv-dbg/src/dm_sba.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/riscv-dbg/src/dm_top.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/riscv-dbg/src/dmi_cdc.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/riscv-dbg/src/dmi_jtag.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/riscv-dbg/src/dmi_jtag_tap.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/dualmem_widen.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/dualmem_widen8.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/eth_mac_1g.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/eth_mac_1g_rgmii.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/eth_mac_1g_rgmii_fifo.sv
-  /home/beepboop/riscv_2023/cva6_study/core/ex_stage.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/exp_backoff.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/deprecated/fifo_v1.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/deprecated/fifo_v2.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/fifo_v3.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_cast_multi.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_classifier.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_divsqrt_multi.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_fma.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_fma_multi.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_noncomp.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_opgroup_block.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_opgroup_fmt_slice.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_opgroup_multifmt_slice.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_rounding.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpnew_top.sv
-  /home/beepboop/riscv_2023/cva6_study/core/fpu_wrap.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/framing_top.sv
-  /home/beepboop/riscv_2023/cva6_study/core/frontend/frontend.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_amo.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_cmo.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_core_arbiter.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_ctrl.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_ctrl_pe.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_data_downsize.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_data_upsize.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_demux.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_fifo_reg.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_fxarb.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_req_read_arbiter.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_req_write_arbiter.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_resp_demux.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_to_axi_read.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_to_axi_write.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_memarray.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_memctrl.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_miss_handler.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_mshr.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_mshr_to_cache_set.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_mux.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_plru.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_prio_1hot_encoder.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_regbank_wbyteenable_1rw.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_regbank_wmask_1rw.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_rrarb.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_rtab.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_sram.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/macros/behav/hpdcache_sram_1rw.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_sram_wbyteenable.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/macros/behav/hpdcache_sram_wbyteenable_1rw.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_sram_wmask.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/common/macros/behav/hpdcache_sram_wmask_1rw.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_uncached.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_wbuf.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hpdcache_wbuf_wrapper.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hwpf_stride/hwpf_stride.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hwpf_stride/hwpf_stride_arb.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/hpdcache/rtl/src/hwpf_stride/hwpf_stride_wrapper.sv
-  /home/beepboop/riscv_2023/cva6_study/core/id_stage.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/iddr.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cvxif_example/instr_decoder.sv
-  /home/beepboop/riscv_2023/cva6_study/core/frontend/instr_queue.sv
-  /home/beepboop/riscv_2023/cva6_study/core/instr_realign.sv
-  /home/beepboop/riscv_2023/cva6_study/core/frontend/instr_scan.sv
-  /home/beepboop/riscv_2023/cva6_study/core/issue_read_operands.sv
-  /home/beepboop/riscv_2023/cva6_study/core/issue_stage.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/iteration_div_sqrt_mvp.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/lfsr.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/lfsr_8bit.sv
-  /home/beepboop/riscv_2023/cva6_study/core/load_store_unit.sv
-  /home/beepboop/riscv_2023/cva6_study/core/load_unit.sv
-  /home/beepboop/riscv_2023/cva6_study/core/lsu_bypass.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/lzc.sv
-  /home/beepboop/riscv_2023/cva6_study/core/mac8_FU/src/mac8_FU.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/miss_handler.sv
-  /home/beepboop/riscv_2023/cva6_study/core/mix_unit.sv
-  /home/beepboop/riscv_2023/cva6_study/core/mult.sv
-  /home/beepboop/riscv_2023/cva6_study/core/multiplier.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/norm_div_sqrt_mvp.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/nrbd_nrsc_mvp.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/oddr.sv
-  /home/beepboop/riscv_2023/cva6_study/core/perf_counters.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/rv_plic/rtl/plic_regmap.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/rv_plic/rtl/plic_top.sv
-  /home/beepboop/riscv_2023/cva6_study/core/pmp/src/pmp.sv
-  /home/beepboop/riscv_2023/cva6_study/core/pmp/src/pmp_entry.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/popcount.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/preprocess_mvp.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/tech_cells_generic/src/deprecated/pulp_clk_cells.sv
-  /home/beepboop/riscv_2023/cva6_study/core/frontend/ras.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/register_interface/src/reg_intf.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/rgmii_core.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/rgmii_lfsr.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/rgmii_phy_if.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/rgmii_soc.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/rr_arb_tree.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/rstgen.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/rstgen_bypass.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/rv_plic/rtl/rv_plic_gateway.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/rv_plic/rtl/rv_plic_target.sv
-  /home/beepboop/riscv_2023/cva6_study/core/scoreboard.sv
-  /home/beepboop/riscv_2023/cva6_study/core/serdiv.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/shift_reg.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/spill_register.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/spill_register_flushable.sv
-  /home/beepboop/riscv_2023/cva6_study/common/local/util/sram.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/ariane-ethernet/ssio_ddr_in.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/std_cache_subsystem.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/std_nbdcache.sv
-  /home/beepboop/riscv_2023/cva6_study/core/store_buffer.sv
-  /home/beepboop/riscv_2023/cva6_study/core/store_unit.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/stream_arbiter.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/stream_arbiter_flushable.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/stream_demux.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/stream_mux.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/stream_register.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/tag_cmp.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/tech_cells_generic/src/rtl/tc_clk.sv
-  /home/beepboop/riscv_2023/cva6_study/common/local/util/tc_sram_fpga_wrapper.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_timer/timer.sv
-  /home/beepboop/riscv_2023/cva6_study/vendor/pulp-platform/common_cells/src/unread.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/wt_axi_adapter.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/wt_cache_subsystem.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/wt_dcache.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/wt_dcache_ctrl.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/wt_dcache_mem.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/wt_dcache_missunit.sv
-  /home/beepboop/riscv_2023/cva6_study/core/cache_subsystem/wt_dcache_wbuffer.sv
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/cva6_zybo_z7_20.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/fpga-support/rtl/AsyncDpRam.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/fpga-support/rtl/AsyncThreePortRam.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/fpga-support/rtl/SyncDpRam.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/fpga-support/rtl/SyncSpRamBeNx64.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/include/config_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/include/cv32a6_ima_sv32_fpga_config_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/include/riscv_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/include/ariane_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/include/acc_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/cf_math_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/acc_dispatcher.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/addr_decode.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/alu.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/amo_buffer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_timer/apb_timer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/register_interface/src/apb_to_reg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/axi/src/axi_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/tb/ariane_axi_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/include/cvxif_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/src/ariane.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/tb/ariane_soc_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane_peripherals_xilinx.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/ariane_regfile_ff.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/ariane_regfile_fpga.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/riscv-dbg/src/dm_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/axi2apb/src/axi2apb_64_32.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/axi_mem_if/src/axi2mem.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/axi_adapter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/axi_slice/src/axi_ar_buffer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/axi/src/axi_atop_filter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/axi_slice/src/axi_aw_buffer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/axi_slice/src/axi_b_buffer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/axi/src/axi_demux.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/axi/src/axi_err_slv.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/axi/src/axi_id_prepend.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/tb/axi_intf.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/clint/axi_lite_interface.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/axi/src/axi_mux.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/axi_slice/src/axi_r_buffer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/src/axi_riscv_atomics/src/axi_res_tbl.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/src/axi_riscv_atomics/src/axi_riscv_amos.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/src/axi_riscv_atomics/src/axi_riscv_amos_alu.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/src/axi_riscv_atomics/src/axi_riscv_atomics.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/src/axi_riscv_atomics/src/axi_riscv_atomics_wrap.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/src/axi_riscv_atomics/src/axi_riscv_lrsc.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/axi_shim.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/axi_slice/src/axi_single_slice.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/axi_slice/src/axi_w_buffer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/axi/src/axi_xbar.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/axis_async_fifo.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/axis_gmii_rx.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/axis_gmii_tx.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/frontend/bht.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/bootrom/bootrom_32.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/bootrom/bootrom_64.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/branch_unit.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/frontend/btb.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/include/std_cache_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/cache_ctrl.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/cdc_2phase.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/clint/clint.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/tech_cells_generic/src/deprecated/cluster_clk_cells.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/commit_stage.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/compressed_decoder.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/defs_div_sqrt_mvp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/control_mvp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/controller.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/counter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/csr_buffer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/csr_regfile.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cva6.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cva6_accel_first_pass_decoder_stub.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/include/cva6_hpdcache_default_config_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/cva6_hpdcache_if_adapter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/include/wt_cache_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hwpf_stride/hwpf_stride_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/cva6_hpdcache_subsystem.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/cva6_hpdcache_subsystem_axi_arbiter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/cva6_icache.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/cva6_icache_axi_wrapper.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/mmu_sv32/cva6_mmu_sv32.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/mmu_sv32/cva6_ptw_sv32.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/mmu_sv32/cva6_shared_tlb_sv32.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/mmu_sv32/cva6_tlb_sv32.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cvxif_example/include/cvxif_instr_pkg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cvxif_example/cvxif_example_coprocessor.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cvxif_fu.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/riscv-dbg/debug_rom/debug_rom.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/decoder.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/delta_counter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/div_sqrt_top_mvp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/riscv-dbg/src/dm_csrs.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/riscv-dbg/src/dm_mem.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/riscv-dbg/src/dm_sba.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/riscv-dbg/src/dm_top.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/riscv-dbg/src/dmi_cdc.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/riscv-dbg/src/dmi_jtag.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/riscv-dbg/src/dmi_jtag_tap.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/dualmem_widen.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/dualmem_widen8.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/eth_mac_1g.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/eth_mac_1g_rgmii.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/eth_mac_1g_rgmii_fifo.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/ex_stage.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/exp_backoff.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/deprecated/fifo_v1.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/deprecated/fifo_v2.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/fifo_v3.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_cast_multi.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_classifier.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_divsqrt_multi.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_fma.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_fma_multi.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_noncomp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_opgroup_block.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_opgroup_fmt_slice.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_opgroup_multifmt_slice.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_rounding.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpnew_top.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/fpu_wrap.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/framing_top.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/frontend/frontend.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_amo.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_cmo.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_core_arbiter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_ctrl.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_ctrl_pe.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_data_downsize.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_data_upsize.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_demux.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_fifo_reg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_fxarb.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_req_read_arbiter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_req_write_arbiter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_resp_demux.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_to_axi_read.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/utils/hpdcache_mem_to_axi_write.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_memarray.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_memctrl.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_miss_handler.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_mshr.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_mshr_to_cache_set.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_mux.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_plru.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_prio_1hot_encoder.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_regbank_wbyteenable_1rw.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_regbank_wmask_1rw.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_rrarb.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_rtab.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_sram.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/macros/behav/hpdcache_sram_1rw.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_sram_wbyteenable.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/macros/behav/hpdcache_sram_wbyteenable_1rw.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/hpdcache_sram_wmask.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/common/macros/behav/hpdcache_sram_wmask_1rw.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_uncached.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_wbuf.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hpdcache_wbuf_wrapper.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hwpf_stride/hwpf_stride.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hwpf_stride/hwpf_stride_arb.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/hpdcache/rtl/src/hwpf_stride/hwpf_stride_wrapper.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/id_stage.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/iddr.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cvxif_example/instr_decoder.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/frontend/instr_queue.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/instr_realign.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/frontend/instr_scan.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/issue_read_operands.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/issue_stage.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/iteration_div_sqrt_mvp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/lfsr.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/lfsr_8bit.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/load_store_unit.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/load_unit.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/lsu_bypass.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/lzc.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/mac8_FU/src/mac8_FU.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/miss_handler.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/mix_unit.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/mult.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/multiplier.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/norm_div_sqrt_mvp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/nrbd_nrsc_mvp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/oddr.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/perf_counters.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/rv_plic/rtl/plic_regmap.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/rv_plic/rtl/plic_top.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/pmp/src/pmp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/pmp/src/pmp_entry.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/popcount.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/openhwgroup/cvfpu/src/fpu_div_sqrt_mvp/hdl/preprocess_mvp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/tech_cells_generic/src/deprecated/pulp_clk_cells.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/frontend/ras.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/register_interface/src/reg_intf.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/rgmii_core.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/rgmii_lfsr.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/rgmii_phy_if.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/rgmii_soc.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/rr_arb_tree.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/rstgen.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/rstgen_bypass.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/rv_plic/rtl/rv_plic_gateway.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/rv_plic/rtl/rv_plic_target.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/scoreboard.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/serdiv.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/shift_reg.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/spill_register.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/spill_register_flushable.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/common/local/util/sram.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/ariane-ethernet/ssio_ddr_in.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/std_cache_subsystem.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/std_nbdcache.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/store_buffer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/store_unit.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/stream_arbiter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/stream_arbiter_flushable.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/stream_demux.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/stream_mux.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/stream_register.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/tag_cmp.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/tech_cells_generic/src/rtl/tc_clk.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/common/local/util/tc_sram_fpga_wrapper.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_timer/timer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/vendor/pulp-platform/common_cells/src/unread.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/wt_axi_adapter.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/wt_cache_subsystem.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/wt_dcache.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/wt_dcache_ctrl.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/wt_dcache_mem.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/wt_dcache_missunit.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/core/cache_subsystem/wt_dcache_wbuffer.sv
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/cva6_zybo_z7_20.sv
 }
 read_vhdl -library xil_defaultlib {
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/apb_uart.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/slib_clock_div.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/slib_counter.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/slib_edge_detect.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/slib_fifo.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/slib_input_filter.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/slib_input_sync.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/slib_mv_filter.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/uart_baudgen.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/uart_interrupt.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/uart_receiver.vhd
-  /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/src/apb_uart/src/uart_transmitter.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/apb_uart.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/slib_clock_div.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/slib_counter.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/slib_edge_detect.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/slib_fifo.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/slib_input_filter.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/slib_input_sync.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/slib_mv_filter.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/uart_baudgen.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/uart_interrupt.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/uart_receiver.vhd
+  /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/src/apb_uart/src/uart_transmitter.vhd
 }
-read_ip -quiet /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.xci
-set_property used_in_synthesis false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master_clocks.xdc]
-set_property used_in_implementation false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master_clocks.xdc]
-set_property used_in_implementation false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master_ooc.xdc]
+read_ip -quiet /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.xci
+set_property used_in_synthesis false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master_clocks.xdc]
+set_property used_in_implementation false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master_clocks.xdc]
+set_property used_in_implementation false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_master/xlnx_axi_dwidth_converter_dm_master_ooc.xdc]
 
-read_ip -quiet /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.xci
-set_property used_in_synthesis false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave_clocks.xdc]
-set_property used_in_implementation false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave_clocks.xdc]
-set_property used_in_implementation false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave_ooc.xdc]
+read_ip -quiet /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.xci
+set_property used_in_synthesis false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave_clocks.xdc]
+set_property used_in_implementation false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave_clocks.xdc]
+set_property used_in_implementation false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave.srcs/sources_1/ip/xlnx_axi_dwidth_converter_dm_slave/xlnx_axi_dwidth_converter_dm_slave_ooc.xdc]
 
-read_ip -quiet /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_blk_mem_gen/xlnx_blk_mem_gen.srcs/sources_1/ip/xlnx_blk_mem_gen/xlnx_blk_mem_gen.xci
-set_property used_in_implementation false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_blk_mem_gen/xlnx_blk_mem_gen.srcs/sources_1/ip/xlnx_blk_mem_gen/xlnx_blk_mem_gen_ooc.xdc]
+read_ip -quiet /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_blk_mem_gen/xlnx_blk_mem_gen.srcs/sources_1/ip/xlnx_blk_mem_gen/xlnx_blk_mem_gen.xci
+set_property used_in_implementation false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_blk_mem_gen/xlnx_blk_mem_gen.srcs/sources_1/ip/xlnx_blk_mem_gen/xlnx_blk_mem_gen_ooc.xdc]
 
-read_ip -quiet /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen.xci
-set_property used_in_implementation false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen_board.xdc]
-set_property used_in_implementation false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen.xdc]
-set_property used_in_implementation false [get_files -all /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen_ooc.xdc]
+read_ip -quiet /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen.xci
+set_property used_in_implementation false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen_board.xdc]
+set_property used_in_implementation false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen.xdc]
+set_property used_in_implementation false [get_files -all /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/xilinx/xlnx_clk_gen/xlnx_clk_gen.srcs/sources_1/ip/xlnx_clk_gen/xlnx_clk_gen_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -389,11 +389,11 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/constraints/zybo_z7_20.xdc
-set_property used_in_implementation false [get_files /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/constraints/zybo_z7_20.xdc]
+read_xdc /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/constraints/zybo_z7_20.xdc
+set_property used_in_implementation false [get_files /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/constraints/zybo_z7_20.xdc]
 
-read_xdc /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/constraints/cva6_fpga.xdc
-set_property used_in_implementation false [get_files /home/beepboop/riscv_2023/cva6_study/corev_apu/fpga/constraints/cva6_fpga.xdc]
+read_xdc /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/constraints/cva6_fpga.xdc
+set_property used_in_implementation false [get_files /home/diskouna/Bureau/INSA/INSAi_CVA6-softcore-contest/corev_apu/fpga/constraints/cva6_fpga.xdc]
 
 read_xdc dont_touch.xdc
 set_property used_in_implementation false [get_files dont_touch.xdc]
