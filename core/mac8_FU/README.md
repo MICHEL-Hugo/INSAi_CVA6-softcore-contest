@@ -18,6 +18,15 @@ width.
 At this moment, only signed vs unsigned multiplications are done. It can be
 extended by adding a sign-extension stage before multiplications.
 
+## ASM INSTRUCTIONS 
+
+mac8_FU instructions use Custom-0 opcode and rtype format.
+
+| instructions |     funct7    | rs2 | rs1 | funct3 | rd  |    Opcode    |
+|--------------|---------------|-----|-----|--------|-----|--------------|
+| mac8_init    |  7'b0000_000  |  -  |  -  | 3b'010 |  -  | 7'b00_010_11 |
+| mac8_acc     |  7'b0000_000  |  -  |  -  | 3b'000 |  -  | 7'b00_010_11 |
+
 ##  TODO : 
  - speculative execution !!! move register writing to commit stage
  - handle the accumulator overflow 
