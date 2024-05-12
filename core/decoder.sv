@@ -266,28 +266,33 @@ module decoder
         end
 
         `ifdef ENABLE_insAI_EXTENSION
-         // --------------------------
-         // MAC8_FU  and MIX_UNIT
-		 // --------------------------
+        // --------------------------
+        // MAC8_FU  and MIX_UNIT
+		// --------------------------
         riscv::OpcodeCustom0: begin
-          instruction_o.fu  = MAC8_FU;
-          //instructions operands
+          /* Instruction structure : 
+           *   FU......instr......funct7[31:25]..funct3[14:12]....Opcode
+           * MIX_UNIT  MIX            7'b0         3b'001        Custom0
+           * MAC8_FU   MAC8_INIT      7'b0         3b'010        Custom0
+           * MAC8_FU   MAC8_ACC       7'b0         3b'000        Custom0
+           */
+
+          // Functional unit : 
+          instruction_o.fu  = (instr.rtype.funct3[12] == 1'b1) ? MIX_UNIT : MAC8_FU;
+          // Operation type  :
+          // Note : At this moment, MIX_UNIT only performs one operation
+          // regardless of instruction_o.op value.
+	      instruction_o.op  = (instr.rtype.funct3[13] == 1'b1) ? MAC8_INIT: MAC8_ACC;
+
+          // Instructions' operands :
           instruction_o.rs1[4:0] = instr.rtype.rs1;
           instruction_o.rs2[4:0] = instr.rtype.rs2;
           instruction_o.rd[4:0]  = instr.rtype.rd;
-		  unique case ({instr.rtype.funct3})
-              3'b000 : instruction_o.op = ariane_pkg::MAC8_ACC;
-			  3'b010 : instruction_o.op = ariane_pkg::MAC8_INIT;
-              3'b001 : begin
-                instruction_o.fu  = MIX_UNIT;
-                instruction_o.op  = ariane_pkg::MIX;
-              end
-              default: begin
-                illegal_instr = 1'b1;
-              end
-          endcase
+          
+          // Illegal instructions logic : 
+          // illegal_instr = (instr.rtype.funct3[14]);
         end
-      `endif // ENABLE_insAI_EXTENSION
+        `endif // ENABLE_insAI_EXTENSION
 
         // --------------------------
         // Reg-Reg Operations
