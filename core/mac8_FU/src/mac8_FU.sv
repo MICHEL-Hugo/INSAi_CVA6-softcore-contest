@@ -29,7 +29,7 @@
 // Following implementation assumes vectors (operand_a, operand_b) of 32 bits
 // width. 
 // At this moment, only signed vs unsigned multiplications are done. It can be
-// be extended by adding a sign-extension stage before multiplications.
+// extended by adding a sign-extension stage before multiplications.
 //
 // TODO : 
 // - speculative execution !!! move register writing to commit stage
