@@ -67,9 +67,16 @@ In our case, we use this cable to program software applications on the CV32A6 in
 1. First, make sure the Digilent **JTAG-HS2 debug adapter** is properly connected to the **PMOD JE** connector and that the USBAUART adapter is properly connected to the **PMOD JB** connector of the Zybo Z7-20 board.
 ![alt text](./docs/pictures/20201204_150708.jpg)
 
-2. Generate the bitstream of the FPGA platform:
+2. Generate the bitstream of the FPGA platform : 
+
+- **without insAI extension** :
 ```
 $ make cva6_fpga
+```
+
+- **with insAI extension** : 
+```
+$ make cva6_fpga_insAI
 ```
 
 3. When the bitstream is generated, switch on Zybo board and run:
@@ -124,9 +131,17 @@ drwxrwxr-x  2 user user 4096 Nov 23 10:57 utils/
 ```
 
 3. To compile mnist application, run the following commands.
+
+- **without insAI extension :**
 ```
 user@[CONTAINER ID]:/workdir$ cd app
 user@[CONTAINER ID]:/workdir/app$ make mnist
+
+```
+- **with insAI extension :**
+```
+user@[CONTAINER ID]:/workdir$ cd app
+user@[CONTAINER ID]:/workdir/app$ make mnist EN_HW_ACCEL=1
 
 ```
 At the end of the compilation the mnist.riscv executable file must be created.
@@ -208,7 +223,9 @@ Continuing.
 (gdb) 
 ```
 
-9. On the hyperterminal configured on /dev/ttyUSB0 11520-8-N-1, you should see:
+9. On the hyperterminal configured on /dev/ttyUSB0 11520-8-N-1, you should see: 
+
+- **without insAI extension :**
 ```
 Expected  = 4
 Predicted = 4
@@ -218,11 +235,22 @@ image env0003: 1731593 instructions
 image env0003: 2353693 cycles
 ```
 
+- **with insAI extension :**
+
+```
+Expected  = 4
+Predicted = 4
+Result : 1/1
+credence: 82
+image env0003: 261198 instructions
+image env0003: 424325 cycles
+```
+
 This result is obtained just after the FPGA bitstream loading.
 When MNIST is rerun system is not at initial state. For instance, cache is preloaded.
 
 
-# Simulation get started
+# Simulation get started (NOT DONE YET)
 When the development environment is set up, it is now possible to run a simulation.
 Some software applications are available into the **sw/app** directory. Especially, there are benchmark applications such as Dhrystone and CoreMark and other test applications.
 
@@ -249,6 +277,8 @@ Moreover, all `printf` used in software application will be displayed into the *
 Simulation is programmed to run 10000000 cycles but the result is displayed before the end of simulation.
 
 For **mnist** application, at the end of the simulation, result is diplayed as following:
+
+**without insAI extension :**
 ```
 Expected  = 4
 Predicted = 4
@@ -258,28 +288,18 @@ image env0003: 1731593 instructions
 image env0003: 2316653 cycles
 ```
 
+**without insAI extension :**
+```
+Expected  = NA
+Predicted = NA
+Result : NA
+credence: NA
+image env0003: NA instructions
+image env0003: NA cycles
+```
+
 CVA6 software environment is detailed into `sw/app` directory.
 
-# Synthesis and place and route get started
-You can perform synthesis and place and route of the CVA6 architecture.
-
-In the first time, synthesis and place and route are carried in "out of context" mode, that means that the CVA6 architecture is synthetized in the FPGA fabric without consideration of the external IOs constraints.
-
-That allows to have an estimation of the logical resources used by the CVA6 in the FPGA fabric as well as the maximal frequency of CVA6 architecture. They are both major metrics for a computation architecture.
-
-Command to run synthesis and place & route in "out of context" mode:
-```
-$ make cva6_ooc CLK_PERIOD_NS=<period of the architecture in ns>
-```
-For example, if you want to clock the architecture to 50 MHz, you have to run:
-```
-$ make cva6_ooc CLK_PERIOD_NS=20
-```
-By default, synthesis is performed in batch mode, however it is possible to run this command using Vivado GUI:
-```
-$ make cva6_ooc CLK_PERIOD_NS=20 BATCH_MODE=0
-```
-This command generates synthesis and place and route reports in **fpga/reports_cva6_ooc_synth** and **fpga/reports_cva6_ooc_impl**.
 
 
 
