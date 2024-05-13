@@ -1,3 +1,6 @@
+# INSAi Team CVA6 extension
+![alt text](./docs/pictures/cv32a6_INSAi.png)
+
 # Getting started
 
 To get more familiar with CVA6 architecture, a partial documentation is available:
