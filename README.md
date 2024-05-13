@@ -288,7 +288,7 @@ image env0003: 1731593 instructions
 image env0003: 2316653 cycles
 ```
 
-**without insAI extension :**
+**with insAI extension :**
 ```
 Expected  = NA
 Predicted = NA
