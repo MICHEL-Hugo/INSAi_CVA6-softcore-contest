@@ -23,7 +23,6 @@ build/
 *.out
 *.jou
 *.o
-uart
 work-ver/*
 corev_apu/fpga/work-fpga
 corev_apu/fpga/reports/
