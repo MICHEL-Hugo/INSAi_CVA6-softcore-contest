@@ -135,7 +135,7 @@ drwxrwxr-x  2 user user 4096 Nov 23 10:57 utils/
 - **without insAI extension :**
 ```
 user@[CONTAINER ID]:/workdir$ cd app
-user@[CONTAINER ID]:/workdir/app$ make mnist
+user@[CONTAINER ID]:/workdir/app$ make mnist 
 
 ```
 - **with insAI extension :**
@@ -144,6 +144,9 @@ user@[CONTAINER ID]:/workdir$ cd app
 user@[CONTAINER ID]:/workdir/app$ make mnist EN_HW_ACCEL=1
 
 ```
+Note : You can ```touch mnist/NetworkPropagate.c``` before running ```make``` command
+to make sure ```mnist/NetworkPropagate.o``` is updated or simply use ```make -B```.
+
 At the end of the compilation the mnist.riscv executable file must be created.
 
 4. Then, in the Docker container, launch **OpenOCD** in background:
@@ -248,4 +251,17 @@ image env0003: 424325 cycles
 
 This result is obtained just after the FPGA bitstream loading.
 When MNIST is rerun system is not at initial state. For instance, cache is preloaded.
+
+# LICENCE
+
+ Copyright 2023-2024 INSA Toulouse.
+
+ Copyright and related rights are licensed under the Solderpad Hardware
+ License, Version 0.51 (the "License"); you may not use this file except in
+ compliance with the License.  You may obtain a copy of the License at
+ http:solderpad.org/licenses/SHL-0.51. Unless required by applicable law
+ or agreed to in writing, software, hardware and materials distributed under
+ this License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations under the License.
 
